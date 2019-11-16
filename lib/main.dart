@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +9,9 @@ import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
+  FirebaseAnalytics analytics = FirebaseAnalytics();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,6 +21,9 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Sukhumvit',
       ),
       home: welcomePage(),
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: analytics)
+      ],
     );
   }
 }
@@ -57,9 +65,10 @@ class _welcomePageState extends State<welcomePage> {
   Future getAccessToken() async{
     try {
       final result = await LineSDK.instance.currentAccessToken;
-      return result.value;
+        return result.value;
     } on PlatformException catch (e) {
       print(e.message);
+      return 0;
     }
   }
 

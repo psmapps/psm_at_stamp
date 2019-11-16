@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "62361774457",
+    "firebase_url": "https://satitprasarnmit-psm-at-stamp.firebaseio.com",
+    "project_id": "satitprasarnmit-psm-at-stamp",
+    "storage_bucket": "satitprasarnmit-psm-at-stamp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62361774457:android:81ec7f233ddf006c90a7a8",
+        "android_client_info": {
+          "package_name": "com.psmapps.psmatstamp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "62361774457-a53cc2f65ogt1jsp1e38e0mu2lfl4is2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMqETkdWuEeLUhaXyTHJuGIJVWb2YzAVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "62361774457-a53cc2f65ogt1jsp1e38e0mu2lfl4is2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "62361774457-fhn5cdl5kff2ve88a36sq0ikploepvdv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.psmapps.psmatstamp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
