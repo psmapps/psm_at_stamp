@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 
+//Import Other Page
+import 'userlogin.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -37,14 +40,24 @@ class welcomePage extends StatefulWidget {
 class _welcomePageState extends State<welcomePage> {
 
   void startUserChecking() async{
-    print("AccessToken> " + await getAccessToken());
+    final prefs = await SharedPreferences.getInstance();
+    //print("AccessToken> " + await getAccessToken());
     try{
       final result = await InternetAddress.lookup("google.com");
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        prefs.setString("Mode", "Online");
         print("Internet> Connected");
-        
+        bool loginStatus = prefs.getBool("Status");
+        if (loginStatus == false || loginStatus == null){
+          print("LoginStatus> Not logged in Sending user to loginpage");
+          await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+        } else {
+          var accessToken = await getAccessToken();
+          //TODO: Push to MainPage
+        }
       }
     } on SocketException catch (e) {
+      prefs.setString("Mode", "Offline");
       print(e.message);
       print("Internet> Not connected!");
       showMessageBox("เข้าสู่โหมด Offline", "ไม่สามารถติดต่อกับ PSM @ STAMP ได้ ระบบจะใช้ Offline Mode อัตโนมัติ");
@@ -78,7 +91,7 @@ class _welcomePageState extends State<welcomePage> {
       builder: (BuildContext context){
         return AlertDialog(
           title: Text(title),
-          content: Text(message),
+          content: Wrap(children: <Widget>[Text(message)],),
           actions: <Widget>[
             FlatButton(
               child: Text("Teest"),
@@ -124,7 +137,11 @@ class _welcomePageState extends State<welcomePage> {
                   CircularProgressIndicator(),
                   Padding(
                     padding: const EdgeInsets.only(top: 9),
-                    child: Text("กำลังเชื่อมต่อกับระบบ PSM @ STAMP", style: TextStyle(fontSize: 20,color: Colors.white)),
+                    child: Wrap(
+                      children: <Widget>[
+                        Text("กำลังเชื่อมต่อกับระบบ PSM @ STAMP", style: TextStyle(fontSize: 20,color: Colors.white)),
+                      ],
+                    ),
                   ),
                 ],)
             ),
