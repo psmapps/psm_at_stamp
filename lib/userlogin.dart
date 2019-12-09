@@ -51,6 +51,10 @@ class _LoginPage extends State<LoginPage>{
                 showMessageBox(false, "คุณไม่อนุญาติการเข้าสู่ระบบด้วย LINE", "เมื่อสักครู่คุณกดยกเลิกการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
                 print("User decline the login");
                 break;
+            case "NETWORK_ERROR":
+                showMessageBox(false, "ไม่สามารถเชื่อมต่อกับ LINE ได้", "กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ตและลองใหม่อีกครั้ง");
+                print("User decline the login");
+                break;
             default:
                 showMessageBox(false, "เกิดข้อผิดพลาด", "เกิดข้อผิดพลาดไม่ทราบสาเหตุ กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
                 print("Unknown but failed to login");

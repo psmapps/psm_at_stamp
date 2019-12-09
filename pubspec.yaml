@@ -1,5 +1,5 @@
 name: psm_at_stamp
-description: A new Flutter project.
+description: PSM_AT_STAMP_Flutter
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -20,7 +20,7 @@ environment:
 
 dependencies:
   firebase_analytics: ^4.0.2
-  cloud_firestore: ^0.12.10
+  cloud_firestore: ^0.12.11
   shared_preferences: 0.5.3+4
   flutter_line_sdk: ^1.2.1
   flutter:
