@@ -69,7 +69,7 @@ class _LoginPage extends State<LoginPage>{
         if (!snapshot.exists) {
           print("Stamp_User> Not Exisit, Send to create page");
           Navigator.pop(context);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => createUser()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => createUser(displayName: displayName, userId: lineUserId, profileImage: profileImage, accessToken: accessToken,)));
         } else {
           print("Exisit");
         }

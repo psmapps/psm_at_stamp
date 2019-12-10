@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'confirmuser.dart';
 
 class createUser extends StatefulWidget{
+  var displayName;
+  var profileImage;
+  var accessToken;
+  var userId;
+
+  createUser({Key key, @required this.userId,@required this.displayName, @required this.profileImage, @required this.accessToken}): super(key: key);
 
   @override
   CreateUserState createState() => CreateUserState();
@@ -13,7 +20,6 @@ class CreateUserState extends State<createUser>{
 
   @override
   Widget build(BuildContext context) {
-
     TextEditingController studentIdText = new TextEditingController();
     void showMessageBox(bool showIndicator,String title, String message) async{
     return showDialog(
@@ -68,9 +74,13 @@ class CreateUserState extends State<createUser>{
             var prefix = snapShot.data['prefix'];
             var name = snapShot.data['name'];
             var surname = snapShot.data['surname'];
-            var classroom = snapShot.data['class'];
+            var year = snapShot.data['year'];
             var room = snapShot.data['room'];
             Navigator.pop(context);
+            print("----{User Data}----");
+            print(prefix + name + " " + surname);
+            print("M." + year + "/" + room);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => confirmPage(studentId: studentId,prefix: prefix, name: name, surname: surname, year: year, room: room,displayName: widget.displayName, userId: widget.userId, profileImage: widget.profileImage, accessToken: widget.accessToken, )));
             //TODO: Push user with userData to confirm page!
           }
         }
@@ -83,7 +93,7 @@ class CreateUserState extends State<createUser>{
     backgroundColor: Color.fromRGBO(43, 43, 43, 1),
     appBar: AppBar(
 
-      title: Text("ผูกบัญชี LINE กับ PSM @ STAMP"),
+      title: Text("ผูกบัญชี PSM @ STAMP กับ LINE"),
     ),
     body: SingleChildScrollView(
       child: Column(
