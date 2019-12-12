@@ -47,6 +47,10 @@ class _LoginPage extends State<LoginPage>{
                 showMessageBox(false, "คุณยกเลิกการเข้าสู่ระบบ", "เมื่อสักครู่คุณกดยกเลิกการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
                 print("User Cancel the login");
                 break;
+            case "-1200":
+                showMessageBox(false, "กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ต", "ไม่สามารถติดต่อกับ LINE ได้ กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ตและลองใหม่อีกครั้ง");
+                print("Connection Failed");
+                break;
             case "AUTHENTICATION_AGENT_ERROR":
                 showMessageBox(false, "คุณไม่อนุญาติการเข้าสู่ระบบด้วย LINE", "เมื่อสักครู่คุณกดยกเลิกการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
                 print("User decline the login");

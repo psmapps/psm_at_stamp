@@ -38,6 +38,17 @@ class ConfirmPageState extends State<confirmPage>{
   }
   @override
   Widget build(BuildContext context) {
+    void confirmData() {
+        print("Hello");
+
+        //TODO: Confirm data implementation code
+    }
+
+    void notconfirmData(){
+        //TODO: not confirm data options show;
+    }
+
+
   return Scaffold(
     backgroundColor: Color.fromRGBO(43, 43, 43, 1),
     appBar: AppBar(
@@ -110,8 +121,11 @@ class ConfirmPageState extends State<confirmPage>{
                             padding: const EdgeInsets.fromLTRB(10, 15, 10 ,15),
                             child: Text("ข้อมูลไม่ถูกต้อง", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                             onPressed: (){
-                              //TODO: Show option to the user for data correction
+                              notconfirmData();
                             },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)
+                            ),
                           ),
                         ),
                         Padding(padding: const EdgeInsets.all(5),),
@@ -119,10 +133,13 @@ class ConfirmPageState extends State<confirmPage>{
                          child: RaisedButton(
                             color: Colors.orange,
                             padding: const EdgeInsets.fromLTRB(10, 15, 10 ,15),
-                            child: Text("ข้อมูลของฉันถูกต้อง", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                            child: Text("ยืนยันการผูกบัญชี", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                             onPressed: (){
-                                //TODO: Implement the creatUser function
+                                confirmData();
                             },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)
+                            ),
                           ),
                        ),
                     ],
