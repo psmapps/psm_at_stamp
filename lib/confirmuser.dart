@@ -1,6 +1,8 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class confirmPage extends StatefulWidget{
@@ -38,15 +40,63 @@ class ConfirmPageState extends State<confirmPage>{
   }
   @override
   Widget build(BuildContext context) {
-    void confirmData() {
-        print("Hello");
 
-        //TODO: Confirm data implementation code
+
+    void showMessageBox(bool showIndicator,String title, String message) async{
+      return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context){
+          if (showIndicator == true){
+            return Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Center(child: CircularProgressIndicator()),
+              ],
+            );
+          } else {
+            return AlertDialog(
+            
+            title: Text(title),
+            content: Text(message),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("ปิด"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },)
+            ],
+            );
+          }
+        }
+      );
+    }
+
+    void confirmData() {
+        showMessageBox(true, "", "");
+        Firestore.instance.collection("Student_Data").document(widget.studentId).updateData({"isRegistered": true});
+        Firestore.instance.collection("Stamp_User").document(widget.userId).setData({
+          "studentId" : widget.studentId,
+          "prefix": widget.prefix,
+          "name": widget.name,
+          "surname": widget.surname,
+          "year": widget.year,
+          "room": widget.room,
+          "userId": widget.userId,
+          "displayName": widget.displayName,
+          "profileImage": widget.profileImage,
+          "accessToken": "",
+          "permission": "student"
+        });
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        showMessageBox(false, "ผูกบัญชีเรียบร้อย", "คุณสามารถเริ่มต้นใช้งาน PSM @ STAMP และ น้องแสตมป์ ผ่านการเข้าสู่ระบบด้วย LINE ได้ทันที");
+
     }
 
     void notconfirmData(){
         //TODO: not confirm data options show;
     }
+
 
 
   return Scaffold(

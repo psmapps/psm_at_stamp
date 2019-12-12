@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:psm_at_stamp/createuser.dart';
+import 'psmatstamp.dart';
 
 class LoginPage extends StatefulWidget{
 
@@ -75,8 +76,13 @@ class _LoginPage extends State<LoginPage>{
           Navigator.pop(context);
           Navigator.push(context, MaterialPageRoute(builder: (context) => createUser(displayName: displayName, userId: lineUserId, profileImage: profileImage, accessToken: accessToken,)));
         } else {
-          print("Exisit");
-        }
+          print("Logged In");
+          //TODO: Decode Data from snaoshot
+          //TODO: Push user with data to psmatstampmainpage
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage()));
+          
+        } 
       });
   }
 

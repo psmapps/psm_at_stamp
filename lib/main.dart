@@ -9,9 +9,13 @@ import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 //Import Other Page
 import 'userlogin.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_){
+      runApp(PSMATSTAMP());
+  });
+}
 
-class MyApp extends StatelessWidget {
+class PSMATSTAMP extends StatelessWidget {
 
   FirebaseAnalytics analytics = FirebaseAnalytics();
 

@@ -68,7 +68,7 @@ class CreateUserState extends State<createUser>{
           if (snapShot.data['isRegistered'] == true){
             print("Registation> Registered");
             Navigator.pop(context);
-            showMessageBox(false, "บัญชีนี้ถูกใช้ลงทะเบียนไปแล้ว", "รหัสนักเรียนนี้ถูกผุกบัญชีกับ LINE ไปแล้ว จึงไม่สามารถผูกซ้ำอีกครั้งได้ หากมีปัญหาในการผูกบัญชี กรุณาติดต่อ PSM @ STAMP Team เพื่อแก้ไขปัญหาต่อไป");
+            showMessageBox(false, "บัญชีนี้ถูกใช้ลงทะเบียนไปแล้ว", "รหัสนักเรียนนี้ถูกผูกบัญชีกับ LINE อื่นไปแล้ว จึงไม่สามารถผูกซ้ำอีกครั้งได้ หากมีปัญหาในการผูกบัญชี กรุณาติดต่อ PSM @ STAMP Team เพื่อแก้ไขปัญหาต่อไป");
           } else {
             print("Registation> Not Registered");
             var prefix = snapShot.data['prefix'];
