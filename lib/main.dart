@@ -10,15 +10,12 @@ import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'userlogin.dart';
 
 void main() {
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_){
-      runApp(PSMATSTAMP());
-  });
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(PSMATSTAMP());
 }
 
 class PSMATSTAMP extends StatelessWidget {
-
   FirebaseAnalytics analytics = FirebaseAnalytics();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -56,7 +53,8 @@ class _welcomePageState extends State<welcomePage> {
         if (loginStatus == false || loginStatus == null){
           print("LoginStatus> Not logged in Sending user to loginpage");
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
-        } else {
+        } else if (loginStatus == true) {
+          print("LoginStatus> Logged in sending user to mainpage");
           var accessToken = await getAccessToken();
           //TODO: Push to MainPage
         }

@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+
 class confirmPage extends StatefulWidget{
   var studentId;
   var prefix;
@@ -85,18 +87,19 @@ class ConfirmPageState extends State<confirmPage>{
           "userId": widget.userId,
           "displayName": widget.displayName,
           "profileImage": widget.profileImage,
-          "accessToken": "",
+          "accessToken": widget.accessToken,
           "permission": "student"
         });
         Navigator.of(context).popUntil((route) => route.isFirst);
+        //TODO: Fix The bug
+        //Navigator.push(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(studentId: widget.studentId,userId: widget.userId, prefix: widget.prefix, name: widget.name, surname: widget.surname, profileImage: widget.profileImage, year: widget.year, room: widget.room, displayName: widget.displayName,)));
         showMessageBox(false, "ผูกบัญชีเรียบร้อย", "คุณสามารถเริ่มต้นใช้งาน PSM @ STAMP และ น้องแสตมป์ ผ่านการเข้าสู่ระบบด้วย LINE ได้ทันที");
 
     }
 
     void notconfirmData(){
-        //TODO: not confirm data options show;
         Navigator.pop(context);
-        showMessageBox(false, "ข้อมูลของคุณไม่ถูกต้อง", "หากมีปัญหาในการผูกบัญชี กรุณาติดต่อ PSM @ STAMP Team ที่ LINE (@psmatstamp) เพื่อดำเนินการแก้ไขปัญหา");
+        showMessageBox(false, "ข้อมูลของคุณไม่ถูกต้อง", "หากมีปัญหาในการผูกบัญชี กรุณาติดต่อ PSM @ STAMP Support โดยการกดปุ่ม ติดต่อ PSM @ STAMP Support Team");
         
     }
 

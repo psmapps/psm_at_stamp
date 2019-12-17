@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'confirmuser.dart';
 
 class createUser extends StatefulWidget{
@@ -81,7 +82,7 @@ class CreateUserState extends State<createUser>{
             print(prefix + name + " " + surname);
             print("M." + year + "/" + room);
             Navigator.push(context, MaterialPageRoute(builder: (context) => confirmPage(studentId: studentId,prefix: prefix, name: name, surname: surname, year: year, room: room,displayName: widget.displayName, userId: widget.userId, profileImage: widget.profileImage, accessToken: widget.accessToken, )));
-            //TODO: Push user with userData to confirm page!
+            
           }
         }
       });
@@ -212,8 +213,16 @@ class CreateUserState extends State<createUser>{
                               Center(child: Text("ติดต่อ PSM @ STAMP Support Team", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold))),
                               ]
                             ),
-                            onPressed: (){
-                              //TODO: Add LINE@ URL PSM@STAMP Support Team
+                            onPressed: () async{
+                              showMessageBox(true, "", "");
+                              print("Opening PSM @ STAMP LINE");
+                              if (await canLaunch("https://lin.ee/hj7O6Fn")){
+                                Navigator.pop(context);
+                                await launch("https://lin.ee/hj7O6Fn");
+                              } else {
+                                Navigator.pop(context);
+                                showMessageBox(false, "ไม่สามารถเปิด URL ได้", "ไม่สามารถเปิด URL ไปที่ LINE PSM @ STAMP ได้ ลองใหม่อีกครั้งหรือเพิ่มเพื่อนด้วยการพิมพ์ ID: @psmatstamp (มี @ ด้วยครับ)");
+                              }
                             },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),

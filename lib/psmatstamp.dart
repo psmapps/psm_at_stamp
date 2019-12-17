@@ -10,7 +10,9 @@ class PSMATSTAMPMainPage extends StatefulWidget{
   var userId;
   var displayName;
   var profileImage;
-  PSMATSTAMPMainPage({Key key, @required this.studentId, @required this.prefix, @required this.name, @required this.surname, @required this.year, @required this.room, @required this.userId, @required this.displayName, @required this.profileImage});
+  var permission;
+  var accessToken;
+  PSMATSTAMPMainPage({Key key, @required this.studentId, @required this.prefix, @required this.name, @required this.surname, @required this.year, @required this.room, @required this.userId, @required this.displayName, @required this.profileImage, @required this.permission,@ required this.accessToken});
   
   @override
   _PSMATSTAMPMainPage createState() => _PSMATSTAMPMainPage();
@@ -22,25 +24,26 @@ class _PSMATSTAMPMainPage extends State<PSMATSTAMPMainPage>{
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.black87,
             bottom: TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.book)),
-                Tab(icon: Icon(Icons.camera_enhance)),
                 Tab(icon: Icon(Icons.settings)),
               ],
             ),
-            title: Center(
-              child: Image.asset('asset/Image/full_logo.png', width: 200, height: 200,),
-            ),
+            title: Container(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Center(child: Image.asset("assets/image/full_logo.png", height: 80, width: 80,)),
+              ),
+            )
           ),
           body: TabBarView(
             children: [
               Icon(Icons.directions_car),
-              Icon(Icons.directions_transit),
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(

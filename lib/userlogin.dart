@@ -77,10 +77,35 @@ class _LoginPage extends State<LoginPage>{
           Navigator.push(context, MaterialPageRoute(builder: (context) => createUser(displayName: displayName, userId: lineUserId, profileImage: profileImage, accessToken: accessToken,)));
         } else {
           print("Logged In");
-          //TODO: Decode Data from snaoshot
-          //TODO: Push user with data to psmatstampmainpage
-          Navigator.pop(context);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage()));
+          var userId = snapshot.data['userId'];
+          var studentId = snapshot.data['studentId'];
+          var prefix = snapshot.data['prefix'];
+          var name = snapshot.data['name'];
+          var surname = snapshot.data['surname'];
+          var displayName = snapshot.data['displayName'];
+          var profileImage = snapshot.data['profileImage'];
+          var year = snapshot.data['year'];
+          var room = snapshot.data['room'];
+          var permission = snapshot.data['permission'];
+          var remoteaccessToken = snapshot.data['accessToken'];
+          print(studentId);
+          print(prefix + name + " " + surname);
+          print(year + "/" + room);
+          print(displayName);
+          print(profileImage);
+          print(userId);
+          print(permission);
+          print(remoteaccessToken);
+          
+          if (remoteaccessToken != accessToken){
+            showMessageBox(false, "การเข้าสู่ระบบซ้ำ", "คุณมีการเข้าสู่ระบบจากอุปกรณ์อื่น อุปกรณ์เครื่องเก่าจะไม่สามารถใช้รับแสตมป์ได้ และจะถูกบังคับออกจากระบบโดยอัตโนมัติ");
+            db.collection("Stamp_User").document(userId).updateData({
+              "accessToken": accessToken,
+            });
+          }
+
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(userId: userId, studentId: studentId, prefix: prefix, name: name, surname: surname,year: year, room: room, displayName: displayName, profileImage: profileImage, permission: permission, accessToken: accessToken,)));
           
         } 
       });
