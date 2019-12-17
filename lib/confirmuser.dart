@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
+import 'psmatstamp.dart';
 
 class confirmPage extends StatefulWidget{
   var studentId;
@@ -90,9 +90,13 @@ class ConfirmPageState extends State<confirmPage>{
           "accessToken": widget.accessToken,
           "permission": "student"
         });
+
+        //TODO: Do file download and keep in firebase storage implementation
+
+        
         Navigator.of(context).popUntil((route) => route.isFirst);
-        //TODO: Fix The bug
-        //Navigator.push(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(studentId: widget.studentId,userId: widget.userId, prefix: widget.prefix, name: widget.name, surname: widget.surname, profileImage: widget.profileImage, year: widget.year, room: widget.room, displayName: widget.displayName,)));
+        
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(studentId: widget.studentId,userId: widget.userId, prefix: widget.prefix, name: widget.name, surname: widget.surname, profileImage: widget.profileImage, year: widget.year, room: widget.room, displayName: widget.displayName, accessToken: widget.accessToken, permission: "student",)));
         showMessageBox(false, "ผูกบัญชีเรียบร้อย", "คุณสามารถเริ่มต้นใช้งาน PSM @ STAMP และ น้องแสตมป์ ผ่านการเข้าสู่ระบบด้วย LINE ได้ทันที");
 
     }
