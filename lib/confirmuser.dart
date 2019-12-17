@@ -95,6 +95,9 @@ class ConfirmPageState extends State<confirmPage>{
 
     void notconfirmData(){
         //TODO: not confirm data options show;
+        Navigator.pop(context);
+        showMessageBox(false, "ข้อมูลของคุณไม่ถูกต้อง", "หากมีปัญหาในการผูกบัญชี กรุณาติดต่อ PSM @ STAMP Team ที่ LINE (@psmatstamp) เพื่อดำเนินการแก้ไขปัญหา");
+        
     }
 
 
@@ -145,8 +148,9 @@ class ConfirmPageState extends State<confirmPage>{
             child: Column(
               children: <Widget>[
                 Wrap(
-                  direction: Axis.horizontal,
+                  direction: Axis.vertical,
                   alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: <Widget>[
                   Text(widget.displayName, style: TextStyle(color: Colors.green, fontSize: 30, fontWeight: FontWeight.bold)),
                   Text(widget.prefix + widget.name + " " + widget.surname, style:  TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),),

@@ -45,6 +45,7 @@ class _welcomePageState extends State<welcomePage> {
 
   void startUserChecking() async{
     final prefs = await SharedPreferences.getInstance();
+    print("Checking Connection");
     //print("AccessToken> " + await getAccessToken());
     try{
       final result = await InternetAddress.lookup("google.com");
@@ -54,7 +55,7 @@ class _welcomePageState extends State<welcomePage> {
         bool loginStatus = prefs.getBool("Status");
         if (loginStatus == false || loginStatus == null){
           print("LoginStatus> Not logged in Sending user to loginpage");
-          await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
         } else {
           var accessToken = await getAccessToken();
           //TODO: Push to MainPage
