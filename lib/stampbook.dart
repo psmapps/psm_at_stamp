@@ -1,0 +1,198 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/icon_data.dart';
+
+class Stampbook extends StatefulWidget{
+  var categoriesid;
+  var userId;
+  var icon;
+  Stampbook({Key key,@required this.categoriesid,@required this.userId, @required this.icon});
+
+  @override
+  StampbookState createState() => StampbookState();
+
+}
+
+class StampbookState extends State<Stampbook>{
+var countstamp = "-";
+
+List<Category> categories = [
+  Category(0,"Loading...", false, icon: IconDataSolid(0xf029)),
+];
+
+var categories_stamp = [];
+var stampid_already = [];
+var transaction_already = [];
+
+  @override
+  void initState() {
+    categories_stamp = [];
+    stampid_already = [];
+    transaction_already = [];
+    super.initState();
+    print(widget.userId);
+    Firestore.instance.collection("Stamp_Transaction").where("userId", isEqualTo: widget.userId).getDocuments().then((querySnap) => {
+      if (!querySnap.documents.isEmpty){
+        querySnap.documents.forEach( (docstamp) {
+          if (docstamp.data["categories"] == widget.categoriesid){
+            stampid_already.add(docstamp.data["stampId"]);
+            transaction_already.add(docstamp.documentID);
+          }
+        })
+      },
+      Firestore.instance.collection("Stamp_Data").where("categories", isEqualTo: widget.categoriesid).getDocuments().then((querySnapshot) {
+        categories_stamp = [];
+        categories = [];
+        if (!querySnapshot.documents.isEmpty){
+          var count = 0;
+          querySnapshot.documents.forEach((doc) {
+            if (stampid_already.contains(doc.documentID)) {
+              categories.add( Category(count, doc.data["name"],true, icon: widget.icon));
+            } else {
+              categories.add( Category(count, doc.data["name"],false, icon: widget.icon));
+            }
+            categories_stamp.add(doc.documentID);
+            count += 1;
+          });
+        } else {
+          
+          categories.add( Category(99, "ไม่มีแสตมป์ในกลุ่มสาระนี้", false,icon: IconDataSolid(0xf04d)));
+        }
+        print(stampid_already.length.toString());
+        setState(() {
+          countstamp = stampid_already.length.toString();
+            _buildCategoryItem;
+          });
+      }),
+      print(stampid_already),
+      print(transaction_already),
+
+    });
+   
+
+
+  }
+   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black87,
+        title: Text(widget.categoriesid),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      // Where the linear gradient begins and ends
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+
+                      colors: [
+                        // Colors are easy thanks to Flutter's Colors class.
+                        Colors.blue,
+                        Colors.yellow,
+                        Colors.redAccent
+
+                      ],
+                    ),
+        ),
+
+        child: CustomScrollView(
+                  physics: BouncingScrollPhysics(),
+                  slivers: <Widget>[
+                    SliverToBoxAdapter(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 30, bottom: 30),
+                          child: Text("คุณได้รับ " + countstamp + " แสตมป์แล้วจากกลุ่มสาระนี้", maxLines: 2,style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),),
+                        ),
+                      ),
+                    ),
+                    SliverPadding(
+                      padding: const EdgeInsets.all(16.0),
+                      sliver: SliverGrid(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 1.2,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0
+                        ),
+                        delegate: SliverChildBuilderDelegate(
+                          _buildCategoryItem,
+                          childCount: categories.length,
+
+                        )
+
+                      ),
+                    ),
+                  ]
+                ),
+      ),
+    );
+  }
+
+    Widget _buildCategoryItem(BuildContext context, int index) {
+    Category category = categories[index];
+    return MaterialButton(
+      elevation: 1.0,
+      highlightElevation: 1.0,
+      onPressed: () => _categoryPressed(context,category),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      color: Colors.black87,
+      textColor: Colors.white,
+      
+      
+      child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[ 
+          if (category.isStamped == true)
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Image.asset('assets/image/stamped.png', height: 100, width: 100,),
+            ),
+          
+          Container(
+            child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              if(category.icon != null)
+                Icon(category.icon),
+              if(category.icon != null)
+                SizedBox(height: 5.0),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Text(
+                  category.name,
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  style: TextStyle(fontSize: 19),),
+              ),
+            ],
+          ),
+        )
+        ],
+      ),
+    );
+  }
+
+  _categoryPressed(BuildContext context,Category category) {
+    if (category.id != 99){
+        print(categories_stamp[category.id]);
+    }
+  }
+}
+  
+class Category{
+  final int id;
+  final String name;
+  final bool isStamped;
+  final dynamic icon;
+  Category(this.id,this.name, this.isStamped, {this.icon});
+
+}

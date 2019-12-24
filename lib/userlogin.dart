@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:psm_at_stamp/createuser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'psmatstamp.dart';
+
 
 class LoginPage extends StatefulWidget{
 
@@ -68,9 +70,9 @@ class _LoginPage extends State<LoginPage>{
     }
   }
 
-  void checkRegisterwithPSMATSTAMP(String lineUserId, String accessToken, String displayName, String profileImage){
+  void checkRegisterwithPSMATSTAMP (String lineUserId, String accessToken, String displayName, String profileImage) async{
       var db = Firestore.instance;
-      db.collection("Stamp_User").document(lineUserId).get().then( (snapshot) {
+      db.collection("Stamp_User").document(lineUserId).get().then( (snapshot) async {
         if (!snapshot.exists) {
           print("Stamp_User> Not Exisit, Send to create page");
           Navigator.pop(context);
@@ -103,6 +105,19 @@ class _LoginPage extends State<LoginPage>{
               "accessToken": accessToken,
             });
           }
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setBool("Status", true);
+          prefs.setString("prefix", prefix);
+          prefs.setString("name", name);
+          prefs.setString("surname", surname);
+          prefs.setString("studentId", studentId);
+          prefs.setString("userId", userId);
+          prefs.setString("year", year);
+          prefs.setString("room", room);
+          prefs.setString("displayName", displayName);
+          prefs.setString("profileImage", profileImage);
+          prefs.setString("permission", permission);
+          prefs.setString("accessToken", accessToken);
 
           Navigator.of(context).popUntil((route) => route.isFirst);
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(userId: userId, studentId: studentId, prefix: prefix, name: name, surname: surname,year: year, room: room, displayName: displayName, profileImage: profileImage, permission: permission, accessToken: accessToken,)));

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 
 //Import Other Page
 import 'userlogin.dart';
+import 'psmatstamp.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +21,7 @@ class PSMATSTAMP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'PSM @ STAMP',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -55,15 +58,85 @@ class _welcomePageState extends State<welcomePage> {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
         } else if (loginStatus == true) {
           print("LoginStatus> Logged in sending user to mainpage");
+          var userId = prefs.getString("userId");
           var accessToken = await getAccessToken();
-          //TODO: Push to MainPage
+          Firestore.instance.collection("Stamp_User").document(userId).get().then((doc) {
+            if (!doc.exists){
+                prefs.setBool("Status", false);
+                prefs.setString("prefix", null);
+                prefs.setString("name", null);
+                prefs.setString("surname", null);
+                prefs.setString("studentId", null);
+                prefs.setString("userId", null);
+                prefs.setString("year", null);
+                prefs.setString("room", null);
+                prefs.setString("displayName", null);
+                prefs.setString("profileImage", null);
+                prefs.setString("permission", null);
+                prefs.setString("accessToken", null);
+                
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                showMessageBox("ไม่พบบัญชีของคุณ", "บัญชีของคุณอาจถุกระงัย หรือ ถูกลบ กรุณาติดต่อ PSM @ STAMP Support Team หากมีปัญหาในการใช้งาน ขณะนี้คุณได้ออกจากระบบแล้ว");
+            } else {
+             var remoteaccessToken = doc.data["accessToken"];
+             if (remoteaccessToken != accessToken){
+                
+                prefs.setBool("Status", false);
+                prefs.setString("prefix", null);
+                prefs.setString("name", null);
+                prefs.setString("surname", null);
+                prefs.setString("studentId", null);
+                prefs.setString("userId", null);
+                prefs.setString("year", null);
+                prefs.setString("room", null);
+                prefs.setString("displayName", null);
+                prefs.setString("profileImage", null);
+                prefs.setString("permission", null);
+                prefs.setString("accessToken", null);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                showMessageBox("ตรวจพบการเข้าสู่ระบบจากที่อื่น", "บัญชีนี้ มีการเข้าสู่ระบบจากอุปกรณ์อื่น คุณจะถูกบังคับออกจากระบบในอุปกรณ์เครื่องนี้โดยอัตโนมัติ");
+             } else {
+               var studentId = doc.data["studentId"];
+               var prefix = doc.data['prefix'];
+               var name = doc.data['name'];
+               var surname = doc.data['surname'];
+               var year = doc.data['year'];
+               var room = doc.data['room'];
+               var displayName = doc.data['displayName'];
+               var profileImage = doc.data['profileImage'];
+               var permission = doc.data['permission'];
+               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(userId: userId, studentId: studentId, prefix: prefix, name: name, surname: surname,year: year, room: room, displayName: displayName, profileImage: profileImage, permission: permission, accessToken: accessToken,)));
+             }
+            }
+          });
+          
         }
       }
     } on SocketException catch (e) {
       prefs.setString("Mode", "Offline");
       print(e.message);
       print("Internet> Not connected!");
-      showMessageBox("เข้าสู่โหมด Offline", "ไม่สามารถติดต่อกับ PSM @ STAMP ได้ ระบบจะใช้ Offline Mode อัตโนมัติ");
+      bool loginStatus = prefs.getBool("Status");
+      if (loginStatus == false || loginStatus == null){
+        print("LoginStatus> Not logged in Sending user to loginpage");
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+      } else {
+        
+        var prefix = prefs.getString("prefix");
+        var name = prefs.getString("name");
+        var surname = prefs.getString("surname");
+        var studentId = prefs.getString("studentId");
+        var userId =  prefs.getString("userId");
+        var year =  prefs.getString("year");
+        var room =  prefs.getString("room");
+        var displayName =  prefs.getString("displayName");
+        var profileImage = prefs.getString("profileImage");
+        var permission = prefs.getString("permission");
+        var accessToken =  prefs.getString("accessToken");
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(userId: userId, studentId: studentId, prefix: prefix, name: name, surname: surname,year: year, room: room, displayName: displayName, profileImage: profileImage, permission: permission, accessToken: accessToken,)));
+        showMessageBox("เข้าสู่โหมด Offline", "ข้อมูลที่นำมาแสดง จะเป็นข้อมูลล่าสุดที่ระบบสามารถติดต่อกับ PSM @ STAMP Server ได้ กรุณาเชื่อมต่ออินเตอร์เน็ตเพื่อรับข้อมูลล่าสุด และ คุณจะไม่สามารถแสกน QR Code เพื่อรับแสตมป์ได้ในโหมด Offline");
+      }
+     
     }
   }
 
@@ -97,9 +170,9 @@ class _welcomePageState extends State<welcomePage> {
           content: Wrap(children: <Widget>[Text(message)],),
           actions: <Widget>[
             FlatButton(
-              child: Text("Teest"),
+              child: Text("ปิด"),
               onPressed: () {
-                print("Test");
+                Navigator.pop(context);
               },)
           ],
         );
