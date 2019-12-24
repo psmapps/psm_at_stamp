@@ -58,14 +58,13 @@ var transaction_already = [];
           
           categories.add( Category(99, "ไม่มีแสตมป์ในกลุ่มสาระนี้", false,icon: IconDataSolid(0xf04d)));
         }
-        print(stampid_already.length.toString());
+        
         setState(() {
           countstamp = stampid_already.length.toString();
             _buildCategoryItem;
           });
       }),
-      print(stampid_already),
-      print(transaction_already),
+      
 
     });
    

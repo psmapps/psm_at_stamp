@@ -257,10 +257,13 @@ Future<void> refreshCategories() async {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(20),
+                                padding: const EdgeInsets.all(10),
                                 child: RaisedButton(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  color: Colors.yellowAccent,
+                                  padding: const EdgeInsets.all(10),
                                   child: Center(
-                                    child: Text("Click to logout"),
+                                    child: Text("ออกจากระบบ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                                   ),
                                   onPressed: (){
                                     
