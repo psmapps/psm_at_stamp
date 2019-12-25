@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/icon_data.dart';
-
+import 'package:flutter_line_sdk/flutter_line_sdk.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'userlogin.dart';
 import 'stampbook.dart';
 
 class PSMATSTAMPMainPage extends StatefulWidget{
@@ -25,6 +27,66 @@ class PSMATSTAMPMainPage extends StatefulWidget{
 
 
 class _PSMATSTAMPMainPage extends State<PSMATSTAMPMainPage>{
+void showMessageBox(bool showIndicator,String title, String message) async{
+      return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context){
+          if (showIndicator == true){
+            return Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Center(child: CircularProgressIndicator()),
+              ],
+            );
+          } else {
+            return AlertDialog(
+            
+            title: Text(title),
+            content: Text(message),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("ปิด"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },)
+            ],
+            );
+          }
+        }
+      );
+    }
+
+Future<void> logout() async{
+  showMessageBox(true, "", "");
+  try{
+    final prefs = await SharedPreferences.getInstance();
+    await LineSDK.channel.invokeMethod("logout");
+    Firestore.instance.collection("Stamp_User").document(widget.userId).updateData({
+      "accessToken": "", 
+    });
+    prefs.setBool("Status", false);
+    prefs.setString("prefix", null);
+    prefs.setString("name", null);
+    prefs.setString("surname", null);
+    prefs.setString("studentId", null);
+    prefs.setString("userId", null);
+    prefs.setString("year", null);
+    prefs.setString("room", null);
+    prefs.setString("displayName", null);
+    prefs.setString("profileImage", null);
+    prefs.setString("permission", null);
+    prefs.setString("accessToken", null);
+    Navigator.pop(context);
+    Navigator.pushReplacement(context, MaterialPageRoute( builder: (context) => LoginPage()));
+    showMessageBox(false, "ออกจากระบบเรียบร้อยแล้ว", "ทำการลงชื่ออกจากระบบเรียบร้อยแล้ว");
+  } catch (e){
+    print(e);
+    Navigator.pop(context);
+    showMessageBox(false, "เกิดข้อผิดพลาด", "ไม่สามารถออกจากระบบได้ กรุณาลองใหม่อีกครั้ง");
+
+  }
+}
 
 List<Category> categories = [
   Category(0,"Loading...", icon: IconDataSolid(0xf029)),
@@ -32,30 +94,6 @@ List<Category> categories = [
 
 List categories_firestore = [];
 
-Future<void> refreshCategories() async {
-    print("Refresing");
-      Firestore.instance.collection("Categories").getDocuments().then((documentSnapshort) {
-        var icon;
-        categories = [];
-        categories_firestore = [];
-        var count = 0;
-        documentSnapshort.documents.forEach((doc) => {
-          
-          if (doc.data["icon"] != null){
-            icon = IconDataBrands(0xf3e2),
-          } else {
-            icon = IconDataSolid(0xf029),
-          
-          },
-          categories.add(Category(count, doc.documentID ,icon: icon),),
-          categories_firestore.add(doc.documentID),
-          count += 1,
-        });
-        setState( () {
-          _buildCategoryItem;
-        });
-    });
-}
 
   @override
   void initState(){
@@ -85,6 +123,8 @@ Future<void> refreshCategories() async {
 
   @override
   Widget build(BuildContext context) {
+    
+
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         label: Text('แสกน QR Code', style: TextStyle(fontWeight: FontWeight.bold),),
@@ -231,7 +271,7 @@ Future<void> refreshCategories() async {
                                                           mainAxisAlignment: MainAxisAlignment.start,
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: <Widget>[
-                                                            Text(widget.displayName, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.lightBlueAccent),),
+                                                            Text(widget.displayName, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue),),
                                                             Padding(padding: EdgeInsets.only(top: 10),
                                                             child: Column(
                                                               mainAxisAlignment: MainAxisAlignment.start,
@@ -255,7 +295,7 @@ Future<void> refreshCategories() async {
                                     ),
                                   ),
                                 ),
-                              ),
+                              ), 
                               Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: RaisedButton(
@@ -266,7 +306,7 @@ Future<void> refreshCategories() async {
                                     child: Text("ออกจากระบบ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                                   ),
                                   onPressed: (){
-                                    
+                                    logout();
                                   },
                                 ),
                               ),
@@ -321,7 +361,7 @@ Future<void> refreshCategories() async {
   _categoryPressed(BuildContext context,Category category) {
     if (category.name != "Loading..."){
     var catid = categories_firestore[category.id]; 
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Stampbook(userId: widget.userId, categoriesid: catid, icon: category.icon,)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Stampbook(userId: widget.userId, categoriesid: catid, icon: category.icon)));
     }
 
 

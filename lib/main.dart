@@ -13,6 +13,7 @@ import 'psmatstamp.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(PSMATSTAMP());
 }
 
@@ -62,6 +63,7 @@ class _welcomePageState extends State<welcomePage> {
           var accessToken = await getAccessToken();
           Firestore.instance.collection("Stamp_User").document(userId).get().then((doc) {
             if (!doc.exists){
+                print("Deletd");
                 prefs.setBool("Status", false);
                 prefs.setString("prefix", null);
                 prefs.setString("name", null);
@@ -80,7 +82,7 @@ class _welcomePageState extends State<welcomePage> {
             } else {
              var remoteaccessToken = doc.data["accessToken"];
              if (remoteaccessToken != accessToken){
-                
+                print("Invalid accessTokn");
                 prefs.setBool("Status", false);
                 prefs.setString("prefix", null);
                 prefs.setString("name", null);
@@ -94,8 +96,9 @@ class _welcomePageState extends State<welcomePage> {
                 prefs.setString("permission", null);
                 prefs.setString("accessToken", null);
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
-                showMessageBox("ตรวจพบการเข้าสู่ระบบจากที่อื่น", "บัญชีนี้ มีการเข้าสู่ระบบจากอุปกรณ์อื่น คุณจะถูกบังคับออกจากระบบในอุปกรณ์เครื่องนี้โดยอัตโนมัติ");
+                showMessageBox("Session นี้หมดอายุแล้ว", "อาจเป็นเพราะ บัญชีนี้มีการเข้าสู่ระบบจากอุปกรณ์อื่น คุณจะถูกบังคับออกจากระบบในอุปกรณ์เครื่องนี้โดยอัตโนมัติ");
              } else {
+               print("Success");
                var studentId = doc.data["studentId"];
                var prefix = doc.data['prefix'];
                var name = doc.data['name'];

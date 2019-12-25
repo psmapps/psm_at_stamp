@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/icon_data.dart';
 
+import 'stampdetail.dart';
+
 class Stampbook extends StatefulWidget{
   var categoriesid;
   var userId;
@@ -17,33 +19,33 @@ class StampbookState extends State<Stampbook>{
 var countstamp = "-";
 
 List<Category> categories = [
-  Category(0,"Loading...", false, icon: IconDataSolid(0xf029)),
+  Category(99,"Loading...", false, icon: IconDataSolid(0xf029)),
 ];
 
 var categories_stamp = [];
 var stampid_already = [];
-var transaction_already = [];
+var timeStamp_already = [];
+var stampName = [];
 
   @override
   void initState() {
     categories_stamp = [];
     stampid_already = [];
-    transaction_already = [];
+    stampName = [];
     super.initState();
     print(widget.userId);
     Firestore.instance.collection("Stamp_Transaction").where("userId", isEqualTo: widget.userId).getDocuments().then((querySnap) => {
-      if (!querySnap.documents.isEmpty){
+      if (querySnap.documents.isNotEmpty){
         querySnap.documents.forEach( (docstamp) {
           if (docstamp.data["categories"] == widget.categoriesid){
             stampid_already.add(docstamp.data["stampId"]);
-            transaction_already.add(docstamp.documentID);
           }
         })
       },
       Firestore.instance.collection("Stamp_Data").where("categories", isEqualTo: widget.categoriesid).getDocuments().then((querySnapshot) {
         categories_stamp = [];
         categories = [];
-        if (!querySnapshot.documents.isEmpty){
+        if (querySnapshot.documents.isNotEmpty){
           var count = 0;
           querySnapshot.documents.forEach((doc) {
             if (stampid_already.contains(doc.documentID)) {
@@ -51,6 +53,7 @@ var transaction_already = [];
             } else {
               categories.add( Category(count, doc.data["name"],false, icon: widget.icon));
             }
+            stampName.add(doc.data["name"]);
             categories_stamp.add(doc.documentID);
             count += 1;
           });
@@ -182,7 +185,8 @@ var transaction_already = [];
 
   _categoryPressed(BuildContext context,Category category) {
     if (category.id != 99){
-        print(categories_stamp[category.id]);
+      
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Stampdetail( stampId: categories_stamp[category.id], stampName: stampName[category.id], userId: widget.userId,stampIcon: widget.icon,)));
     }
   }
 }
