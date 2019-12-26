@@ -17,7 +17,7 @@ _LoginPage createState() => _LoginPage();
 
 class _LoginPage extends State<LoginPage>{
 
-
+TextEditingController loginCode = new TextEditingController();
 
   void startLineLogin() async{
     showMessageBox(true, "", "");
@@ -180,6 +180,40 @@ class _LoginPage extends State<LoginPage>{
   }
 
 
+ void checkloginCode() async{
+    return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context){
+       
+          return AlertDialog(
+          title: Text("กรุณากรอก LoginCode เพื่อทำการเข้าสู่ระบบ"),
+          content: TextField(controller: loginCode),
+          actions: <Widget>[
+            
+            FlatButton(
+              child: Text("ปิด"),
+              onPressed: () {
+                Navigator.pop(context);
+              },),
+              FlatButton(
+              child: Text("ตรวจสอบและเข้าสู่ระบบ"),
+              onPressed: () {
+                Navigator.pop(context);
+                showMessageBox(true, "", "");
+                var logincode = loginCode.text;
+                Firestore.instance.collection("").document(logincode).get().then((doc) {
+                  
+                });
+              },)
+           ],
+          );
+        
+      }
+    );
+  }
+
+
   void initState(){
 
     super.initState();
@@ -188,6 +222,7 @@ class _LoginPage extends State<LoginPage>{
    @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(43, 43, 43, 1),
       body: Container(
         child: Center(
@@ -265,6 +300,8 @@ class _LoginPage extends State<LoginPage>{
                         child: Text("เข้าสู่ระบบด้วย LoginCode", style: TextStyle(fontSize: 13, color: Colors.white),),
                         onPressed: (){
                           //TODO: LoginWith LoginCode
+                          checkloginCode();
+
                         },
                       ),)
                         ,)

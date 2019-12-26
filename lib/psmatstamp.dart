@@ -8,6 +8,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'userlogin.dart';
 import 'stampbook.dart';
+import 'staff.dart';
 
 class PSMATSTAMPMainPage extends StatefulWidget{
   var studentId;
@@ -29,6 +30,7 @@ class PSMATSTAMPMainPage extends StatefulWidget{
 
 
 class _PSMATSTAMPMainPage extends State<PSMATSTAMPMainPage>{
+
 void showMessageBox(bool showIndicator,String title, String message) async{
       return showDialog(
         barrierDismissible: false,
@@ -59,6 +61,10 @@ void showMessageBox(bool showIndicator,String title, String message) async{
       );
 }
 
+void staffpage(){
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Staff(userId: widget.userId, accessToken: widget.accessToken,)));
+}
+
 Future<void> scanQRCode() async{
   try {
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#ebb434", "กลับ", true, ScanMode.QR);
@@ -74,17 +80,39 @@ Future<void> scanQRCode() async{
       dynamic resp = await callable.call(<String, dynamic>{
           'qrcodedata': barcodeScanRes,
           'userId': widget.userId,
-          'studentId': widget.studentId
+          'studentId': widget.studentId,
+          'accessToken': widget.accessToken
       });
-      print(resp);
-      Navigator.pop(context);
-      showMessageBox(false, "Response", resp.data);
+      print(resp.data);
+      if (resp.data != "RESTRICT"){
+        Navigator.pop(context);
+        showMessageBox(false, "ผลลัพท์การแสกน QR Code", resp.data);
+      } else {
+        final prefs = await SharedPreferences.getInstance();
+        print("Invalid accessTokn");
+        prefs.setBool("Status", false);
+        prefs.setString("prefix", null);
+        prefs.setString("name", null);
+        prefs.setString("surname", null);
+        prefs.setString("studentId", null);
+        prefs.setString("userId", null);
+        prefs.setString("year", null);
+        prefs.setString("room", null);
+        prefs.setString("displayName", null);
+        prefs.setString("profileImage", null);
+        prefs.setString("permission", null);
+        prefs.setString("accessToken", null);
+        Navigator.pop(context);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+        showMessageBox(false, "Session นี้หมดอายุแล้ว", "อาจเป็นไปได้ว่า คุณได้ทำการเข้าสู่ระบบจากอุปกรณ์เครื่องอื่น คุณจะถูกบังคับให้ออกจากระบบในอุปกรณ์เครื่องนี้ทันที");
+      }
 
     }
 
   } catch (e) {
     print(e);
-    showMessageBox(false, "เกิดข้อผิดพลาด","ไม่สามารถแสกน QR Code ได้");
+    Navigator.pop(context);
+    showMessageBox(false, "เกิดข้อผิดพลาด","ไม่สามารถตรวจสอบ QR Code ได้ กรุณาตรวจสอบการอนุญติการใช้กล้อง และ การเชื่อมตออินเตอร์เน็ต");
   }
 }
 
@@ -259,76 +287,60 @@ List categories_firestore = [];
                   ),
                   child: ListView(
                     children: <Widget>[
-                      Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)
-                                  ),
-                                  child: InkWell(
-                                    splashColor: Colors.grey,
-                                    onTap: (){
-
-                                    },
-                                    child: Container(
-                                        width: 400,
-                                        height: 190,
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: <Widget>[
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: <Widget>[
-                                                Padding(
-                                                    padding: const EdgeInsets.only(top: 15, left: 10),
-                                                    child:  ClipRRect(
-                                                      borderRadius: BorderRadius.circular(20),
-                                                      child: Image.network(widget.profileImage, height: 160,width: 160,),
-                                                    )
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(left: 20, right: 5),
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: <Widget>[
-                                                      FittedBox(
-                                                        fit: BoxFit.fitWidth,
-                                                        child: Column(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            Text(widget.displayName, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue),),
-                                                            Padding(padding: EdgeInsets.only(top: 10),
-                                                            child: Column(
-                                                              mainAxisAlignment: MainAxisAlignment.start,
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                              children: <Widget>[
-                                                                Text(widget.prefix + widget.name + " " + widget.surname, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
-                                                                Text("ชั้น: ม." + widget.year + "/" + widget.room, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
-                                                                Text("รหัสนักเรียน: " + widget.studentId, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-                                                              ],
-                                                            ),)
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                    ),
+                              
+                             Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child:  ClipRRect(
+                                    borderRadius: new BorderRadius.circular(10),
+                                    
+                                    child: Image.network(widget.profileImage, height: 100, width: 100,)
                                   ),
                                 ),
-                              ), 
-                              Padding(
+                              
+                              Flexible(
+                                child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(widget.displayName, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue),),
+                                        Padding(
+                                          padding: const EdgeInsets.only(right: 10),
+                                          child: Text(widget.prefix + widget.name + " " + widget.surname,style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold), maxLines: 2, textAlign: TextAlign.left,),
+                                        ) ,
+                                        Text("รหัสนักเรียน " + widget.studentId + " ม." + widget.year + "/" + widget.room,style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold), maxLines: 2,)
+                                    ],),
+                            
+                                ),
+                              )
+                            ],
+                          )
+                        ),
+                      ),
+                      if (widget.permission == "staff")
+                        Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              color: Colors.pink,
+                              padding: const EdgeInsets.all(10),
+                              child: Center(
+                                child: Text("[Staff] เข้าสู่ระบบแจกแสตมป์", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,),
+                              ),),
+                              onPressed: (){
+                                staffpage();
+                              },
+                            ),
+                        ),
+                        
+                      Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: RaisedButton(
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -341,10 +353,6 @@ List categories_firestore = [];
                                     logout();
                                   },
                                 ),
-                              ),
-
-                            ],
-                          )
                       ),
                     ],
 

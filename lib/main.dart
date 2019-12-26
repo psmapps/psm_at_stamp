@@ -78,7 +78,7 @@ class _welcomePageState extends State<welcomePage> {
                 prefs.setString("accessToken", null);
                 
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
-                showMessageBox("ไม่พบบัญชีของคุณ", "บัญชีของคุณอาจถุกระงัย หรือ ถูกลบ กรุณาติดต่อ PSM @ STAMP Support Team หากมีปัญหาในการใช้งาน ขณะนี้คุณได้ออกจากระบบแล้ว");
+                showMessageBox("ไม่พบบัญชีของคุณ", "บัญชีของคุณอาจถุกระงับ หรือ ถูกลบ กรุณาติดต่อ PSM @ STAMP Support Team หากมีปัญหาในการใช้งาน ขณะนี้คุณได้ออกจากระบบแล้ว");
             } else {
              var remoteaccessToken = doc.data["accessToken"];
              if (remoteaccessToken != accessToken){
@@ -108,6 +108,18 @@ class _welcomePageState extends State<welcomePage> {
                var displayName = doc.data['displayName'];
                var profileImage = doc.data['profileImage'];
                var permission = doc.data['permission'];
+               prefs.setBool("Status", true);
+                prefs.setString("prefix", prefix);
+                prefs.setString("name", name);
+                prefs.setString("surname", surname);
+                prefs.setString("studentId", studentId);
+                prefs.setString("userId", userId);
+                prefs.setString("year", year);
+                prefs.setString("room", room);
+                prefs.setString("displayName", displayName);
+                prefs.setString("profileImage", profileImage);
+                prefs.setString("permission", permission);
+                prefs.setString("accessToken", accessToken);
                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(userId: userId, studentId: studentId, prefix: prefix, name: name, surname: surname,year: year, room: room, displayName: displayName, profileImage: profileImage, permission: permission, accessToken: accessToken,)));
              }
             }
