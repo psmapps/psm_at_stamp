@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/icon_data.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'userlogin.dart';
 import 'stampbook.dart';
 
@@ -55,7 +57,36 @@ void showMessageBox(bool showIndicator,String title, String message) async{
           }
         }
       );
+}
+
+Future<void> scanQRCode() async{
+  try {
+    String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#ebb434", "กลับ", true, ScanMode.QR);
+    print(barcodeScanRes);
+    if (barcodeScanRes == "-1"){
+      print("Back");
+    } else {
+      showMessageBox(true, "", "");
+      final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+            functionName: 'QRCodeValidate',
+            
+      );
+      dynamic resp = await callable.call(<String, dynamic>{
+          'qrcodedata': barcodeScanRes,
+          'userId': widget.userId,
+          'studentId': widget.studentId
+      });
+      print(resp);
+      Navigator.pop(context);
+      showMessageBox(false, "Response", resp.data);
+
     }
+
+  } catch (e) {
+    print(e);
+    showMessageBox(false, "เกิดข้อผิดพลาด","ไม่สามารถแสกน QR Code ได้");
+  }
+}
 
 Future<void> logout() async{
   showMessageBox(true, "", "");
@@ -80,6 +111,7 @@ Future<void> logout() async{
     Navigator.pop(context);
     Navigator.pushReplacement(context, MaterialPageRoute( builder: (context) => LoginPage()));
     showMessageBox(false, "ออกจากระบบเรียบร้อยแล้ว", "ทำการลงชื่ออกจากระบบเรียบร้อยแล้ว");
+
   } catch (e){
     print(e);
     Navigator.pop(context);
@@ -131,7 +163,7 @@ List categories_firestore = [];
         icon: Icon(Icons.camera_alt),
         backgroundColor: Colors.pink,
         onPressed: () {
-          print("Hello");
+          scanQRCode();
       },),
       
     body: Container(
