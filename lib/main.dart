@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 //Import Other Page
 import 'userlogin.dart';
@@ -14,6 +15,8 @@ import 'psmatstamp.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  Crashlytics.instance.enableInDevMode = true;
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
   runApp(PSMATSTAMP());
 }
 
@@ -49,7 +52,7 @@ class _welcomePageState extends State<welcomePage> {
     print("Checking Connection");
     //print("AccessToken> " + await getAccessToken());
     try{
-      final result = await InternetAddress.lookup("google.com");
+      final result = await InternetAddress.lookup("google.com").timeout(Duration(seconds: 10));
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         prefs.setString("Mode", "Online");
         print("Internet> Connected");
@@ -58,9 +61,16 @@ class _welcomePageState extends State<welcomePage> {
           print("LoginStatus> Not logged in Sending user to loginpage");
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
         } else if (loginStatus == true) {
-          print("LoginStatus> Logged in sending user to mainpage");
+          print("LoginStatus> Logged in");
           var userId = prefs.getString("userId");
-          var accessToken = await getAccessToken();
+          var accessToken = "";
+          if (prefs.getBool("isLoginCode") != true){
+            print("I'm here");
+            accessToken = await getAccessToken();
+          } else {
+            print("Im here2");
+            accessToken = prefs.getString("localaccessToken");
+          }
           Firestore.instance.collection("Stamp_User").document(userId).get().then((doc) {
             if (!doc.exists){
                 print("Deletd");
@@ -155,16 +165,7 @@ class _welcomePageState extends State<welcomePage> {
     }
   }
 
-  Future verifyAccessToken() async{
-    try {
-      final result = await LineSDK.instance.verifyAccessToken();
-      print(result.data);
-      return 1;
-    } on PlatformException catch (e) {
-      print(e.message);
-      return 0;
-    }
-  }
+
 
   Future getAccessToken() async{
     try {
@@ -203,10 +204,11 @@ class _welcomePageState extends State<welcomePage> {
     });
   }
 
+  @override
   void initState(){
+    super.initState();
     initLineSDK();
     startUserChecking();
-    super.initState();
   }
 
   @override

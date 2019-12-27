@@ -8,7 +8,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="psm_at_stamp"
+        android:label="PSM @ STAMP"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
