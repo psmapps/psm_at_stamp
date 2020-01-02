@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -187,75 +186,80 @@ TextEditingController loginCode = new TextEditingController();
     final prefs = await SharedPreferences.getInstance();
     showMessageBox(true, "", "");
                 var logincode = loginCode.text;
-                Firestore.instance.collection("loginCode").document(logincode.toString()).get().then((doc) {
-                  if (doc.exists){
-                    var userId = doc.data['userId'];
-                    Firestore.instance.collection("Stamp_User").document(userId).get().then((docdata) {
-                      if (docdata.exists){
-                        var userId = docdata.data['userId'];
-                        var studentId = docdata.data['studentId'];
-                        var prefix = docdata.data['prefix'];
-                        var name = docdata.data['name'];
-                        var surname = docdata.data['surname'];
-                        var displayName = docdata.data['displayName'];
-                        var profileImage = docdata.data['profileImage'];
-                        var year = docdata.data['year'];
-                        var room = docdata.data['room'];
-                        var permission = docdata.data['permission'];
-                        var localaccessToken = "";
-                        if (prefs.getString("localaccessToken") == null || prefs.getString("localaccessToken") == ""){
-                          const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+                if (logincode != ""){
+                  Firestore.instance.collection("loginCode").document(logincode.toString()).get().then((doc) {
+                    if (doc.exists){
+                      var userId = doc.data['userId'];
+                      Firestore.instance.collection("Stamp_User").document(userId).get().then((docdata) {
+                        if (docdata.exists){
+                          var userId = docdata.data['userId'];
+                          var studentId = docdata.data['studentId'];
+                          var prefix = docdata.data['prefix'];
+                          var name = docdata.data['name'];
+                          var surname = docdata.data['surname'];
+                          var displayName = docdata.data['displayName'];
+                          var profileImage = docdata.data['profileImage'];
+                          var year = docdata.data['year'];
+                          var room = docdata.data['room'];
+                          var permission = docdata.data['permission'];
+                          var localaccessToken = "";
+                          if (prefs.getString("localaccessToken") == null || prefs.getString("localaccessToken") == ""){
+                            const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-                          String RandomString(int strlen) {
-                            Random rnd = new Random(new DateTime.now().millisecondsSinceEpoch);
-                            String result = "";
-                            for (var i = 0; i < strlen; i++) {
-                              result += chars[rnd.nextInt(chars.length)];
+                            String RandomString(int strlen) {
+                              Random rnd = new Random(new DateTime.now().millisecondsSinceEpoch);
+                              String result = "";
+                              for (var i = 0; i < strlen; i++) {
+                                result += chars[rnd.nextInt(chars.length)];
+                              }
+                              return result;
                             }
-                            return result;
+                            localaccessToken = RandomString(50);
+                            prefs.setString("localaccessToken", localaccessToken);
+                            Firestore.instance.collection("Stamp_User").document(userId).updateData({
+                              "accessToken": localaccessToken,
+                              "isLoginCode": true
+                            });
+
+
+                          } else {
+                            localaccessToken = prefs.getString("localaccessToken");
+                            Firestore.instance.collection("Stamp_User").document(userId).updateData({
+                              "accessToken": localaccessToken,
+                              "isLoginCode": true
+                            });
                           }
-                          localaccessToken = RandomString(50);
-                          prefs.setString("localaccessToken", localaccessToken);
-                          Firestore.instance.collection("Stamp_User").document(userId).updateData({
-                            "accessToken": localaccessToken,
-                            "isLoginCode": true
-                          });
 
-
+                          prefs.setBool("Status", true);
+                          prefs.setString("prefix", prefix);
+                          prefs.setString("name", name);
+                          prefs.setString("surname", surname);
+                          prefs.setString("studentId", studentId);
+                          prefs.setString("userId", userId);
+                          prefs.setString("year", year);
+                          prefs.setString("room", room);
+                          prefs.setString("displayName", displayName);
+                          prefs.setString("profileImage", profileImage);
+                          prefs.setString("permission", permission);
+                          prefs.setString("accessToken", localaccessToken);
+                          prefs.setBool("isLoginCode", true);
+                          Navigator.of(context).popUntil((route) => route.isFirst);
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(userId: userId, studentId: studentId, prefix: prefix, name: name, surname: surname,year: year, room: room, displayName: displayName, profileImage: profileImage, permission: permission, accessToken: localaccessToken,)));
+                          
                         } else {
-                          localaccessToken = prefs.getString("localaccessToken");
-                          Firestore.instance.collection("Stamp_User").document(userId).updateData({
-                            "accessToken": localaccessToken,
-                            "isLoginCode": true
-                          });
+                          Navigator.pop(context);
+                          showMessageBox(false, "ไม่พบบัญชีที่ผูกกับ loginCode นี้", "ไม่พบบัญชีที่ผูกกับ loginCode นี้ กรุณาติดต่อ PSM @ STAMP Team เพื่อแก้ไขปัญหานี้");
                         }
-
-                        prefs.setBool("Status", true);
-                        prefs.setString("prefix", prefix);
-                        prefs.setString("name", name);
-                        prefs.setString("surname", surname);
-                        prefs.setString("studentId", studentId);
-                        prefs.setString("userId", userId);
-                        prefs.setString("year", year);
-                        prefs.setString("room", room);
-                        prefs.setString("displayName", displayName);
-                        prefs.setString("profileImage", profileImage);
-                        prefs.setString("permission", permission);
-                        prefs.setString("accessToken", localaccessToken);
-                        prefs.setBool("isLoginCode", true);
-                         Navigator.of(context).popUntil((route) => route.isFirst);
-                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(userId: userId, studentId: studentId, prefix: prefix, name: name, surname: surname,year: year, room: room, displayName: displayName, profileImage: profileImage, permission: permission, accessToken: localaccessToken,)));
-                        
-                      } else {
-                        Navigator.pop(context);
-                        showMessageBox(false, "ไม่พบบัญชีที่ผูกกับ loginCode นี้", "ไม่พบบัญชีที่ผูกกับ loginCode นี้ กรุณาติดต่อ PSM @ STAMP Team เพื่อแก้ไขปัญหานี้");
-                      }
-                    });
-                  } else {
-                    Navigator.pop(context);
-                    showMessageBox(false, "ไม่พบรหัส loginCode นี้", "ไม่พบรหัส loginCode นี้ กรุณากรอกข้อมูลให้ถูกต้องเพื่อเข้าสู่ระบบด้วย loginCode หรือติดต่อ PSM @ STAMP Team");
-                  }
-                });
+                      });
+                    } else {
+                      Navigator.pop(context);
+                      showMessageBox(false, "ไม่พบรหัส loginCode นี้", "ไม่พบรหัส loginCode นี้ กรุณากรอกข้อมูลให้ถูกต้องเพื่อเข้าสู่ระบบด้วย loginCode หรือติดต่อ PSM @ STAMP Team");
+                    }
+                  });
+                } else {
+                  Navigator.pop(context);
+                  showMessageBox(false, "กรุณากรอกรหัส LoginCode", "กรุณากรอกรหัส LoginCode เพื่อทำการเข้าสู่ระบบ");
+                }
   }
 
 

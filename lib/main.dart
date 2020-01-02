@@ -65,10 +65,10 @@ class _welcomePageState extends State<welcomePage> {
           var userId = prefs.getString("userId");
           var accessToken = "";
           if (prefs.getBool("isLoginCode") != true){
-            print("I'm here");
+           
             accessToken = await getAccessToken();
           } else {
-            print("Im here2");
+            
             accessToken = prefs.getString("localaccessToken");
           }
           Firestore.instance.collection("Stamp_User").document(userId).get().then((doc) {
