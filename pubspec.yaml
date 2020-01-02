@@ -19,6 +19,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  permission_handler: '^4.0.0'
   firebase_analytics: ^4.0.2
   cloud_firestore: ^0.13.0+1
   shared_preferences: 0.5.3+4

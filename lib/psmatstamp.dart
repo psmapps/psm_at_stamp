@@ -6,6 +6,7 @@ import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import "package:permission_handler/permission_handler.dart";
 import 'userlogin.dart';
 import 'stampbook.dart';
 import 'staff.dart';
@@ -66,54 +67,85 @@ void staffpage(){
 }
 
 Future<void> scanQRCode() async{
-  try {
-    String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#ebb434", "กลับ", true, ScanMode.QR);
-    print(barcodeScanRes);
-    if (barcodeScanRes == "-1"){
-      print("Back");
-    } else {
+  PermissionStatus permission = await PermissionHandler().checkPermissionStatus(PermissionGroup.camera);
+  if (permission != PermissionStatus.granted){
+    print(permission);
+    if (permission == PermissionStatus.denied){
       showMessageBox(true, "", "");
-      final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
-            functionName: 'QRCodeValidate',
-            
-      );
-      dynamic resp = await callable.call(<String, dynamic>{
-          'qrcodedata': barcodeScanRes,
-          'userId': widget.userId,
-          'studentId': widget.studentId,
-          'accessToken': widget.accessToken
-      });
-      print(resp.data);
-      if (resp.data != "RESTRICT"){
-        Navigator.pop(context);
-        showMessageBox(false, "ผลลัพท์การแสกน QR Code", resp.data);
+        try{
+          Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.camera]);
+          Navigator.pop(context);
+          if (permission == PermissionStatus.denied){
+            showMessageBox(false, "ไม่สามารถเปิดใช้งานกล้องได้", "ฟีเจอร์กล้องถูกปิดใช้งานในอุปกรณ์ของคุณ กรุณาตรวจสอบการตั้งค่าหรือการทำงานของกล้อง");
+          } else {
+            scanQRCode();
+          }
+          
+        } catch (e){
+          print(e);
+          Navigator.pop(context);
+          showMessageBox(false, "ไม่สามารถเปิดใช้งานกล้องได้", "ฟีเจอร์กล้องถูกปิดใช้งานในอุปกรณ์ของคุณ กรุณาตรวจสอบการตั้งค่าหรือการทำงานของกล้อง");
+        }
+        
+    } else if (permission == PermissionStatus.disabled) {
+        showMessageBox(false, "ไม่สามารถเปิดใช้งานกล้องได้", "ฟีเจอร์กล้องถูกปิดใช้งานในอุปกรณ์ของคุณ กรุณาตรวจสอบการตั้งค่าหรือการทำงานของกล้อง");
+    } else if (permission == PermissionStatus.restricted){
+        showMessageBox(false, "ไม่สามารถเปิดใช้งานกล้องได้", "กรุณาให้สิทธิการเข้าถึงกล้องเพื่อใช้แสกน QR Code ในระบบ PSM @ STAMP");
+        bool isOpened = await PermissionHandler().openAppSettings();
+    } else {
+      Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.camera]);
+      scanQRCode();
+    }
+} else {
+    try {
+      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode("#ebb434", "กลับ", true, ScanMode.QR);
+      print(barcodeScanRes);
+      if (barcodeScanRes == "-1"){
+        print("Back");
       } else {
-        final prefs = await SharedPreferences.getInstance();
-        print("Invalid accessTokn");
-        prefs.setBool("Status", false);
-        prefs.setString("prefix", null);
-        prefs.setString("name", null);
-        prefs.setString("surname", null);
-        prefs.setString("studentId", null);
-        prefs.setString("userId", null);
-        prefs.setString("year", null);
-        prefs.setString("room", null);
-        prefs.setString("displayName", null);
-        prefs.setString("profileImage", null);
-        prefs.setString("permission", null);
-        prefs.setString("accessToken", null);
-        prefs.setBool("isLoginCode", false);
-        Navigator.pop(context);
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
-        showMessageBox(false, "Session นี้หมดอายุแล้ว", "อาจเป็นไปได้ว่า คุณได้ทำการเข้าสู่ระบบจากอุปกรณ์เครื่องอื่น คุณจะถูกบังคับให้ออกจากระบบในอุปกรณ์เครื่องนี้ทันที");
+        showMessageBox(true, "", "");
+        final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+              functionName: 'QRCodeValidate',
+              
+        );
+        dynamic resp = await callable.call(<String, dynamic>{
+            'qrcodedata': barcodeScanRes,
+            'userId': widget.userId,
+            'studentId': widget.studentId,
+            'accessToken': widget.accessToken
+        });
+        print(resp.data);
+        if (resp.data != "RESTRICT"){
+          Navigator.pop(context);
+          showMessageBox(false, "ผลลัพท์การแสกน QR Code", resp.data);
+        } else {
+          final prefs = await SharedPreferences.getInstance();
+          print("Invalid accessTokn");
+          prefs.setBool("Status", false);
+          prefs.setString("prefix", null);
+          prefs.setString("name", null);
+          prefs.setString("surname", null);
+          prefs.setString("studentId", null);
+          prefs.setString("userId", null);
+          prefs.setString("year", null);
+          prefs.setString("room", null);
+          prefs.setString("displayName", null);
+          prefs.setString("profileImage", null);
+          prefs.setString("permission", null);
+          prefs.setString("accessToken", null);
+          prefs.setBool("isLoginCode", false);
+          Navigator.pop(context);
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+          showMessageBox(false, "Session นี้หมดอายุแล้ว", "อาจเป็นไปได้ว่า คุณได้ทำการเข้าสู่ระบบจากอุปกรณ์เครื่องอื่น คุณจะถูกบังคับให้ออกจากระบบในอุปกรณ์เครื่องนี้ทันที");
+        }
+
       }
 
+    } catch (e) {
+      print(e);
+      Navigator.pop(context);
+      showMessageBox(false, "เกิดข้อผิดพลาด","ไม่สามารถตรวจสอบ QR Code ได้ กรุณาตรวจสอบการอนุญติการใช้กล้อง และ การเชื่อมตออินเตอร์เน็ต");
     }
-
-  } catch (e) {
-    print(e);
-    Navigator.pop(context);
-    showMessageBox(false, "เกิดข้อผิดพลาด","ไม่สามารถตรวจสอบ QR Code ได้ กรุณาตรวจสอบการอนุญติการใช้กล้อง และ การเชื่อมตออินเตอร์เน็ต");
   }
 }
 
