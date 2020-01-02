@@ -43,6 +43,7 @@ allprojects {
     configurations.all {
            resolutionStrategy.force "androidx.lifecycle:lifecycle-runtime:2.1.0"
            resolutionStrategy.force "androidx.fragment:fragment:1.1.0"
+           resolutionStrategy.force "com.google.firebase:firebase-iid:20.0.1"
     }
 }
 

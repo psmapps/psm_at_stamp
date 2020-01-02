@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:psm_at_stamp/createuser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'psmatstamp.dart';
 
 
@@ -293,10 +294,17 @@ TextEditingController loginCode = new TextEditingController();
     );
   }
 
-
+  void checkNotification() async{
+    PermissionStatus permission = await PermissionHandler().checkPermissionStatus(PermissionGroup.notification);
+    print(permission);
+    if (permission != PermissionStatus.granted){
+        Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.notification]);
+    } 
+  }
   void initState(){
-
+    checkNotification();
     super.initState();
+
   }
 
    @override

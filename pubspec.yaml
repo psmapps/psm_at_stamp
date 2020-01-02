@@ -13,12 +13,14 @@ description: PSM_AT_STAMP_Flutter
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 module:
   androidX: true
-version: 1.0.0+2
+version: 1.0.0+3
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  flutter_local_notifications: ^0.9.1+1
+  firebase_messaging: ^6.0.9
   permission_handler: '^4.0.0'
   firebase_analytics: ^4.0.2
   cloud_firestore: ^0.13.0+1

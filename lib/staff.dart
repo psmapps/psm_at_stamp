@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -56,6 +55,9 @@ void showMessageBox(bool showIndicator,String title, String message) async{
       );
 }
 void genNewQRCode() async{
+  setState(() {
+    refreshTxt = "Refreshing. . .";
+  });
   final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
             functionName: 'QRGenerate',
             
@@ -90,6 +92,7 @@ void genNewQRCode() async{
         showMessageBox(false, "Session นี้หมดอายุแล้ว", "อาจเป็นไปได้ว่า คุณได้ทำการเข้าสู่ระบบจากอุปกรณ์เครื่องอื่น คุณจะถูกบังคับให้ออกจากระบบในอุปกรณ์เครื่องนี้ทันที");
 
       } else {
+        
         setState(() {
           refreshTxt = "Refresh Stamp";
           stampData = resp.data;
@@ -98,6 +101,8 @@ void genNewQRCode() async{
     
       
 }
+
+
 
 @override
 void initState(){
@@ -113,6 +118,7 @@ void initState(){
         });
         genNewQRCode();
         timer = Timer.periodic(Duration(seconds: 27), (Timer t) => genNewQRCode());
+        
         
       });
     } else {
@@ -206,6 +212,10 @@ void dispose() {
                     ),
                   ),
                   Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text("Note: แสตมป์มีอายุ 30 วินาที" , style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,)),
+                  ),
+                  Padding(
                             padding: const EdgeInsets.all(10),
                             child: RaisedButton(
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -215,10 +225,12 @@ void dispose() {
                                 child: Text(refreshTxt, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,),
                               ),),
                               onPressed: (){
-                                setState(() {
-                                  refreshTxt = "Refreshing. . .";
-                                });
-                                genNewQRCode();
+                                if (refreshTxt != "Refreshing. . ."){
+                                  setState(() {
+                                    refreshTxt = "Refreshing. . .";
+                                  });
+                                  genNewQRCode();
+                                }
                                 
                               },
                             ),

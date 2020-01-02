@@ -7,16 +7,75 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 //Import Other Page
 import 'userlogin.dart';
 import 'psmatstamp.dart';
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+void  sendNotification(title, message) async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails('10000',
+        'FLUTTER_NOTIFICATION_CHANNEL', 'FLUTTER_NOTIFICATION_CHANNEL_DETAIL',
+        importance: Importance.Max, priority: Priority.High);
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+ 
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+ 
+    await flutterLocalNotificationsPlugin.show(111, title,
+        message, platformChannelSpecifics,
+        payload: message);
+}
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Crashlytics.instance.enableInDevMode = true;
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
+
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+  
+      firebaseMessaging.configure(
+        onMessage: (Map<String, dynamic> message) async {
+          print("onMessage: $message");
+          Map mapNotification = message["notification"];
+          String title = mapNotification["title"];
+          String body = mapNotification["body"];
+          sendNotification(title, body);
+          
+        },
+        onLaunch: (Map<String, dynamic> message) async {
+          print("onLaunch: $message");
+          Map mapNotification = message["notification"];
+          String title = mapNotification["title"];
+          String body = mapNotification["body"];
+          sendNotification(title, body);
+        },
+        onResume: (Map<String, dynamic> message) async {
+          print("onResume: $message");
+          Map mapNotification = message["notification"];
+          String title = mapNotification["title"];
+          String body = mapNotification["body"];
+          sendNotification(title, body);
+        },
+       
+
+    );
+ 
+    firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+    firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+ 
+    firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      print("Token : $token");
+    });
   runApp(PSMATSTAMP());
 }
 
@@ -196,6 +255,20 @@ class _welcomePageState extends State<welcomePage> {
     );
   }
 
+  void startNotification(){
+    var initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+ 
+    var initializationSettingsIOS = IOSInitializationSettings(
+        onDidReceiveLocalNotification: (id, title, body, payload) {
+      print("onDidReceiveLocalNotification called.");
+    });
+    var initializationSettings = InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+ 
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,);
+  }
+
 
 
   void initLineSDK() {
@@ -208,6 +281,7 @@ class _welcomePageState extends State<welcomePage> {
   void initState(){
     super.initState();
     initLineSDK();
+    startNotification();
     startUserChecking();
   }
 
