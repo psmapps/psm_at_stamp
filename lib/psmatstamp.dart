@@ -133,7 +133,6 @@ Future<void> scanQRCode() async{
           prefs.setString("profileImage", null);
           prefs.setString("permission", null);
           prefs.setString("accessToken", null);
-          prefs.setBool("isLoginCode", false);
           Navigator.pop(context);
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
           showMessageBox(false, "Session นี้หมดอายุแล้ว", "อาจเป็นไปได้ว่า คุณได้ทำการเข้าสู่ระบบจากอุปกรณ์เครื่องอื่น คุณจะถูกบังคับให้ออกจากระบบในอุปกรณ์เครื่องนี้ทันที");
@@ -153,13 +152,11 @@ Future<void> logout() async{
   showMessageBox(true, "", "");
   try{
     final prefs = await SharedPreferences.getInstance();
-    if (prefs.getBool("isLoginCode") != true){
-        await LineSDK.channel.invokeMethod("logout");
-    } 
+    await LineSDK.channel.invokeMethod("logout");
+    
 
     Firestore.instance.collection("Stamp_User").document(widget.userId).updateData({
       "accessToken": "",
-      "isLoginCode": null 
     });
     prefs.setBool("Status", false);
     prefs.setString("prefix", null);
@@ -173,7 +170,6 @@ Future<void> logout() async{
     prefs.setString("profileImage", null);
     prefs.setString("permission", null);
     prefs.setString("accessToken", null);
-    prefs.setBool("isLoginCode", false);
     Navigator.pop(context);
     Navigator.pushReplacement(context, MaterialPageRoute( builder: (context) => LoginPage()));
     showMessageBox(false, "ออกจากระบบเรียบร้อยแล้ว", "ทำการลงชื่ออกจากระบบเรียบร้อยแล้ว");

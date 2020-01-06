@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -35,10 +37,24 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Music is needed for PSM @ STAMP</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Calendars is needed for PSM @ STAMP</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera is needed for QR Code Scan in PSM @ STAMP System</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Contacts is needed for PSM @ STAMP</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Location is needed for PSM @ STAMP</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location is needed for PSM @ STAMP</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Motion is needed for PSM @ STAMP</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Photo library is needed for PSM @ STAMP</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speech is needed for PSM @ STAMP</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

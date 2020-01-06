@@ -123,13 +123,8 @@ class _welcomePageState extends State<welcomePage> {
           print("LoginStatus> Logged in");
           var userId = prefs.getString("userId");
           var accessToken = "";
-          if (prefs.getBool("isLoginCode") != true){
-           
-            accessToken = await getAccessToken();
-          } else {
-            
-            accessToken = prefs.getString("localaccessToken");
-          }
+          accessToken = await getAccessToken();
+         
           Firestore.instance.collection("Stamp_User").document(userId).get().then((doc) {
             if (!doc.exists){
                 print("Deletd");
