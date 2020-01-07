@@ -1,4 +1,5 @@
-import 'dart:math';
+import 'dart:io';
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +8,8 @@ import 'package:psm_at_stamp/createuser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'psmatstamp.dart';
-
+import 'package:device_info/device_info.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget{
 
@@ -18,6 +20,107 @@ _LoginPage createState() => _LoginPage();
 
 class _LoginPage extends State<LoginPage>{
 
+
+  void signinWithApple() async{
+    showMessageBox(true, "", "");
+    if (Platform.isIOS){
+      var iosInfo = await DeviceInfoPlugin().iosInfo;
+      var version = iosInfo.systemVersion;
+      if (version.contains('13') == true) {
+        final AuthorizationResult result = await AppleSignIn.performRequests([
+          AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName,])
+        ]);
+        switch (result.status) {
+          case AuthorizationStatus.authorized:
+            print("successfull sign in");
+            final AppleIdCredential appleIdCredential = result.credential;
+
+            OAuthProvider oAuthProvider =
+                new OAuthProvider(providerId: "apple.com");
+            final AuthCredential credential = oAuthProvider.getCredential(
+              idToken:
+                  String.fromCharCodes(appleIdCredential.identityToken),
+              accessToken:
+                  String.fromCharCodes(appleIdCredential.authorizationCode),
+            );
+
+            final AuthResult _res = await FirebaseAuth.instance.signInWithCredential(credential);
+            FirebaseAuth.instance.currentUser().then((val) async {
+              print(val.uid);
+              Firestore.instance.collection("Stamp_User").document(val.uid).get().then((valfire) async{
+                String accessToken = new String.fromCharCodes(appleIdCredential.authorizationCode);
+                if (valfire.exists){
+                  var userId = valfire.data['userId'];
+                  var studentId = valfire.data['studentId'];
+                  var prefix = valfire.data['prefix'];
+                  var name = valfire.data['name'];
+                  var surname = valfire.data['surname'];
+                  var displayName = valfire.data['displayName'];
+                  var profileImage = valfire.data['profileImage'];
+                  var year = valfire.data['year'];
+                  var room = valfire.data['room'];
+                  var permission = valfire.data['permission'];
+                  var remoteaccessToken = valfire.data['accessToken'];
+                  print(studentId);
+                  print(prefix + name + " " + surname);
+                  print(year + "/" + room);
+                  print(displayName);
+                  print(profileImage);
+                  print(userId);
+                  print(permission);
+                  print(remoteaccessToken);
+                  Firestore.instance.collection("Stamp_User").document(userId).updateData({
+                      "accessToken": accessToken,
+                  });
+                  final prefs = await SharedPreferences.getInstance();
+                  prefs.setBool("Status", true);
+                  prefs.setString("prefix", prefix);
+                  prefs.setString("name", name);
+                  prefs.setString("surname", surname);
+                  prefs.setString("studentId", studentId);
+                  prefs.setString("userId", userId);
+                  prefs.setString("year", year);
+                  prefs.setString("room", room);
+                  prefs.setString("displayName", displayName);
+                  prefs.setString("profileImage", profileImage);
+                  prefs.setString("permission", permission);
+                  prefs.setString("accessToken", accessToken);
+                  prefs.setString("PermanentaccessToken", accessToken);
+                  prefs.setBool("isAppleLogin", true);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(userId: userId, studentId: studentId, prefix: prefix, name: name, surname: surname,year: year, room: room, displayName: displayName, profileImage: profileImage, permission: permission, accessToken: accessToken,)));
+                  if (remoteaccessToken != accessToken && remoteaccessToken != ""){
+                    showMessageBox(false, "การเข้าสู่ระบบซ้ำ", "คุณมีการเข้าสู่ระบบจากอุปกรณ์อื่น อุปกรณ์เครื่องเก่าจะไม่สามารถใช้รับแสตมป์ได้ และจะถูกบังคับออกจากระบบโดยอัตโนมัติ");
+                  }
+
+
+
+                } else {
+                  print("Stamp_User> Not Exisit, Send to create page");
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => createUser(displayName: "(Sign in with Apple)", userId: val.uid, profileImage: "https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/user.png?alt=media&token=eb023a2a-0d9e-46f2-8301-ef4e0e20cfee", accessToken:accessToken,)));
+                }
+              });
+            });
+            
+            break;
+          case AuthorizationStatus.cancelled:
+            Navigator.pop(context);
+            showMessageBox(false, "คุณยกเลิกการเข้าสู่ระบบ", "เมื่อสักครู่คุณกดยกเลิกการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
+                
+            break;
+          case AuthorizationStatus.error:
+            print(result.error);
+            Navigator.pop(context);
+            showMessageBox(false, "เกิดข้อผิดพลาด", "เกิดข้อผิดพลาดขณะเข้าสู่ระบบด้วย Apple กรุณาลองใหม่อีกครั้ง");
+            break;
+        }
+      } else {
+        Navigator.pop(context);
+            showMessageBox(false, "เกิดข้อผิดพลาด", "อุปกรณ์ของคุณไม่รองรับการเข้าสู่ระบบด้วย Apple (รองรับตั้งเเต่ IOS 13 เป็นต้นมา)");
+      }
+    }
+  }
 
   void startLineLogin() async{
     showMessageBox(true, "", "");
@@ -98,13 +201,9 @@ class _LoginPage extends State<LoginPage>{
           print(userId);
           print(permission);
           print(remoteaccessToken);
-          
-          if (remoteaccessToken != accessToken){
-            showMessageBox(false, "การเข้าสู่ระบบซ้ำ", "คุณมีการเข้าสู่ระบบจากอุปกรณ์อื่น อุปกรณ์เครื่องเก่าจะไม่สามารถใช้รับแสตมป์ได้ และจะถูกบังคับออกจากระบบโดยอัตโนมัติ");
-            db.collection("Stamp_User").document(userId).updateData({
+          db.collection("Stamp_User").document(userId).updateData({
               "accessToken": accessToken,
-            });
-          }
+           });
           final prefs = await SharedPreferences.getInstance();
           prefs.setBool("Status", true);
           prefs.setString("prefix", prefix);
@@ -118,10 +217,13 @@ class _LoginPage extends State<LoginPage>{
           prefs.setString("profileImage", profileImage);
           prefs.setString("permission", permission);
           prefs.setString("accessToken", accessToken);
+          prefs.setBool("isAppleLogin", false);
 
           Navigator.of(context).popUntil((route) => route.isFirst);
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(userId: userId, studentId: studentId, prefix: prefix, name: name, surname: surname,year: year, room: room, displayName: displayName, profileImage: profileImage, permission: permission, accessToken: accessToken,)));
-          
+          if (remoteaccessToken != accessToken && remoteaccessToken != ""){
+            showMessageBox(false, "การเข้าสู่ระบบซ้ำ", "คุณมีการเข้าสู่ระบบจากอุปกรณ์อื่น อุปกรณ์เครื่องเก่าจะไม่สามารถใช้รับแสตมป์ได้ และจะถูกบังคับออกจากระบบโดยอัตโนมัติ");
+          }
         } 
       });
   }
@@ -220,7 +322,7 @@ class _LoginPage extends State<LoginPage>{
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
+                        padding: const EdgeInsets.only(bottom: 10),
                         child: Row(
                           children: <Widget>[
                             Expanded(
@@ -256,11 +358,20 @@ class _LoginPage extends State<LoginPage>{
                                   ),
                                 ),
                               ),
-
-
-                              
+  
                           ]
                           ),
+                      ),
+                       Padding(
+                        padding: const EdgeInsets.only(left: 10,bottom: 20, right: 10),
+                        child: AppleSignInButton(
+                          style: ButtonStyle.white,
+                          type: ButtonType.signIn,
+                          
+                          onPressed: () {
+                            signinWithApple();
+                          },
+                        )
                       ),
                   
                   ],),

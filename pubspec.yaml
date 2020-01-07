@@ -19,6 +19,9 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  apple_sign_in: ^0.1.0
+  device_info: ^0.4.1+4
+  firebase_auth: ^0.15.3
   flutter_local_notifications: ^0.9.1+1
   firebase_messaging: ^6.0.9
   permission_handler: '^4.0.0'

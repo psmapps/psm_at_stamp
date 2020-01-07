@@ -1,7 +1,5 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -97,7 +95,7 @@ class ConfirmPageState extends State<confirmPage>{
         Navigator.of(context).popUntil((route) => route.isFirst);
         
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(studentId: widget.studentId,userId: widget.userId, prefix: widget.prefix, name: widget.name, surname: widget.surname, profileImage: widget.profileImage, year: widget.year, room: widget.room, displayName: widget.displayName, accessToken: widget.accessToken, permission: "student",)));
-        showMessageBox(false, "ผูกบัญชีเรียบร้อย", "คุณสามารถเริ่มต้นใช้งาน PSM @ STAMP และ น้องแสตมป์ ผ่านการเข้าสู่ระบบด้วย LINE ได้ทันที");
+        showMessageBox(false, "ผูกบัญชีเรียบร้อย", "คุณสามารถเริ่มต้นใช้งาน PSM @ STAMP ได้ทันที");
 
     }
 
@@ -124,20 +122,9 @@ class ConfirmPageState extends State<confirmPage>{
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(30),
-                    child: Image.asset("assets/image/full_logo.png"),
+                    child: Image.asset("assets/image/full_logo.png", height: 150, width: 150,),
                   )
                 ),
-                Container(
-                  color: Colors.grey,
-                  width: 2,
-                  height: 100,
-                ),
-                Expanded(child: 
-                  Padding(
-                    padding: const EdgeInsets.all(50),
-                    child: Image.asset("assets/image/line_logo.png"),
-                  )
-                )
               ],
             ),
           ),

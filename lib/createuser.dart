@@ -59,7 +59,7 @@ class CreateUserState extends State<createUser>{
       print("StudentID> " + studentId);
       if (studentId == "" || studentId.length < 6){
         Navigator.pop(context);
-        showMessageBox(false, "กรุณากรอกข้อมูลให้ครบก่อนทำการผูกบัญชี", "กรุณากรอกรหัสนักเรียนให้ถูกต้องก่อนทำการผูกบัญชี PSM @ STAMP กับ บัญชี LINE");
+        showMessageBox(false, "กรุณากรอกข้อมูลให้ครบก่อนทำการผูกบัญชี", "กรุณากรอกรหัสนักเรียนให้ถูกต้องก่อนทำการผูกบัญชี PSM @ STAMP");
       } else {
         Firestore.instance.collection("Student_Data").document(studentId).get().then((snapShot){
         if (!snapShot.exists){
@@ -69,7 +69,7 @@ class CreateUserState extends State<createUser>{
           if (snapShot.data['isRegistered'] == true){
             print("Registation> Registered");
             Navigator.pop(context);
-            showMessageBox(false, "บัญชีนี้ถูกใช้ลงทะเบียนไปแล้ว", "รหัสนักเรียนนี้ถูกผูกบัญชีกับ LINE อื่นไปแล้ว จึงไม่สามารถผูกซ้ำอีกครั้งได้ หากมีปัญหาในการผูกบัญชี กรุณาติดต่อ PSM @ STAMP Team เพื่อแก้ไขปัญหาต่อไป");
+            showMessageBox(false, "รหัสนักเรียนนี้ถูกใช้ลงทะเบียนไปแล้ว", "รหัสนักเรียนนี้ถูกผูกบัญชีไปแล้ว จึงไม่สามารถผูกซ้ำอีกครั้งได้ หากมีปัญหาในการผูกบัญชี กรุณาติดต่อ PSM @ STAMP Team เพื่อแก้ไขปัญหาต่อไป");
           } else {
             print("Registation> Not Registered");
             var prefix = snapShot.data['prefix'];
@@ -94,7 +94,7 @@ class CreateUserState extends State<createUser>{
     backgroundColor: Color.fromRGBO(43, 43, 43, 1),
     appBar: AppBar(
 
-      title: Text("ผูกบัญชี PSM @ STAMP กับ LINE"),
+      title: Text("ผูกบัญชี PSM @ STAMP"),
     ),
     body: SingleChildScrollView(
       child: Column(
@@ -107,29 +107,19 @@ class CreateUserState extends State<createUser>{
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(30),
-                    child: Image.asset("assets/image/full_logo.png"),
+                    child: Image.asset("assets/image/full_logo.png", width: 200, height: 200,),
                   )
                 ),
-                Container(
-                  color: Colors.grey,
-                  width: 2,
-                  height: 100,
-                ),
-                Expanded(child: 
-                  Padding(
-                    padding: const EdgeInsets.all(50),
-                    child: Image.asset("assets/image/line_logo.png"),
-                  )
-                )
+                
               ],
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.only(top: 5),
             child: Center(
               child: Column(
                 children: <Widget>[
-                      Text("ผูกบัญชี PSM @ STAMP กับ บัญชี LINE", style: TextStyle(fontSize: 20,color: Colors.white, fontWeight: FontWeight.bold)),
+                      Text("ผูกบัญชี PSM @ STAMP", style: TextStyle(fontSize: 20,color: Colors.white, fontWeight: FontWeight.bold)),
                       Text("(ทำเพียงครั้งแรกครั้งเดียว)", style: TextStyle(fontSize: 13,color: Colors.white, fontWeight: FontWeight.bold)),
                 ],
                 ),
@@ -147,8 +137,9 @@ class CreateUserState extends State<createUser>{
                     direction: Axis.horizontal,
                     children: <Widget>[
                     Text("1. คุณยืนยันว่าคุณคือเจ้าของรหัสนักเรียนที่คุณกรอกด้านล่างจริง", style: TextStyle(color: Colors.white, fontSize: 15,)),
-                    Text("2. เมื่อคุณผูกบัญชีไปเเล้ว LINE Account และ รหัสนักเรียนนี้ จะไม่สามารถผูกบัญชีได้ใหม่อีกครั้ง", style: TextStyle(color: Colors.white, fontSize: 15,)),
-                    Text("3. คุณสามารถเข้าใช้งาน น้องแสตมป์ ใน LNE ได้โดยไม่ต้องลงทะเบียนใหม่อีกครั้ง", style: TextStyle(color: Colors.white, fontSize: 15,)),
+                    Text("2. เมื่อคุณผูกบัญชีไปเเล้ว Apple ID, LINE ID และ รหัสนักเรียนนี้ จะไม่สามารถผูกบัญชีได้ใหม่อีกครั้ง", style: TextStyle(color: Colors.white, fontSize: 15,)),
+                    Text("3. (หากผูกบัญชีกับ LINE) คุณสามารถเข้าใช้งาน น้องแสตมป์ ใน LNE ได้โดยไม่ต้องลงทะเบียนใหม่อีกครั้ง", style: TextStyle(color: Colors.white, fontSize: 15,)),
+                    Text("4. (หากผูกบัญชีกับ Apple) คุณต้องลงทะเบียนกับน้องแสตมป์ด้วยตนเองหากต้องการร่วมกิจกรรมจาก PSM @ STAMP", style: TextStyle(color: Colors.white, fontSize: 15,)),
                   ],)
                   
                 ],),
@@ -187,7 +178,7 @@ class CreateUserState extends State<createUser>{
                             padding: const EdgeInsets.all(10),
                             child: Column(
                               children: <Widget>[
-                              Center(child: Text("ผูกบัญชี PSM @ STAMP กับ บัญชี LINE", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+                              Center(child: Text("ผูกบัญชี PSM @ STAMP", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
                               ]
                             ),
                             onPressed: (){

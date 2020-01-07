@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import "package:permission_handler/permission_handler.dart";
+import 'package:url_launcher/url_launcher.dart';
 import 'userlogin.dart';
 import 'stampbook.dart';
 import 'staff.dart';
@@ -152,7 +153,12 @@ Future<void> logout() async{
   showMessageBox(true, "", "");
   try{
     final prefs = await SharedPreferences.getInstance();
-    await LineSDK.channel.invokeMethod("logout");
+    if (prefs.getBool("isAppleLogin") == false){
+      await LineSDK.channel.invokeMethod("logout");
+    } else {
+      prefs.setString("PermanentaccessToken", null);
+    }
+
     
 
     Firestore.instance.collection("Stamp_User").document(widget.userId).updateData({
@@ -373,6 +379,28 @@ List categories_firestore = [];
                               },
                             ),
                         ),
+                      Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  color: Color.fromRGBO(0, 185, 0, 1),
+                                  padding: const EdgeInsets.all(10),
+                                  child: Center(
+                                    child: Text("น้องแสตมป์", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
+                                  ),
+                                  onPressed: () async{
+                                     print("Opening Nong stamp LINE");
+                                    if (await canLaunch("https://lin.ee/cWz2Ula")){
+                                      
+                                      await launch("https://lin.ee/cWz2Ula");
+                                    } else {
+                                      
+                                      showMessageBox(false, "ไม่สามารถเปิด URL ได้", "ไม่สามารถเปิด URL ไปที่ LINE น้องแสตมป์ ได้ ลองใหม่อีกครั้งหรือเพิ่มเพื่อนด้วยการพิมพ์ ID: @nongstamp (มี @ ด้วยครับ)");
+                                    }
+                            
+                                  },
+                                ),
+                      ),
                         
                       Padding(
                                 padding: const EdgeInsets.all(10),
