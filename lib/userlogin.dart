@@ -455,16 +455,6 @@ class _LoginPage extends State<LoginPage> {
                         ),
                       ]),
                     ),
-                    Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10, bottom: 20, right: 10),
-                        child: AppleSignInButton(
-                          style: ButtonStyle.white,
-                          type: ButtonType.signIn,
-                          onPressed: () {
-                            signinWithApple();
-                          },
-                        )),
                   ],
                 ),
               )
