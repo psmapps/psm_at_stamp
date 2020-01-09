@@ -8,8 +8,9 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import "package:permission_handler/permission_handler.dart";
 import 'package:url_launcher/url_launcher.dart';
-import 'userlogin.dart';
-import 'stampbook.dart';
+
+import 'login.dart';
+import 'stamp_book.dart';
 import 'staff.dart';
 import 'widget.dart';
 
@@ -563,12 +564,12 @@ class _PSMATSTAMPMainPage extends State<PSMATSTAMPMainPage> {
     if (category.name != "Loading...") {
       var catid = categories_firestore[category.id];
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Stampbook(
-                  userId: widget.userId,
-                  categoriesid: catid,
-                  icon: category.icon)));
+        context,
+        MaterialPageRoute(
+          builder: (context) => StampBook(
+              userId: widget.userId, categoriesid: catid, icon: category.icon),
+        ),
+      );
     }
   }
 }

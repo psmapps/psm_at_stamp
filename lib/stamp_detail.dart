@@ -1,33 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Stampdetail extends StatefulWidget {
+class StampDetail extends StatefulWidget {
   var stampId;
   var stampName;
   var userId;
   var stampIcon;
 
-  Stampdetail(
+  StampDetail(
       {Key key,
       @required this.stampId,
       @required this.stampName,
       @required this.userId,
       @required this.stampIcon});
   @override
-  Stampdetailstate createState() => Stampdetailstate();
+  StampDetailstate createState() => StampDetailstate();
 }
 
-class Stampdetailstate extends State<Stampdetail> {
+class StampDetailstate extends State<StampDetail> {
+  // dart is type safe better to specify type
   var detail = "";
   var location = "";
   var isOpen = "";
   var stamped = false;
   var recieveddate = "";
   var ref = "";
-  @override
-  void initState() {
-    super.initState();
-    Firestore.instance
+
+  Future<void> _checkData() async {
+    await Firestore.instance
         .collection("Stamp_Data")
         .document(widget.stampId)
         .get()
@@ -70,6 +70,11 @@ class Stampdetailstate extends State<Stampdetail> {
         }
       }
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
 
     Firestore.instance
         .collection("Stamp_Transaction")
@@ -104,15 +109,12 @@ class Stampdetailstate extends State<Stampdetail> {
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                // Where the linear gradient begins and ends
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-
                 colors: [
-                  // Colors are easy thanks to Flutter's Colors class.
                   Colors.blue,
                   Colors.yellow,
-                  Colors.redAccent
+                  Colors.redAccent,
                 ],
               ),
             ),
@@ -122,58 +124,63 @@ class Stampdetailstate extends State<Stampdetail> {
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    color: Colors.black,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Container(
-                              child: Icon(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  color: Colors.black,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Container(
+                          child: Icon(
                             widget.stampIcon,
                             size: 70,
                             color: Colors.yellowAccent,
-                          )),
+                          ),
                         ),
-                        Expanded(
-                          child: Center(
-                              child: Text(
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
                             widget.stampName,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 30),
                             maxLines: 2,
-                          )),
-                        )
-                      ],
-                    )),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
                 child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    color: Colors.black,
-                    child: Row(children: <Widget>[
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  color: Colors.black,
+                  child: Row(
+                    children: <Widget>[
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Text(
-                                  "รายละเอียดแสตมป์:",
-                                  style: TextStyle(
-                                      color: Colors.greenAccent,
-                                      fontSize: 23,
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.underline,
-                                      decorationStyle:
-                                          TextDecorationStyle.double),
-                                )),
+                              padding: const EdgeInsets.all(20),
+                              child: Text(
+                                "รายละเอียดแสตมป์:",
+                                style: TextStyle(
+                                    color: Colors.greenAccent,
+                                    fontSize: 23,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline,
+                                    decorationStyle:
+                                        TextDecorationStyle.double),
+                              ),
+                            ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
                               child: Row(
@@ -186,14 +193,15 @@ class Stampdetailstate extends State<Stampdetail> {
                                         color: Colors.orangeAccent),
                                   ),
                                   Expanded(
-                                      child: Text(
-                                    widget.stampName,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17,
-                                        color: Colors.white),
-                                    maxLines: 2,
-                                  ))
+                                    child: Text(
+                                      widget.stampName,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17,
+                                          color: Colors.white),
+                                      maxLines: 2,
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -209,14 +217,15 @@ class Stampdetailstate extends State<Stampdetail> {
                                         color: Colors.orangeAccent),
                                   ),
                                   Expanded(
-                                      child: Text(
-                                    isOpen,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17,
-                                        color: Colors.white),
-                                    maxLines: 2,
-                                  ))
+                                    child: Text(
+                                      isOpen,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17,
+                                          color: Colors.white),
+                                      maxLines: 2,
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -235,13 +244,14 @@ class Stampdetailstate extends State<Stampdetail> {
                                     textAlign: TextAlign.start,
                                   ),
                                   Expanded(
-                                      child: Text(location,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17,
-                                              color: Colors.white),
-                                          maxLines: 2,
-                                          textAlign: TextAlign.start))
+                                    child: Text(location,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17,
+                                            color: Colors.white),
+                                        maxLines: 2,
+                                        textAlign: TextAlign.start),
+                                  )
                                 ],
                               ),
                             ),
@@ -260,20 +270,23 @@ class Stampdetailstate extends State<Stampdetail> {
                                     textAlign: TextAlign.start,
                                   ),
                                   Expanded(
-                                      child: Text(detail,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17,
-                                              color: Colors.white),
-                                          maxLines: 10,
-                                          textAlign: TextAlign.start))
+                                    child: Text(detail,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17,
+                                            color: Colors.white),
+                                        maxLines: 10,
+                                        textAlign: TextAlign.start),
+                                  )
                                 ],
                               ),
                             )
                           ],
                         ),
                       ),
-                    ])),
+                    ],
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
@@ -285,24 +298,24 @@ class Stampdetailstate extends State<Stampdetail> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Stack(
-                                children: <Widget>[
-                                  Container(
-                                    decoration: new BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    padding: const EdgeInsets.all(50),
+                            padding: const EdgeInsets.all(20),
+                            child: Stack(
+                              children: <Widget>[
+                                Container(
+                                  decoration: new BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  padding: const EdgeInsets.all(50),
+                                ),
+                                if (stamped)
+                                  Image.asset(
+                                    'assets/image/stamped.png',
+                                    height: 100,
+                                    width: 100,
                                   ),
-                                  if (stamped == true)
-                                    Image.asset(
-                                      'assets/image/stamped.png',
-                                      height: 100,
-                                      width: 100,
-                                    ),
-                                ],
-                              )),
+                              ],
+                            ),
+                          ),
                           Flexible(
                               child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -316,7 +329,7 @@ class Stampdetailstate extends State<Stampdetail> {
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
-                              if (stamped == true)
+                              if (stamped)
                                 Padding(
                                     padding: const EdgeInsets.only(
                                         top: 2, right: 10),
@@ -325,7 +338,7 @@ class Stampdetailstate extends State<Stampdetail> {
                                       style: TextStyle(color: Colors.white),
                                       maxLines: 2,
                                     )),
-                              if (stamped == true)
+                              if (stamped)
                                 Padding(
                                     padding: const EdgeInsets.only(
                                         top: 2, right: 10),
@@ -334,7 +347,7 @@ class Stampdetailstate extends State<Stampdetail> {
                                       style: TextStyle(color: Colors.white),
                                       maxLines: 2,
                                     )),
-                              if (stamped == false)
+                              if (stamped)
                                 Padding(
                                     padding: const EdgeInsets.only(
                                         top: 2, right: 10),
