@@ -16,7 +16,7 @@ module:
 version: 1.0.0+3
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   apple_sign_in: ^0.1.0
@@ -24,7 +24,7 @@ dependencies:
   firebase_auth: ^0.15.3
   flutter_local_notifications: ^0.9.1+1
   firebase_messaging: ^6.0.9
-  permission_handler: '^4.0.0'
+  permission_handler: "^4.0.0"
   firebase_analytics: ^4.0.2
   cloud_firestore: ^0.13.0+1
   shared_preferences: 0.5.3+4
@@ -46,13 +46,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'psmatstamp.dart';
+import 'widget.dart';
 
-class confirmPage extends StatefulWidget{
+class ConfirmPage extends StatefulWidget {
   var studentId;
   var prefix;
   var name;
@@ -16,15 +15,26 @@ class confirmPage extends StatefulWidget{
   var profileImage;
   var userId;
   var accessToken;
-  confirmPage({Key key, @required this.studentId, @required this.prefix ,@required this.name, @required this.surname, @required this.year, @required this.room, @required this.displayName, @required this.profileImage, @required this.userId, @required this.accessToken}): super(key: key);
+  ConfirmPage(
+      {Key key,
+      @required this.studentId,
+      @required this.prefix,
+      @required this.name,
+      @required this.surname,
+      @required this.year,
+      @required this.room,
+      @required this.displayName,
+      @required this.profileImage,
+      @required this.userId,
+      @required this.accessToken})
+      : super(key: key);
 
   @override
   ConfirmPageState createState() => ConfirmPageState();
 }
 
-
-class ConfirmPageState extends State<confirmPage>{
-  void initState(){
+class ConfirmPageState extends State<ConfirmPage> {
+  void initState() {
     print("----{Confirm Data}----");
     print("StudentId: " + widget.studentId);
     print(widget.prefix + widget.name + " " + widget.surname);
@@ -36,83 +46,67 @@ class ConfirmPageState extends State<confirmPage>{
     print("accessToken: " + widget.accessToken);
 
     super.initState();
-    
   }
+
   @override
   Widget build(BuildContext context) {
-
-
-    void showMessageBox(bool showIndicator,String title, String message) async{
-      return showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context){
-          if (showIndicator == true){
-            return Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Center(child: CircularProgressIndicator()),
-              ],
-            );
-          } else {
-            return AlertDialog(
-            
-            title: Text(title),
-            content: Text(message),
-            actions: <Widget>[
-              FlatButton(
-                child: Text("ปิด"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },)
-            ],
-            );
-          }
-        }
-      );
-    }
-
     void confirmData() {
-        showMessageBox(true, "", "");
-        Firestore.instance.collection("Student_Data").document(widget.studentId).updateData({"isRegistered": true});
-        Firestore.instance.collection("Stamp_User").document(widget.userId).setData({
-          "studentId" : widget.studentId,
-          "prefix": widget.prefix,
-          "name": widget.name,
-          "surname": widget.surname,
-          "year": widget.year,
-          "room": widget.room,
-          "userId": widget.userId,
-          "displayName": widget.displayName,
-          "profileImage": widget.profileImage,
-          "accessToken": widget.accessToken,
-          "permission": "student"
-        });
+      showMessageBox(context, true, "", "");
+      Firestore.instance
+          .collection("Student_Data")
+          .document(widget.studentId)
+          .updateData({"isRegistered": true});
+      Firestore.instance
+          .collection("Stamp_User")
+          .document(widget.userId)
+          .setData({
+        "studentId": widget.studentId,
+        "prefix": widget.prefix,
+        "name": widget.name,
+        "surname": widget.surname,
+        "year": widget.year,
+        "room": widget.room,
+        "userId": widget.userId,
+        "displayName": widget.displayName,
+        "profileImage": widget.profileImage,
+        "accessToken": widget.accessToken,
+        "permission": "student"
+      });
 
-        //TODO: Do file download and keep in firebase storage implementation
+      Navigator.of(context).popUntil((route) => route.isFirst);
 
-        
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PSMATSTAMPMainPage(studentId: widget.studentId,userId: widget.userId, prefix: widget.prefix, name: widget.name, surname: widget.surname, profileImage: widget.profileImage, year: widget.year, room: widget.room, displayName: widget.displayName, accessToken: widget.accessToken, permission: "student",)));
-        showMessageBox(false, "ผูกบัญชีเรียบร้อย", "คุณสามารถเริ่มต้นใช้งาน PSM @ STAMP ได้ทันที");
-
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PSMATSTAMPMainPage(
+            studentId: widget.studentId,
+            userId: widget.userId,
+            prefix: widget.prefix,
+            name: widget.name,
+            surname: widget.surname,
+            profileImage: widget.profileImage,
+            year: widget.year,
+            room: widget.room,
+            displayName: widget.displayName,
+            accessToken: widget.accessToken,
+            permission: "student",
+          ),
+        ),
+      );
+      showMessageBox(context, false, "ผูกบัญชีเรียบร้อย",
+          "คุณสามารถเริ่มต้นใช้งาน PSM @ STAMP ได้ทันที");
     }
 
-    void notconfirmData(){
-        Navigator.pop(context);
-        showMessageBox(false, "ข้อมูลของคุณไม่ถูกต้อง", "หากมีปัญหาในการผูกบัญชี กรุณาติดต่อ PSM @ STAMP Support โดยการกดปุ่ม ติดต่อ PSM @ STAMP Support Team");
-        
+    void notconfirmData() {
+      Navigator.pop(context);
+      showMessageBox(context, false, "ข้อมูลของคุณไม่ถูกต้อง",
+          "หากมีปัญหาในการผูกบัญชี กรุณาติดต่อ PSM @ STAMP Support โดยการกดปุ่ม ติดต่อ PSM @ STAMP Support Team");
     }
 
-
-
-  return Scaffold(
-    backgroundColor: Color.fromRGBO(43, 43, 43, 1),
-    appBar: AppBar(
-      title: Text("ยืนยันการผูกบัญชี")
-    ),
-    body:  Column(
+    return Scaffold(
+      backgroundColor: Color.fromRGBO(43, 43, 43, 1),
+      appBar: AppBar(title: Text("ยืนยันการผูกบัญชี")),
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
@@ -122,8 +116,12 @@ class ConfirmPageState extends State<confirmPage>{
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(30),
-                    child: Image.asset("assets/image/full_logo.png", height: 150, width: 150,),
-                  )
+                    child: Image.asset(
+                      "assets/image/full_logo.png",
+                      height: 150,
+                      width: 150,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -133,7 +131,11 @@ class ConfirmPageState extends State<confirmPage>{
             child: Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
-                child: Image.network(widget.profileImage, height: 170, width: 170,),
+                child: Image.network(
+                  widget.profileImage,
+                  height: 170,
+                  width: 170,
+                ),
               ),
             ),
           ),
@@ -146,60 +148,88 @@ class ConfirmPageState extends State<confirmPage>{
                   alignment: WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: <Widget>[
-                  Text(widget.displayName, style: TextStyle(color: Colors.green, fontSize: 30, fontWeight: FontWeight.bold)),
-                  Text(widget.prefix + widget.name + " " + widget.surname, style:  TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),),
-                  Text("รหัสนักเรียน: " + widget.studentId + " - ชั้น: ม." + widget.year + "/" + widget.room, style:  TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),)
-                 ],
+                    Text(widget.displayName,
+                        style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold)),
+                    Text(
+                      widget.prefix + widget.name + " " + widget.surname,
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    Text(
+                      "รหัสนักเรียน: " +
+                          widget.studentId +
+                          " - ชั้น: ม." +
+                          widget.year +
+                          "/" +
+                          widget.room,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
                 )
               ],
-              ),
+            ),
           ),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 15, left: 10, right: 10),
+                  padding:
+                      const EdgeInsets.only(bottom: 15, left: 10, right: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-
-                        Expanded(
-                          child: RaisedButton(
-                            padding: const EdgeInsets.fromLTRB(10, 15, 10 ,15),
-                            child: Text("ข้อมูลไม่ถูกต้อง", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                            onPressed: (){
-                              notconfirmData();
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)
-                            ),
+                      Expanded(
+                        child: RaisedButton(
+                          padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                          child: Text("ข้อมูลไม่ถูกต้อง",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          onPressed: () {
+                            notconfirmData();
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        Padding(padding: const EdgeInsets.all(5),),
-                       Expanded(
-                         child: RaisedButton(
-                            color: Colors.orange,
-                            padding: const EdgeInsets.fromLTRB(10, 15, 10 ,15),
-                            child: Text("ยืนยันการผูกบัญชี", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                            onPressed: (){
-                                confirmData();
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)
-                            ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                      ),
+                      Expanded(
+                        child: RaisedButton(
+                          color: Colors.orange,
+                          padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                          child: Text(
+                            "ยืนยันการผูกบัญชี",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
                           ),
-                       ),
+                          onPressed: () {
+                            confirmData();
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                
               ],
             ),
           )
         ],
-        ),
-  );
+      ),
+    );
   }
-
 }
