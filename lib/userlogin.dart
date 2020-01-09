@@ -19,21 +19,22 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPage extends State<LoginPage> {
   void signinWithApple() async {
-    showMessageBox(context, true, "", "");
+    showMessageBox(
+      context,
+      true,
+      "",
+      "",
+    );
     if (Platform.isIOS) {
       var iosInfo = await DeviceInfoPlugin().iosInfo;
       var version = iosInfo.systemVersion;
-      if (version.contains('13')) {
-        final AuthorizationResult result = await AppleSignIn.performRequests(
-          [
-            AppleIdRequest(
-              requestedScopes: [
-                Scope.email,
-                Scope.fullName,
-              ],
-            )
-          ],
-        );
+      if (version.contains('13') == true) {
+        final AuthorizationResult result = await AppleSignIn.performRequests([
+          AppleIdRequest(requestedScopes: [
+            Scope.email,
+            Scope.fullName,
+          ])
+        ]);
         switch (result.status) {
           case AuthorizationStatus.authorized:
             print("successfull sign in");
@@ -49,113 +50,133 @@ class _LoginPage extends State<LoginPage> {
 
             final AuthResult _res =
                 await FirebaseAuth.instance.signInWithCredential(credential);
-            FirebaseAuth.instance.currentUser().then((val) async {
-              print(val.uid);
-              Firestore.instance
-                  .collection("Stamp_User")
-                  .document(val.uid)
-                  .get()
-                  .then((valfire) async {
-                String accessToken = new String.fromCharCodes(
-                    appleIdCredential.authorizationCode);
-                if (valfire.exists) {
-                  var userId = valfire.data['userId'];
-                  var studentId = valfire.data['studentId'];
-                  var prefix = valfire.data['prefix'];
-                  var name = valfire.data['name'];
-                  var surname = valfire.data['surname'];
-                  var displayName = valfire.data['displayName'];
-                  var profileImage = valfire.data['profileImage'];
-                  var year = valfire.data['year'];
-                  var room = valfire.data['room'];
-                  var permission = valfire.data['permission'];
-                  var remoteaccessToken = valfire.data['accessToken'];
-                  print(studentId);
-                  print(prefix + name + " " + surname);
-                  print(year + "/" + room);
-                  print(displayName);
-                  print(profileImage);
-                  print(userId);
-                  print(permission);
-                  print(remoteaccessToken);
-                  Firestore.instance
-                      .collection("Stamp_User")
-                      .document(userId)
-                      .updateData({
-                    "accessToken": accessToken,
-                  });
-                  final prefs = await SharedPreferences.getInstance();
-                  prefs.setBool("Status", true);
-                  prefs.setString("prefix", prefix);
-                  prefs.setString("name", name);
-                  prefs.setString("surname", surname);
-                  prefs.setString("studentId", studentId);
-                  prefs.setString("userId", userId);
-                  prefs.setString("year", year);
-                  prefs.setString("room", room);
-                  prefs.setString("displayName", displayName);
-                  prefs.setString("profileImage", profileImage);
-                  prefs.setString("permission", permission);
-                  prefs.setString("accessToken", accessToken);
-                  prefs.setString("PermanentaccessToken", accessToken);
-                  prefs.setBool("isAppleLogin", true);
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
+            FirebaseAuth.instance.currentUser().then(
+              (val) async {
+                print(val.uid);
+                await Firestore.instance
+                    .collection("Stamp_User")
+                    .document(val.uid)
+                    .get()
+                    .then(
+                  (valfire) async {
+                    String accessToken = new String.fromCharCodes(
+                        appleIdCredential.authorizationCode);
+                    if (valfire.exists) {
+                      var userId = valfire.data['userId'];
+                      var studentId = valfire.data['studentId'];
+                      var prefix = valfire.data['prefix'];
+                      var name = valfire.data['name'];
+                      var surname = valfire.data['surname'];
+                      var displayName = valfire.data['displayName'];
+                      var profileImage = valfire.data['profileImage'];
+                      var year = valfire.data['year'];
+                      var room = valfire.data['room'];
+                      var permission = valfire.data['permission'];
+                      var remoteaccessToken = valfire.data['accessToken'];
+                      print(studentId);
+                      print(prefix + name + " " + surname);
+                      print(year + "/" + room);
+                      print(displayName);
+                      print(profileImage);
+                      print(userId);
+                      print(permission);
+                      print(remoteaccessToken);
+                      await Firestore.instance
+                          .collection("Stamp_User")
+                          .document(userId)
+                          .updateData({
+                        "accessToken": accessToken,
+                      });
+                      final prefs = await SharedPreferences.getInstance();
+                      prefs.setBool("Status", true);
+                      prefs.setString("prefix", prefix);
+                      prefs.setString("name", name);
+                      prefs.setString("surname", surname);
+                      prefs.setString("studentId", studentId);
+                      prefs.setString("userId", userId);
+                      prefs.setString("year", year);
+                      prefs.setString("room", room);
+                      prefs.setString("displayName", displayName);
+                      prefs.setString("profileImage", profileImage);
+                      prefs.setString("permission", permission);
+                      prefs.setString("accessToken", accessToken);
+                      prefs.setString("PermanentaccessToken", accessToken);
+                      prefs.setBool("isAppleLogin", true);
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
                           builder: (context) => PSMATSTAMPMainPage(
-                                userId: userId,
-                                studentId: studentId,
-                                prefix: prefix,
-                                name: name,
-                                surname: surname,
-                                year: year,
-                                room: room,
-                                displayName: displayName,
-                                profileImage: profileImage,
-                                permission: permission,
-                                accessToken: accessToken,
-                              )));
-                  if (remoteaccessToken != accessToken &&
-                      remoteaccessToken != "") {
-                    showMessageBox(context, false, "การเข้าสู่ระบบซ้ำ",
-                        "คุณมีการเข้าสู่ระบบจากอุปกรณ์อื่น อุปกรณ์เครื่องเก่าจะไม่สามารถใช้รับแสตมป์ได้ และจะถูกบังคับออกจากระบบโดยอัตโนมัติ");
-                  }
-                } else {
-                  print("Stamp_User> Not Exisit, Send to create page");
-                  Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
+                            userId: userId,
+                            studentId: studentId,
+                            prefix: prefix,
+                            name: name,
+                            surname: surname,
+                            year: year,
+                            room: room,
+                            displayName: displayName,
+                            profileImage: profileImage,
+                            permission: permission,
+                            accessToken: accessToken,
+                          ),
+                        ),
+                      );
+                      if (remoteaccessToken != accessToken &&
+                          remoteaccessToken != "") {
+                        showMessageBox(context, false, "การเข้าสู่ระบบซ้ำ",
+                            "คุณมีการเข้าสู่ระบบจากอุปกรณ์อื่น อุปกรณ์เครื่องเก่าจะไม่สามารถใช้รับแสตมป์ได้ และจะถูกบังคับออกจากระบบโดยอัตโนมัติ");
+                      }
+                    } else {
+                      print("Stamp_User> Not Exisit, Send to create page");
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
                           builder: (context) => createUser(
-                                displayName: "(Sign in with Apple)",
-                                userId: val.uid,
-                                profileImage:
-                                    "https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/user.png?alt=media&token=eb023a2a-0d9e-46f2-8301-ef4e0e20cfee",
-                                accessToken: accessToken,
-                              )));
-                }
-              });
-            });
+                            displayName: "(Sign in with Apple)",
+                            userId: val.uid,
+                            profileImage:
+                                "https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/user.png?alt=media&token=eb023a2a-0d9e-46f2-8301-ef4e0e20cfee",
+                            accessToken: accessToken,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                );
+              },
+            );
 
             break;
           case AuthorizationStatus.cancelled:
             Navigator.pop(context);
-            showMessageBox(context, false, "คุณยกเลิกการเข้าสู่ระบบ",
-                "เมื่อสักครู่คุณกดยกเลิกการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
+            showMessageBox(
+              context,
+              false,
+              "คุณยกเลิกการเข้าสู่ระบบ",
+              "เมื่อสักครู่คุณกดยกเลิกการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง",
+            );
 
             break;
           case AuthorizationStatus.error:
             print(result.error);
             Navigator.pop(context);
-            showMessageBox(context, false, "เกิดข้อผิดพลาด",
-                "เกิดข้อผิดพลาดขณะเข้าสู่ระบบด้วย Apple กรุณาลองใหม่อีกครั้ง");
+            showMessageBox(
+              context,
+              false,
+              "เกิดข้อผิดพลาด",
+              "เกิดข้อผิดพลาดขณะเข้าสู่ระบบด้วย Apple กรุณาลองใหม่อีกครั้ง",
+            );
             break;
         }
       } else {
         Navigator.pop(context);
-        showMessageBox(context, false, "เกิดข้อผิดพลาด",
-            "อุปกรณ์ของคุณไม่รองรับการเข้าสู่ระบบด้วย Apple (รองรับตั้งเเต่ IOS 13 เป็นต้นมา)");
+        showMessageBox(
+          context,
+          false,
+          "เกิดข้อผิดพลาด",
+          "อุปกรณ์ของคุณไม่รองรับการเข้าสู่ระบบด้วย Apple (รองรับตั้งเเต่ IOS 13 เป็นต้นมา)",
+        );
       }
     }
   }
@@ -170,8 +191,12 @@ class _LoginPage extends State<LoginPage> {
       var accessToken = await getAccessToken();
       if (accessToken == false) {
         Navigator.pop(context);
-        showMessageBox(context, false, "เกิดข้อผิดพลาด",
-            "ไม่สามารถเข้าสู่ระบบด้วย LINE ได้ กรุณาลองใหม่อีกครั้ง");
+        showMessageBox(
+          context,
+          false,
+          "เกิดข้อผิดพลาด",
+          "ไม่สามารถเข้าสู่ระบบด้วย LINE ได้ กรุณาลองใหม่อีกครั้ง",
+        );
         return;
       }
       printoutput(displayName, userId, profileImage, accessToken);
@@ -183,38 +208,69 @@ class _LoginPage extends State<LoginPage> {
       Navigator.pop(context);
       switch (e.code.toString()) {
         case "3003":
-          //IOS Cancel
-          showMessageBox(context, false, "คุณยกเลิกการเข้าสู่ระบบ",
-              "เมื่อสักครู่คุณกดยกเลิกการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
+          // IOS Cancel
+          showMessageBox(
+            context,
+            false,
+            "คุณยกเลิกการเข้าสู่ระบบ",
+            "เมื่อสักครู่คุณกดยกเลิกการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง",
+          );
           print("User Cancel the login");
           break;
         case "CANCEL":
-          //Android Cancel
-          showMessageBox(context, false, "คุณยกเลิกการเข้าสู่ระบบ",
-              "เมื่อสักครู่คุณกดยกเลิกการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
+          // Android Cancel
+          showMessageBox(
+            context,
+            false,
+            "คุณยกเลิกการเข้าสู่ระบบ",
+            "เมื่อสักครู่คุณกดยกเลิกการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง",
+          );
           print("User Cancel the login");
           break;
         case "-1200":
-          showMessageBox(context, false, "กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ต",
-              "ไม่สามารถติดต่อกับ LINE ได้ กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ตและลองใหม่อีกครั้ง");
+          showMessageBox(
+            context,
+            false,
+            "กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ต",
+            "ไม่สามารถติดต่อกับ LINE ได้ กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ตและลองใหม่อีกครั้ง",
+          );
           print("Connection Failed");
           break;
         case "AUTHENTICATION_AGENT_ERROR":
-          showMessageBox(context, false, "คุณไม่อนุญาติการเข้าสู่ระบบด้วย LINE",
-              "เมื่อสักครู่คุณกดยกเลิกการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
+          showMessageBox(
+            context,
+            false,
+            "คุณไม่อนุญาติการเข้าสู่ระบบด้วย LINE",
+            "เมื่อสักครู่คุณกดยกเลิกการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง",
+          );
           print("User decline the login");
           break;
         case "NETWORK_ERROR":
-          showMessageBox(context, false, "ไม่สามารถเชื่อมต่อกับ LINE ได้",
-              "กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ตและลองใหม่อีกครั้ง");
+          showMessageBox(
+            context,
+            false,
+            "ไม่สามารถเชื่อมต่อกับ LINE ได้",
+            "กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ตและลองใหม่อีกครั้ง",
+          );
           print("User decline the login");
           break;
         default:
-          showMessageBox(context, false, "เกิดข้อผิดพลาด",
-              "เกิดข้อผิดพลาดไม่ทราบสาเหตุ กรุณาเข้าสู่ระบบใหม่อีกครั้ง");
+          showMessageBox(
+            context,
+            false,
+            "เกิดข้อผิดพลาด",
+            "เกิดข้อผิดพลาดไม่ทราบสาเหตุ กรุณาเข้าสู่ระบบใหม่อีกครั้ง",
+          );
           print("Unknown but failed to login");
           break;
       }
+      // showMessageBox(
+      //   context,
+      //   false,
+      //   "เกิดข้อผิดพลาด",
+      //   "เกิดข้อผิดพลาดไม่ทราบสาเหตุ กรุณาเข้าสู่ระบบใหม่อีกครั้ง",
+      // );
+      // print("Unknown but failed to login");
     }
   }
 
