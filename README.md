@@ -1,16 +1,11 @@
-# psm_at_stamp
+# PSM @ STAMP (psm_at_stamp)
 
-A new Flutter project.
+![](https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/full_logo.png?alt=media&token=b128128f-d44f-41b7-a4d1-432aaa8ca6ab)
 
-## Getting Started
+![Build Status](https://api.codemagic.io/apps/5e9190511838ac398d17dedf/5e9190511838ac398d17dede/status_badge.svg)
 
-This project is a starting point for a Flutter application.
+### This project is not an open source!
 
-A few resources to get you started if this is your first Flutter project:
+## Re-Build Project
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This project is currently under re-building.
