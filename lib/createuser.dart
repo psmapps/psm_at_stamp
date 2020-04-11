@@ -54,7 +54,15 @@ class CreateUserState extends State<createUser> {
                       studentId +
                       ") กรุณาตรวจสอบและลองใหม่อีกครั้ง");
             } else {
-              if (snapShot.data['isRegistered']) {
+              bool registered;
+              if (snapShot.data['isRegistered'] == null ||
+                  snapShot.data['isRegistered'] == false) {
+                registered = false;
+              } else {
+                registered = true;
+              }
+
+              if (registered) {
                 print("Registation> Registered");
                 Navigator.pop(context);
                 showMessageBox(
@@ -166,7 +174,7 @@ class CreateUserState extends State<createUser> {
                               fontSize: 15,
                             )),
                         Text(
-                            "2. เมื่อคุณผูกบัญชีไปเเล้ว Apple ID, LINE ID และ ร��สนักเรียนนี้ จะไม่สามารถผูกบัญชีได้ใหม่อีกครั้ง",
+                            "2. เมื่อคุณผูกบัญชีไปเเล้ว Apple ID, LINE ID และ รหัสนักเรียนนี้ จะไม่สามารถผูกบัญชีได้ใหม่อีกครั้ง",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,

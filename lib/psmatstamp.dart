@@ -552,7 +552,7 @@ class _PSMATSTAMPMainPage extends State<PSMATSTAMPMainPage> {
               category.name,
               textAlign: TextAlign.center,
               maxLines: 3,
-              style: TextStyle(fontSize: 19),
+              style: TextStyle(fontSize: 15),
             ),
           ),
         ],

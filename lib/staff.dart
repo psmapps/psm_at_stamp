@@ -182,7 +182,7 @@ class StaffState extends State<Staff> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Text("Note: แสตมป์มีอ���ยุ 30 วินา��",
+                  child: Text("Note: แสตมป์มีอายุ 30 วินาที",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

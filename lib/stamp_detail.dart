@@ -75,7 +75,7 @@ class StampDetailstate extends State<StampDetail> {
   @override
   void initState() {
     super.initState();
-
+    _checkData();
     Firestore.instance
         .collection("Stamp_Transaction")
         .where("userId", isEqualTo: widget.userId)

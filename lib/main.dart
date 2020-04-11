@@ -252,6 +252,46 @@ class _welcomePageState extends State<welcomePage> {
         showMessageBox("เข้าสู่โหมด Offline",
             "ข้อมูลที่นำมาแสดง จะเป็นข้อมูลล่าสุดที่ระบบสามารถติดต่อกับ PSM @ STAMP Server ได้ กรุณาเชื่อมต่ออินเตอร์เน็ตเพื่อรับข้อมูลล่าสุด และ คุณจะไม่สามารถแสกน QR Code เพื่อรับแสตมป์ได้ในโหมด Offline");
       }
+    } catch (e) {
+      prefs.setString("Mode", "Offline");
+      print(e.message);
+      print("Internet> Not connected!");
+      bool loginStatus = prefs.getBool("Status");
+      if (loginStatus == false || loginStatus == null) {
+        print("LoginStatus> Not logged in Sending user to loginpage");
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+      } else {
+        var prefix = prefs.getString("prefix");
+        var name = prefs.getString("name");
+        var surname = prefs.getString("surname");
+        var studentId = prefs.getString("studentId");
+        var userId = prefs.getString("userId");
+        var year = prefs.getString("year");
+        var room = prefs.getString("room");
+        var displayName = prefs.getString("displayName");
+        var profileImage = prefs.getString("profileImage");
+        var permission = prefs.getString("permission");
+        var accessToken = prefs.getString("accessToken");
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PSMATSTAMPMainPage(
+                      userId: userId,
+                      studentId: studentId,
+                      prefix: prefix,
+                      name: name,
+                      surname: surname,
+                      year: year,
+                      room: room,
+                      displayName: displayName,
+                      profileImage: profileImage,
+                      permission: permission,
+                      accessToken: accessToken,
+                    )));
+        showMessageBox("เข้าสู่โหมด Offline",
+            "ข้อมูลที่นำมาแสดง จะเป็นข้อมูลล่าสุดที่ระบบสามารถติดต่อกับ PSM @ STAMP Server ได้ กรุณาเชื่อมต่ออินเตอร์เน็ตเพื่อรับข้อมูลล่าสุด และ คุณจะไม่สามารถแสกน QR Code เพื่อรับแสตมป์ได้ในโหมด Offline");
+      }
     }
   }
 

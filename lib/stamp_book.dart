@@ -31,7 +31,7 @@ class StampBookState extends State<StampBook> {
   ];
 
   @override
-  void initState() async {
+  void initState() {
     categories_stamp = [];
     stampid_already = [];
     stampName = [];
