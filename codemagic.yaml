@@ -21,14 +21,6 @@ workflows:
       cocoapods: default
     scripts:
       - |
-         #!/bin/sh
-        echo $ANDROID_CREDENTIAL | base64 --decode > $FCI_BUILD_DIR/android/app/google-services.json
-        echo "Listing android directory to confirm google-services.json is there"
-        ls android/app
-        echo $IOS_CREDENTIAL | base64 --decode > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist
-        echo "Listing ios directory to confirm GoogleService-Info.plist is there"
-        ls ios/Runner
-      - |
         # set up key.properties
         echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore
         cat >> "$FCI_BUILD_DIR/android/key.properties" <<EOF
@@ -42,6 +34,13 @@ workflows:
         echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
       - flutter packages pub get
       - flutter config --enable-web
+      - |
+        echo $ANDROID_CREDENTIAL | base64 --decode > $FCI_BUILD_DIR/android/app/google-services.json
+        echo "Listing android directory to confirm google-services.json is there"
+        ls android/app
+        echo $IOS_CREDENTIAL | base64 --decode > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist
+        echo "Listing ios directory to confirm GoogleService-Info.plist is there"
+        ls ios/Runner
       - flutter build apk --debug
       - find . -name "Podfile" -execdir pod install \;
       - keychain initialize
