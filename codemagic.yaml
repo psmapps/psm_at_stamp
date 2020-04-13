@@ -20,8 +20,8 @@ workflows:
       xcode: latest
       cocoapods: default
     scripts:
-      - echo $ANDROID_CREDENTIAL | base64 --decode > android/app/google-services.json
-      - echo $IOS_CREDENTIAL | base64 --decode > ios/Runner/GoogleService-Info.plist
+      - echo $ANDROID_CREDENTIAL | base64 --decode > $FCI_BUILD_DIR/android/app/google-services.json
+      - echo $IOS_CREDENTIAL | base64 --decode > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist
       - |
         # set up key.properties
         echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore
