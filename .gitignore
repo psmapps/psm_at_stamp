@@ -35,3 +35,7 @@ lib/generated_plugin_registrant.dart
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+/.blackbox/pubring.gpg~
+/.blackbox/pubring.kbx~
+/.blackbox/secring.gpg
+/ios/Runner/GoogleService-Info.plist
