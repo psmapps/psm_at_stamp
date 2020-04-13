@@ -20,8 +20,14 @@ workflows:
       xcode: latest
       cocoapods: default
     scripts:
-      - echo $ANDROID_CREDENTIAL | base64 --decode > $FCI_BUILD_DIR/android/app/google-services.json
-      - echo $IOS_CREDENTIAL | base64 --decode > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist
+      - |
+         #!/bin/sh
+        echo $ANDROID_CREDENTIAL | base64 --decode > $FCI_BUILD_DIR/android/app/google-services.json
+        echo "Listing android directory to confirm google-services.json is there"
+        ls android/app
+        echo $IOS_CREDENTIAL | base64 --decode > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist
+        echo "Listing ios directory to confirm GoogleService-Info.plist is there"
+        ls ios/Runner
       - |
         # set up key.properties
         echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore
