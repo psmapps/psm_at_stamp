@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:psm_at_stamp/components/signin_screen_components.dart';
 
 class SignInScreen extends StatefulWidget {
   SignInScreen({Key key}) : super(key: key);
@@ -15,34 +17,74 @@ class _SignInScreenState extends State<SignInScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
-          child: Column(
-            children: <Widget>[
-              Center(
-                child: Image.asset(
-                  "assets/images/icons/icon.png",
-                  scale: 3.5,
-                ),
-              ),
-              Text(
-                "Welcome to PSM @ STAMP",
-                style: TextStyle(
-                    fontFamily: "Library",
-                    color: Color.fromRGBO(225, 223, 26, 1),
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Please Sign-in before start using.",
-                style: TextStyle(color: Colors.white),
-              ),
-              Container(
-                padding: const EdgeInsets.all(20),
-                child: RaisedButton(
-                  onPressed: () {},
-                  child: Text("Hello"),
-                ),
-              )
-            ],
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Column(
+                      children: <Widget>[
+                        Image.asset(
+                          "assets/images/icons/icon.png",
+                          scale: 3.7,
+                        ),
+                        Text(
+                          "ยินดีต้อนรับเข้าสู่ PSM @ STAMP",
+                          style: TextStyle(
+                              fontFamily: "Sukhumwit",
+                              color: Color.fromRGBO(225, 223, 26, 1),
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "กรุณาเข้าสู่ระบบก่อนเริ่มต้นใช้งาน",
+                          style: TextStyle(
+                            fontFamily: "Sukhumwit",
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ],
+                    )),
+                Container(
+                    padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        signInButtonComponent(
+                          title: "เข้าสู่ระบบด้วย Google",
+                          icon: FontAwesomeIcons.google,
+                          onPressHandler: () {
+                            print("Hello");
+                          },
+                        ),
+                        signInButtonComponent(
+                          title: "เข้าสู่ระบบด้วย Apple",
+                          icon: FontAwesomeIcons.apple,
+                          onPressHandler: () {
+                            print("Email/Password");
+                          },
+                        ),
+                        signInButtonComponent(
+                          title: "เข้าสู่ระบบด้วย LINE",
+                          icon: FontAwesomeIcons.line,
+                          onPressHandler: () {
+                            print("LINE");
+                          },
+                        ),
+                        signInButtonComponent(
+                          title: "เข้าสู่ระบบด้วย Email/Password",
+                          icon: Icons.email,
+                          onPressHandler: () {
+                            print("Email/Password");
+                          },
+                        ),
+                      ],
+                    ))
+              ],
+            ),
           ),
         ),
       ),
