@@ -19,14 +19,15 @@ Widget signInButtonComponent(
               child: Row(
                 children: <Widget>[
                   FaIcon(icon, size: 23),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 17),
-                    child: Text(
-                      title,
-                      style: TextStyle(
-                          fontFamily: "Sukhumwit",
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                            fontFamily: "Sukhumwit",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17),
+                      ),
                     ),
                   ),
                 ],
