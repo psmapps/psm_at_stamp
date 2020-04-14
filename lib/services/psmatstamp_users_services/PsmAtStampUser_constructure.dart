@@ -14,6 +14,7 @@ class PsmAtStampUser {
   String year;
   String room;
   String profileImageUrl;
+  String displayName;
   PsmAtStampUserPermission permission;
   Map<String, dynamic> otherInfos;
   PsmAtStampUser(
@@ -25,6 +26,7 @@ class PsmAtStampUser {
       @required String year,
       @required String room,
       @required PsmAtStampUserPermission permission,
+      @required String displayName,
       String profileImageUrl,
       Map<String, dynamic> otherInfos}) {
     this.prefix = prefix;
@@ -35,6 +37,7 @@ class PsmAtStampUser {
     this.year = year;
     this.room = room;
     this.permission = permission;
+    this.displayName = displayName;
     this.profileImageUrl = profileImageUrl;
     this.otherInfos = otherInfos;
   }

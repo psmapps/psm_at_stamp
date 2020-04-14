@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 
 /// signUserIn is used to get and set the data in the Stamp_User
@@ -27,8 +26,7 @@ Future<PsmAtStampUser> signUserIn(
     String _remotePermission = docData["permission"];
 
     if (docData["accessToken"] != null &&
-        docData["udid"] != null &&
-        docData["udid"] != udid) {
+        (docData["udid"] != null && docData["udid"] != udid)) {
       didOverrideSignIn = true;
     }
 
@@ -37,11 +35,12 @@ Future<PsmAtStampUser> signUserIn(
         docData["surname"] == null ||
         docData["studentId"] == null ||
         docData["year"] == null ||
-        docData["class"] == null ||
+        docData["room"] == null ||
         docData["permission"] == null) {
       throw PlatformException(
           code: "ACCOUNT_DATA_INVALID",
-          details: "Some of required data is missing from this account");
+          details:
+              "Some of required data is missing from this account: " + userId);
     }
 
     await Firestore.instance
@@ -69,6 +68,7 @@ Future<PsmAtStampUser> signUserIn(
         year: docData["year"],
         room: docData["room"],
         permission: _permission,
+        displayName: docData["displayName"] ?? "PSM @ STAMP",
         profileImageUrl: docData["profileImage"] ??
             "https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/user.png?alt=media&token=eb023a2a-0d9e-46f2-8301-ef4e0e20cfee",
         otherInfos: {"didOverrideSignIn": didOverrideSignIn});

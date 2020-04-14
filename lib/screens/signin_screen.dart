@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/signin_screen_components.dart';
+import 'package:psm_at_stamp/services/signin_screen_services/signin_with_apple/signin_with_apple.dart';
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_google/signin_with_google.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -67,7 +68,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 title: "เข้าสู่ระบบด้วย Apple",
                                 icon: FontAwesomeIcons.apple,
                                 onPressHandler: () {
-                                  print("Email/Password");
+                                  signInWithApple(context);
                                 },
                               )
                             : Container(),

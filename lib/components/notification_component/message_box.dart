@@ -19,7 +19,7 @@ void showMessageBox(BuildContext context,
       children: <Widget>[
         icon != null
             ? Padding(
-                padding: const EdgeInsets.only(right: 10),
+                padding: const EdgeInsets.only(right: 14),
                 child: Icon(
                   icon,
                   color: iconColor,
@@ -29,7 +29,7 @@ void showMessageBox(BuildContext context,
         Text(
           title,
           style: TextStyle(
-            fontSize: 15,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             fontFamily: "Sukhumwit",
           ),
@@ -40,7 +40,7 @@ void showMessageBox(BuildContext context,
     content: Text(
       content,
       style: TextStyle(
-        fontSize: 12,
+        fontSize: 18,
         fontFamily: "Sukhumwit",
       ),
     ),

@@ -31,7 +31,11 @@ Future<void> signInWithGoogle(BuildContext context) async {
         udid: _udid);
     Navigator.pop(context);
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeScreen(
+                  psmAtStampUser: _psmatstampUser,
+                )));
   } on PlatformException catch (e) {
     GoogleSignIn().signOut();
     Navigator.pop(context);
