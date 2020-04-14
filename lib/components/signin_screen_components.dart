@@ -18,18 +18,15 @@ Widget signInButtonComponent(
               padding: const EdgeInsets.all(9),
               child: Row(
                 children: <Widget>[
-                  FaIcon(
-                    icon,
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                            fontFamily: "Sukhumwit",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
-                      ),
+                  FaIcon(icon, size: 23),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 17),
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          fontFamily: "Sukhumwit",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17),
                     ),
                   ),
                 ],

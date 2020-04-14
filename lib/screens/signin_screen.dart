@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/signin_screen_components.dart';
@@ -60,13 +61,15 @@ class _SignInScreenState extends State<SignInScreen> {
                             print("Hello");
                           },
                         ),
-                        signInButtonComponent(
-                          title: "เข้าสู่ระบบด้วย Apple",
-                          icon: FontAwesomeIcons.apple,
-                          onPressHandler: () {
-                            print("Email/Password");
-                          },
-                        ),
+                        Platform.isIOS
+                            ? signInButtonComponent(
+                                title: "เข้าสู่ระบบด้วย Apple",
+                                icon: FontAwesomeIcons.apple,
+                                onPressHandler: () {
+                                  print("Email/Password");
+                                },
+                              )
+                            : Container(),
                         signInButtonComponent(
                           title: "เข้าสู่ระบบด้วย LINE",
                           icon: FontAwesomeIcons.line,
