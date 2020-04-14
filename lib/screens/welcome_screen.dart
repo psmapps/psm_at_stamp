@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psm_at_stamp/services/welcome_screen_services.dart/welcome_screen_services.dart';
+import 'package:psm_at_stamp/services/welcome_screen_services/welcome_screen_services.dart';
 
 class WelcomeScreen extends StatefulWidget {
   WelcomeScreen({Key key}) : super(key: key);
