@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  flutter_line_sdk: ^1.2.9
   apple_sign_in: ^0.1.0
   flutter_udid: ^1.0.1
   cloud_firestore: ^0.13.4+2

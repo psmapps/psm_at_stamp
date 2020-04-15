@@ -1,9 +1,11 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:psm_at_stamp/components/signin_screen_components.dart';
+import 'package:psm_at_stamp/components/signin_button_components.dart';
+import 'package:psm_at_stamp/screens/signin_screens/signin_with_email_screen.dart';
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_apple/signin_with_apple.dart';
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_google/signin_with_google.dart';
+import 'package:psm_at_stamp/services/signin_screen_services/signin_with_line/signin_with_line.dart';
 
 class SignInScreen extends StatefulWidget {
   SignInScreen({Key key}) : super(key: key);
@@ -76,14 +78,18 @@ class _SignInScreenState extends State<SignInScreen> {
                           title: "เข้าสู่ระบบด้วย LINE",
                           icon: FontAwesomeIcons.line,
                           onPressHandler: () {
-                            print("LINE");
+                            signInWithLine(context);
                           },
                         ),
                         signInButtonComponent(
                           title: "เข้าสู่ระบบด้วย Email/Password",
                           icon: Icons.email,
                           onPressHandler: () {
-                            print("Email/Password");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SignInWithEmailScreen()));
                           },
                         ),
                       ],

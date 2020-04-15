@@ -26,14 +26,16 @@ void showMessageBox(BuildContext context,
                 ),
               )
             : Container(),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            fontFamily: "Sukhumwit",
+        Flexible(
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontFamily: "Sukhumwit",
+            ),
+            maxLines: 2,
           ),
-          maxLines: 2,
         )
       ],
     ),

@@ -33,6 +33,7 @@ void showLoadingBox(BuildContext context, {String loadingMessage}) {
                               fontWeight: FontWeight.bold,
                               fontFamily: "Sukhumwit"),
                           maxLines: 2,
+                          textAlign: TextAlign.center,
                         ),
                       )
                     : Container()

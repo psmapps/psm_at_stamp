@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-Widget signInButtonComponent(
-    {@required String title,
-    @required IconData icon,
-    @required Function onPressHandler}) {
+/// signInButtonComponent is used to create sign in button signin page and the others
+/// * Required
+/// [title, onPressHandler]
+/// * Optional
+/// [icon]
+Widget signInButtonComponent({
+  @required String title,
+  @required Function onPressHandler,
+  IconData icon,
+}) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Row(
@@ -18,7 +24,7 @@ Widget signInButtonComponent(
               padding: const EdgeInsets.all(9),
               child: Row(
                 children: <Widget>[
-                  FaIcon(icon, size: 23),
+                  icon != null ? FaIcon(icon, size: 23) : Container(),
                   Expanded(
                     child: Center(
                       child: Text(
