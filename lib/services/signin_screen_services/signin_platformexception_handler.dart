@@ -106,7 +106,7 @@ void signInPlatformExceptionHandler(
         content:
             "เกิดข้อผิดพลาดไม่ทราบสาเหตุ กรุณาลองใหม่อีกครั้ง (Code: ${exception.code})",
         icon: FontAwesomeIcons.exclamationCircle,
-        iconColor: Colors.greenAccent,
+        iconColor: Colors.red,
       );
   }
 }
