@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> check() {
     logger.d(widget.psmAtStampUser.otherInfos["didOverrideSignIn"]);
-    Future.delayed(Duration(seconds: 1), () {
+    return Future.delayed(Duration(seconds: 1), () {
       if (widget.psmAtStampUser.otherInfos["didOverrideSignIn"]) {
         showMessageBox(
           context,
