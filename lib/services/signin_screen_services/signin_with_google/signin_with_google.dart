@@ -25,11 +25,10 @@ Future<void> signInWithGoogle(BuildContext context) async {
         await FirebaseAuth.instance.signInWithCredential(_authCredential);
   } on PlatformException catch (exception) {
     Navigator.pop(context);
-
-    signInPlatformExceptionHandler(context, exception);
+    return signInPlatformExceptionHandler(context, exception);
   } on NoSuchMethodError catch (e) {
     Navigator.pop(context);
-    logger.d(e);
+    return logger.d(e);
   }
 
   try {

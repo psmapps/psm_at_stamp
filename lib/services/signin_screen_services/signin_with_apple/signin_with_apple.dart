@@ -93,7 +93,7 @@ Future<void> signInWithApple(BuildContext context) async {
         email: _authResult.user.email,
         profileImage: _authResult.user.photoUrl ??
             "https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/user.png?alt=media&token=eb023a2a-0d9e-46f2-8301-ef4e0e20cfee",
-        displayName: _authResult.user.displayName ?? "Stamp User",
+        displayName: "Stamp User",
         userId: _authResult.user.uid,
         signInServices: SignInServices.apple,
       );

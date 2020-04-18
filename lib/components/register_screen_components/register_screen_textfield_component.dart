@@ -5,12 +5,14 @@ Widget registerScreenTextFieldComponent(BuildContext context,
     {@required FocusNode beforeFocusNode,
     @required FocusNode currentFocusNode,
     @required FocusNode nextFocusNode,
-    @required String hintText}) {
+    @required String hintText,
+    @required TextEditingController textEditingController}) {
   return Flexible(
     child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         focusNode: currentFocusNode,
+        controller: textEditingController,
         inputFormatters: [
           LengthLimitingTextInputFormatter(1),
         ],

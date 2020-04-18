@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/components/signin_textfield_components.dart';
+import 'package:psm_at_stamp/screens/signin_screens/signin_with_email_forget_screen.dart';
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_email/signin_with_email.dart';
 
 class SignInWithEmailScreen extends StatefulWidget {
@@ -46,23 +47,46 @@ class _SignInWithEmailScreenState extends State<SignInWithEmailScreen> {
                     },
                     keyboardType: TextInputType.emailAddress),
                 signInTextField(
-                    controller: passwordTextController,
-                    focusNode: passwordFocus,
-                    labelText: "Password",
-                    isObsecureText: true,
-                    keyboardType: TextInputType.visiblePassword),
+                  controller: passwordTextController,
+                  focusNode: passwordFocus,
+                  labelText: "Password",
+                  isObsecureText: true,
+                  keyboardType: TextInputType.visiblePassword,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
-                  child: signInButtonComponent(
-                      title: "เข้าสู่ระบบด้วย Email/Password",
-                      icon: Icons.email,
-                      onPressHandler: () {
-                        signInWithEmail(
-                          context,
-                          email: emailTextController.text,
-                          password: passwordTextController.text,
-                        );
-                      }),
+                  child: Row(
+                    children: <Widget>[
+                      Flexible(
+                        flex: 2,
+                        child: signInButtonComponent(
+                          title: "ลืมรหัสผ่าน",
+                          onPressHandler: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    SignInWithEmailForgetPassword(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Flexible(
+                        flex: 3,
+                        child: signInButtonComponent(
+                            title: "เข้าสู่ระบบ",
+                            icon: Icons.account_circle,
+                            onPressHandler: () {
+                              signInWithEmail(
+                                context,
+                                email: emailTextController.text,
+                                password: passwordTextController.text,
+                              );
+                            }),
+                      ),
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),

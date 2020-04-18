@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 Widget signInButtonComponent({
   @required String title,
   @required Function onPressHandler,
+  Color buttonColor,
   IconData icon,
 }) {
   return Padding(
@@ -17,6 +18,7 @@ Widget signInButtonComponent({
       children: <Widget>[
         Expanded(
           child: RaisedButton(
+            color: buttonColor ?? Colors.grey[100],
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
             onPressed: onPressHandler,

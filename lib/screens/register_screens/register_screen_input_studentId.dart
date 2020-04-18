@@ -4,6 +4,7 @@ import 'package:psm_at_stamp/components/register_screen_components/register_staf
 import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/register_services/psmatstampregister_constructure.dart';
+import 'package:psm_at_stamp/services/register_services/register_validate_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   final PsmAtStampRegister psmAtStampRegister;
@@ -24,6 +25,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   FocusNode studentIdDigit4 = FocusNode();
   FocusNode studentIdDigit5 = FocusNode();
   FocusNode studentIdDigit6 = FocusNode();
+  TextEditingController studentIdTextDigit1 = TextEditingController();
+  TextEditingController studentIdTextDigit2 = TextEditingController();
+  TextEditingController studentIdTextDigit3 = TextEditingController();
+  TextEditingController studentIdTextDigit4 = TextEditingController();
+  TextEditingController studentIdTextDigit5 = TextEditingController();
+  TextEditingController studentIdTextDigit6 = TextEditingController();
+  TextEditingController stampLinkCode = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: <Widget>[
                     registerScreenTextFieldComponent(
                       context,
+                      textEditingController: studentIdTextDigit1,
                       beforeFocusNode: null,
                       currentFocusNode: studentIdDigit1,
                       nextFocusNode: studentIdDigit2,
@@ -76,49 +85,70 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     registerScreenTextFieldComponent(
                       context,
+                      textEditingController: studentIdTextDigit2,
                       beforeFocusNode: studentIdDigit1,
                       currentFocusNode: studentIdDigit2,
                       nextFocusNode: studentIdDigit3,
-                      hintText: "1",
+                      hintText: "0",
                     ),
                     registerScreenTextFieldComponent(
                       context,
+                      textEditingController: studentIdTextDigit3,
                       beforeFocusNode: studentIdDigit2,
                       currentFocusNode: studentIdDigit3,
                       nextFocusNode: studentIdDigit4,
-                      hintText: "8",
+                      hintText: "0",
                     ),
                     registerScreenTextFieldComponent(
                       context,
+                      textEditingController: studentIdTextDigit4,
                       beforeFocusNode: studentIdDigit3,
                       currentFocusNode: studentIdDigit4,
                       nextFocusNode: studentIdDigit5,
-                      hintText: "6",
+                      hintText: "0",
                     ),
                     registerScreenTextFieldComponent(
                       context,
+                      textEditingController: studentIdTextDigit5,
                       beforeFocusNode: studentIdDigit4,
                       currentFocusNode: studentIdDigit5,
                       nextFocusNode: studentIdDigit6,
-                      hintText: "9",
+                      hintText: "0",
                     ),
                     registerScreenTextFieldComponent(
                       context,
+                      textEditingController: studentIdTextDigit6,
                       beforeFocusNode: studentIdDigit5,
                       currentFocusNode: studentIdDigit6,
                       nextFocusNode: null,
-                      hintText: "3",
+                      hintText: "0",
                     ),
                   ],
                 ),
               ),
               widget.psmAtStampRegister.permission ==
                       PsmAtStampUserPermission.staff
-                  ? registerStaffSector()
+                  ? registerStaffSector(
+                      context,
+                      textEditingController: stampLinkCode,
+                    )
                   : Container(),
               signInButtonComponent(
                 title: "ผูกรหัสนักเรียนหรือรหัสบัญชีนี้",
-                onPressHandler: () {},
+                onPressHandler: () {
+                  String studentId = studentIdTextDigit1.text +
+                      studentIdTextDigit2.text +
+                      studentIdTextDigit3.text +
+                      studentIdTextDigit4.text +
+                      studentIdTextDigit5.text +
+                      studentIdTextDigit6.text;
+                  registerValidate(
+                    context,
+                    studentId: studentId,
+                    psmAtStampRegister: widget.psmAtStampRegister,
+                    stampLinkCode: stampLinkCode.text,
+                  );
+                },
               ),
             ],
           ),

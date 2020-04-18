@@ -52,11 +52,12 @@ Future<PsmAtStampUser> signUserIn({
         .document(userId)
         .updateData({"accessToken": accessToken, "udid": _udid});
 
-    if (_remotePermission == "student") {
+    if (_remotePermission == "student" || _remotePermission == "Student") {
       _permission = PsmAtStampUserPermission.student;
-    } else if (_remotePermission == "staff") {
+    } else if (_remotePermission == "staff" || _remotePermission == "Staff") {
       _permission = PsmAtStampUserPermission.staff;
-    } else if (_remotePermission == "administrator") {
+    } else if (_remotePermission == "administrator" ||
+        _remotePermission == "Administrator") {
       _permission = PsmAtStampUserPermission.administrator;
     } else {
       throw PlatformException(

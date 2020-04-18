@@ -22,11 +22,11 @@ Future<void> signInWithEmail(BuildContext context,
         .signInWithEmailAndPassword(email: email, password: password);
   } on PlatformException catch (e) {
     Navigator.pop(context);
-    signInPlatformExceptionHandler(context, e);
+    return signInPlatformExceptionHandler(context, e);
   } catch (e) {
     Navigator.pop(context);
     logger.d(e);
-    showMessageBox(
+    return showMessageBox(
       context,
       title: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
       content: "เกิดข้อผิดพลาดโดยไม่ทราบสาเหตุ กรุณาลองใหม่อีกครั้ง",
