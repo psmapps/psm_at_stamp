@@ -77,6 +77,26 @@ void signInPlatformExceptionHandler(
         iconColor: Colors.red,
       );
       break;
+    case "ERROR_WEAK_PASSWORD":
+      showMessageBox(
+        context,
+        title: "Password ของคุณง่ายเกินไป",
+        content:
+            "Password ของคุณสามารถคาดเดาได้ง่าย กรุณาตั้ง Password บัญชีของคุณใหม่อีกครั้งเพื่อความปลอดภัยของบัญชี PSM @ STAMP ของคุณ",
+        icon: FontAwesomeIcons.exclamationCircle,
+        iconColor: Colors.red,
+      );
+      break;
+    case "ERROR_EMAIL_ALREADY_IN_USE":
+      showMessageBox(
+        context,
+        title: "Email นี้ถูกใช้งานไปแล้ว",
+        content:
+            "Email นี้เคยใช้เปิดบัญชีกับ PSM @ STMAP ไปแล้ว กรุณาเปลี่ยน Email หรือ ติดต่อ PSM @ STAMP Team หากต้องการความช่วยเหลือ",
+        icon: FontAwesomeIcons.exclamationCircle,
+        iconColor: Colors.red,
+      );
+      break;
     default:
       showMessageBox(
         context,

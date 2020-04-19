@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/notification_component/loading_box.dart';
 import 'package:psm_at_stamp/components/notification_component/message_box.dart';
-import 'package:psm_at_stamp/screens/home_screen.dart';
+import 'package:psm_at_stamp/screens/home_screens/home_screen.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/sign_user_in.dart';
@@ -34,6 +34,18 @@ Future<void> signInWithEmail(BuildContext context,
       iconColor: Colors.red,
     );
   }
+  if (!(_authResult.user.isEmailVerified) ||
+      _authResult.user.isEmailVerified == null) {
+    Navigator.pop(context);
+    return showMessageBox(
+      context,
+      title: "Email ยังไม่ได้ยืนยัน",
+      content:
+          "กรุณายืนยันที่อยู่ Email ของคุณก่อนเริ่มต้นใช้งาน PSM @ STAMP หากคุณยังไม่ได้รับ Email กรุณาตรวจสอบในกล่องจดหมายขยะ หรือ Spam หรือ กดที่ปุ่ม ส่ง Email ยืนยันอีกครั้ง ด้านล่างเพื่อส่ง Email การยืนยัน Email อีกครั้ง",
+      icon: FontAwesomeIcons.exclamationTriangle,
+      iconColor: Colors.yellow,
+    );
+  }
 
   try {
     PsmAtStampUser psmAtStampUser = await signUserIn(
@@ -41,7 +53,7 @@ Future<void> signInWithEmail(BuildContext context,
       accessToken: "SIGNIN_WITH_EMAIL",
     );
     Navigator.pop(context);
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => HomeScreen(

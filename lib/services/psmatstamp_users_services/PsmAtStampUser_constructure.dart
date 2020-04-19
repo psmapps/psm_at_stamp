@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 
 /// PsmAtStampUser are used to share user data with home_page
@@ -15,6 +16,8 @@ class PsmAtStampUser {
   String room;
   String profileImageUrl;
   String displayName;
+  String accessToken;
+  String udid;
   PsmAtStampUserPermission permission;
   Map<String, dynamic> otherInfos;
   PsmAtStampUser(
@@ -27,6 +30,8 @@ class PsmAtStampUser {
       @required String room,
       @required PsmAtStampUserPermission permission,
       @required String displayName,
+      @required String accessToken,
+      @required String udid,
       String profileImageUrl,
       Map<String, dynamic> otherInfos}) {
     this.prefix = prefix;
@@ -36,10 +41,44 @@ class PsmAtStampUser {
     this.userId = userId;
     this.year = year;
     this.room = room;
+    this.udid = udid;
     this.permission = permission;
     this.displayName = displayName;
     this.profileImageUrl = profileImageUrl;
     this.otherInfos = otherInfos;
+  }
+  String exportToString() {
+    String permission;
+    switch (this.permission) {
+      case PsmAtStampUserPermission.student:
+        permission = "Student";
+        break;
+      case PsmAtStampUserPermission.staff:
+        permission = "Staff";
+        break;
+      case PsmAtStampUserPermission.administrator:
+        permission = "Administrator";
+        break;
+      default:
+        permission = "Null";
+    }
+    Map<String, dynamic> psmAtStampUser = {
+      "prefix": this.prefix,
+      "name": this.name,
+      "surname": this.surname,
+      "userId": this.userId,
+      "studentId": this.studentId,
+      "year": this.year,
+      "room": this.room,
+      "permission": permission,
+      "accessToken": this.accessToken,
+      "udid": this.udid,
+      "displayName": this.displayName,
+      "profileImageUrl": this.profileImageUrl,
+      "otherInfos":
+          this.otherInfos != null ? json.encode(this.otherInfos) : "{}"
+    };
+    return json.encode(psmAtStampUser);
   }
 }
 

@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/notification_component/loading_box.dart';
 import 'package:psm_at_stamp/components/notification_component/message_box.dart';
-import 'package:psm_at_stamp/screens/home_screen.dart';
+import 'package:psm_at_stamp/screens/home_screens/home_screen.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/sign_user_in.dart';
@@ -78,7 +78,7 @@ Future<void> signInWithApple(BuildContext context) async {
       ),
     );
     Navigator.pop(context);
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => HomeScreen(

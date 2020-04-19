@@ -41,6 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               color: Color.fromRGBO(225, 223, 26, 1),
                               fontSize: 25,
                               fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
                         ),
                         Text(
                           "กรุณาเข้าสู่ระบบก่อนเริ่มต้นใช้งาน",
@@ -82,7 +83,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           },
                         ),
                         signInButtonComponent(
-                          title: "เข้าสู่ระบบด้วย Email/Password",
+                          title: "เข้าสู่ระบบด้วย Email",
                           icon: Icons.email,
                           onPressHandler: () {
                             Navigator.push(

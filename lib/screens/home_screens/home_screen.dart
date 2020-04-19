@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/notification_component/message_box.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
+import 'package:psm_at_stamp/services/psmatstamp_users_services/sign_user_out.dart';
 
 class HomeScreen extends StatefulWidget {
   final PsmAtStampUser psmAtStampUser;
@@ -20,9 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> check() {
-    logger.d(widget.psmAtStampUser.otherInfos["didOverrideSignIn"]);
+    logger.d(widget.psmAtStampUser.otherInfos["didOverrideSignIn"] ?? false);
     return Future.delayed(Duration(seconds: 1), () {
-      if (widget.psmAtStampUser.otherInfos["didOverrideSignIn"]) {
+      if (widget.psmAtStampUser.otherInfos["didOverrideSignIn"] ?? false) {
         showMessageBox(
           context,
           title: "การเข้าสู่ระบบซ้ำ",
@@ -40,6 +41,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
+        actions: <Widget>[
+          IconButton(
+            icon: FaIcon(FontAwesomeIcons.signOutAlt),
+            onPressed: () {
+              signUserOut(context, psmAtStampUser: widget.psmAtStampUser);
+            },
+          )
+        ],
       ),
       body: Text("Body"),
     );

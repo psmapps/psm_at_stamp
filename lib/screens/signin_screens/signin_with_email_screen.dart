@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/components/signin_textfield_components.dart';
 import 'package:psm_at_stamp/screens/signin_screens/signin_with_email_forget_screen.dart';
+import 'package:psm_at_stamp/screens/signin_screens/signin_with_email_register_screen.dart';
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_email/signin_with_email.dart';
 
 class SignInWithEmailScreen extends StatefulWidget {
@@ -75,15 +76,16 @@ class _SignInWithEmailScreenState extends State<SignInWithEmailScreen> {
                       Flexible(
                         flex: 3,
                         child: signInButtonComponent(
-                            title: "เข้าสู่ระบบ",
-                            icon: Icons.account_circle,
-                            onPressHandler: () {
-                              signInWithEmail(
-                                context,
-                                email: emailTextController.text,
-                                password: passwordTextController.text,
-                              );
-                            }),
+                          title: "เข้าสู่ระบบ",
+                          icon: Icons.account_circle,
+                          onPressHandler: () {
+                            signInWithEmail(
+                              context,
+                              email: emailTextController.text,
+                              password: passwordTextController.text,
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -102,7 +104,14 @@ class _SignInWithEmailScreenState extends State<SignInWithEmailScreen> {
                   padding: const EdgeInsets.only(top: 10),
                   child: signInButtonComponent(
                     title: "สมัครบัญชีด้วย Email",
-                    onPressHandler: () {},
+                    onPressHandler: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignInWithEmailRegisterScreen(),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

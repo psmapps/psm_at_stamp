@@ -44,6 +44,8 @@ void signInWithLinePlatformExceptionHandler(BuildContext context,
         iconColor: Colors.red,
       );
       break;
+    case "AUTHENTICATION_AGENT_ERROR":
+      break;
     default:
       showMessageBox(
         context,
