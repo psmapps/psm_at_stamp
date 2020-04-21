@@ -14,6 +14,7 @@ import 'package:psm_at_stamp/services/psmatstamp_users_services/save_credential_
 Future<PsmAtStampUser> signUserIn({
   @required String userId,
   @required String accessToken,
+  @required SignInServices signInServices,
 }) async {
   String udid = await FlutterUdid.udid;
   DocumentSnapshot doc =
@@ -77,11 +78,13 @@ Future<PsmAtStampUser> signUserIn({
     permission: _permission,
     accessToken: accessToken,
     udid: udid,
+    signInServices: signInServices,
     displayName: docData["displayName"] ?? "PSM @ STAMP",
     profileImageUrl: docData["profileImage"] ??
         "https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/user.png?alt=media&token=eb023a2a-0d9e-46f2-8301-ef4e0e20cfee",
     otherInfos: {"didOverrideSignIn": didOverrideSignIn},
   );
+  logger.d(psmAtStampUser.exportToString());
   try {
     await saveCredentialToFile(psmAtStampUser: psmAtStampUser);
   } catch (e) {

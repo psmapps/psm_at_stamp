@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:psm_at_stamp/components/notification_component/message_box.dart';
-import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
+import 'package:psm_at_stamp/screens/home_screens/custom_tab_indicator.dart';
+import 'package:psm_at_stamp/screens/my_account_screens/my_account_screen.dart';
+import 'package:psm_at_stamp/screens/stamp_book_screens/stamp_book_screen.dart';
+import 'package:psm_at_stamp/services/home_screen_services/check_did_override_signin.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
-import 'package:psm_at_stamp/services/psmatstamp_users_services/sign_user_out.dart';
 
 class HomeScreen extends StatefulWidget {
   final PsmAtStampUser psmAtStampUser;
@@ -14,43 +15,80 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TabController tabController;
   @override
   void initState() {
     super.initState();
-    check();
-  }
-
-  Future<void> check() {
-    logger.d(widget.psmAtStampUser.otherInfos["didOverrideSignIn"] ?? false);
-    return Future.delayed(Duration(seconds: 1), () {
-      if (widget.psmAtStampUser.otherInfos["didOverrideSignIn"] ?? false) {
-        showMessageBox(
-          context,
-          title: "การเข้าสู่ระบบซ้ำ",
-          content:
-              "การเข้าสู่ระบบนี้จะทำให้คุณออกจากระบบในอุปกรณ์เก่าโดยอัตโนมัติ เนื่องจากผู้ใช้งานสามารถเข้าสู่ระบบได้จากอุปกรณ์เครื่องเดียวเท่านั้น",
-          icon: FontAwesomeIcons.exclamationTriangle,
-          iconColor: Colors.yellow[600],
-        );
-      }
-    });
+    checkDidOverrideSignIn(context, psmAtStampUser: widget.psmAtStampUser);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-        actions: <Widget>[
-          IconButton(
-            icon: FaIcon(FontAwesomeIcons.signOutAlt),
-            onPressed: () {
-              signUserOut(context, psmAtStampUser: widget.psmAtStampUser);
-            },
-          )
-        ],
-      ),
-      body: Text("Body"),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          backgroundColor: Color.fromRGBO(90, 90, 90, 1),
+          appBar: AppBar(
+            backgroundColor: Color.fromRGBO(31, 31, 31, 1),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(19),
+                bottomRight: Radius.circular(19),
+              ),
+            ),
+            title: Center(
+              child: Image.asset(
+                "assets/images/icons/icon.png",
+                scale: 18,
+              ),
+            ),
+          ),
+          body: TabBarView(
+            controller: tabController,
+            children: <Widget>[
+              StampBookScreen(
+                psmAtStampUser: widget.psmAtStampUser,
+              ),
+              MyAccountScreen(
+                psmAtStampUser: widget.psmAtStampUser,
+              )
+            ],
+          ),
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(19),
+                topRight: Radius.circular(19),
+              ),
+              color: Color.fromRGBO(31, 31, 31, 1),
+            ),
+            child: TabBar(
+              indicator: CustomTabIndicator(),
+              labelColor: Colors.white,
+              controller: tabController,
+              unselectedLabelStyle: TextStyle(fontSize: 0),
+              labelStyle: TextStyle(
+                  fontFamily: "Sukhumwit",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16),
+              tabs: [
+                Tab(
+                  icon: Icon(FontAwesomeIcons.book),
+                  child: Text("สมุดแสตมป์"),
+                ),
+                Tab(
+                  icon: Icon(FontAwesomeIcons.userAlt),
+                  child: Text("บัญชีของฉัน"),
+                ),
+              ],
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(FontAwesomeIcons.qrcode),
+            tooltip: "สแกน QR Code รับแสตมป์",
+            backgroundColor: Colors.green[800],
+            onPressed: () {},
+          )),
     );
   }
 }

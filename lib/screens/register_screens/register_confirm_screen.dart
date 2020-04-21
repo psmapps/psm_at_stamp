@@ -104,6 +104,7 @@ class _RegisterConfirmScreenState extends State<RegisterConfirmScreen> {
                     child: signInButtonComponent(
                       title: "ข้อมูลไม่ถูกต้อง",
                       buttonColor: Colors.red,
+                      textAlign: TextAlign.center,
                       onPressHandler: () {
                         showMessageBox(
                           context,
@@ -129,6 +130,7 @@ class _RegisterConfirmScreenState extends State<RegisterConfirmScreen> {
                     child: signInButtonComponent(
                       title: "ยืนยันการผูกบัญชี",
                       buttonColor: Colors.green,
+                      textAlign: TextAlign.center,
                       onPressHandler: () {
                         if (widget.psmAtStampRegister.permission ==
                             PsmAtStampUserPermission.student) {

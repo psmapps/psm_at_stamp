@@ -76,6 +76,7 @@ Future<void> signInWithApple(BuildContext context) async {
       accessToken: String.fromCharCodes(
         _signInWithAppleResult.credential.authorizationCode,
       ),
+      signInServices: SignInServices.apple,
     );
     Navigator.pop(context);
     Navigator.pushReplacement(

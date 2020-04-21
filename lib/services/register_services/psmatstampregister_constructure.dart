@@ -47,5 +47,3 @@ class PsmAtStampRegister {
     this.signInServices = signInServices;
   }
 }
-
-enum SignInServices { line, apple, google, email }

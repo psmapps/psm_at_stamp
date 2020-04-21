@@ -25,7 +25,7 @@ Future<void> signInWithLine(BuildContext context) async {
   try {
     _lineLoginResult =
         await LineSDK.instance.login(scopes: ["profile", "openid", "email"]);
-    logger.d(_lineLoginResult.toString());
+    logger.d(json.encode(_lineLoginResult.data));
     if (Platform.isIOS) {
       _idTokenDecode =
           jwtDecode(token: _lineLoginResult.accessToken.data["id_token"]);
@@ -97,6 +97,7 @@ Future<void> signInWithLine(BuildContext context) async {
     PsmAtStampUser psmAtStampUser = await signUserIn(
       userId: _authResult.user.uid,
       accessToken: _lineLoginResult.accessToken.data["access_token"],
+      signInServices: SignInServices.line,
     );
     Navigator.pop(context);
     Navigator.pushReplacement(

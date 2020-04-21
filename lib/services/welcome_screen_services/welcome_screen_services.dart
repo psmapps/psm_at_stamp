@@ -31,6 +31,7 @@ Future<void> welcomeCredentialCheck(BuildContext context) async {
 
   if (docSnap.data["accessToken"] != psmAtStampUserFromCredentail.accessToken &&
       docSnap.data["udid"] != _udid) {
+    logger.d("overrideSignIn detected. Deleting local credential file.");
     await deleteCredentialFile();
     return showMessageBox(
       context,
@@ -64,10 +65,12 @@ Future<void> welcomeCredentialCheck(BuildContext context) async {
     permission: psmAtStampUserFromCredentail.permission,
     accessToken: psmAtStampUserFromCredentail.accessToken,
     udid: _udid,
+    signInServices: psmAtStampUserFromCredentail.signInServices,
     displayName: psmAtStampUserFromCredentail.displayName,
     profileImageUrl: psmAtStampUserFromCredentail.profileImageUrl,
     otherInfos: {"didOverrideSignIn": false},
   );
+  logger.d(psmAtStampUser.exportToString());
   Navigator.pushReplacement(
     context,
     MaterialPageRoute(

@@ -5,11 +5,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 /// * Required
 /// [title, onPressHandler]
 /// * Optional
-/// [icon]
+/// [icon, textAlign]
 Widget signInButtonComponent({
   @required String title,
   @required Function onPressHandler,
   Color buttonColor,
+  TextAlign textAlign,
   IconData icon,
 }) {
   return Padding(
@@ -35,6 +36,7 @@ Widget signInButtonComponent({
                             fontFamily: "Sukhumwit",
                             fontWeight: FontWeight.bold,
                             fontSize: 17),
+                        textAlign: textAlign ?? TextAlign.start,
                       ),
                     ),
                   ),

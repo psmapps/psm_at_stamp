@@ -35,6 +35,7 @@ Future<void> signInWithGoogle(BuildContext context) async {
     PsmAtStampUser psmAtStampUser = await signUserIn(
       userId: _authResult.user.uid,
       accessToken: _googleSignInAuth.accessToken,
+      signInServices: SignInServices.google,
     );
     Navigator.pop(context);
     Navigator.pushReplacement(

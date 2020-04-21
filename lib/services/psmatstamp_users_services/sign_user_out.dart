@@ -17,14 +17,20 @@ Future<void> signUserOut(BuildContext context,
         .collection("Stamp_User")
         .document(psmAtStampUser.userId)
         .updateData({"udid": "", "accessToken": ""});
-    await GoogleSignIn().signOut();
-    await LineSDK.instance.logout();
+    if (psmAtStampUser.signInServices == SignInServices.google) {
+      await GoogleSignIn().signOut();
+    }
+    if (psmAtStampUser.signInServices == SignInServices.line) {
+      await LineSDK.instance.logout();
+    }
     await FirebaseAuth.instance.signOut();
     await deleteCredentialFile();
   } catch (e) {
+    Navigator.pop(context);
     logger.d(e);
     return;
   }
+  logger.d("Signed out user " + psmAtStampUser.userId);
   Navigator.pop(context);
   Navigator.pushReplacement(
     context,

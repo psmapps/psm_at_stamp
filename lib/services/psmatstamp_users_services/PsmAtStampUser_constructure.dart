@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:psm_at_stamp/services/psmatstamp_users_services/permission_converter_service.dart';
+import 'package:psm_at_stamp/services/psmatstamp_users_services/signin_service_converter_service.dart';
 
 /// PsmAtStampUser are used to share user data with home_page
 /// * Required
@@ -19,6 +21,7 @@ class PsmAtStampUser {
   String accessToken;
   String udid;
   PsmAtStampUserPermission permission;
+  SignInServices signInServices;
   Map<String, dynamic> otherInfos;
   PsmAtStampUser(
       {@required String prefix,
@@ -32,6 +35,7 @@ class PsmAtStampUser {
       @required String displayName,
       @required String accessToken,
       @required String udid,
+      @required SignInServices signInServices,
       String profileImageUrl,
       Map<String, dynamic> otherInfos}) {
     this.prefix = prefix;
@@ -42,26 +46,14 @@ class PsmAtStampUser {
     this.year = year;
     this.room = room;
     this.udid = udid;
+    this.accessToken = accessToken;
     this.permission = permission;
     this.displayName = displayName;
     this.profileImageUrl = profileImageUrl;
+    this.signInServices = signInServices;
     this.otherInfos = otherInfos;
   }
   String exportToString() {
-    String permission;
-    switch (this.permission) {
-      case PsmAtStampUserPermission.student:
-        permission = "Student";
-        break;
-      case PsmAtStampUserPermission.staff:
-        permission = "Staff";
-        break;
-      case PsmAtStampUserPermission.administrator:
-        permission = "Administrator";
-        break;
-      default:
-        permission = "Null";
-    }
     Map<String, dynamic> psmAtStampUser = {
       "prefix": this.prefix,
       "name": this.name,
@@ -70,11 +62,14 @@ class PsmAtStampUser {
       "studentId": this.studentId,
       "year": this.year,
       "room": this.room,
-      "permission": permission,
+      "permission": psmAtStampPermissionToString(
+          psmAtStampUserPermission: this.permission),
       "accessToken": this.accessToken,
       "udid": this.udid,
       "displayName": this.displayName,
       "profileImageUrl": this.profileImageUrl,
+      "signInServices":
+          psmAtStampSignInServiceToString(signInService: this.signInServices),
       "otherInfos":
           this.otherInfos != null ? json.encode(this.otherInfos) : "{}"
     };
@@ -84,3 +79,6 @@ class PsmAtStampUser {
 
 /// PsmAtStampUserPermission is a permission for the PsmAtStampUser. Currently have [student, staff, administrator]
 enum PsmAtStampUserPermission { student, staff, administrator }
+
+/// SignInServices is a permission for the PsmAtStampUser. Currently have [line, apple, google, email]
+enum SignInServices { line, apple, google, email }

@@ -51,6 +51,7 @@ Future<void> signInWithEmail(BuildContext context,
     PsmAtStampUser psmAtStampUser = await signUserIn(
       userId: _authResult.user.uid,
       accessToken: "SIGNIN_WITH_EMAIL",
+      signInServices: SignInServices.email,
     );
     Navigator.pop(context);
     Navigator.pushReplacement(
