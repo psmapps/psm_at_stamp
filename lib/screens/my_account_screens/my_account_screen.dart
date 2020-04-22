@@ -1,8 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:psm_at_stamp/components/my_account_component/badge_display_component.dart';
+import 'package:psm_at_stamp/components/my_account_component/display_name_component.dart';
+import 'package:psm_at_stamp/components/notification_component/message_box.dart';
 import 'package:psm_at_stamp/components/signin_button_components.dart';
-import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/sign_user_out.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class MyAccountScreen extends StatefulWidget {
   final PsmAtStampUser psmAtStampUser;
@@ -15,7 +20,6 @@ class MyAccountScreen extends StatefulWidget {
 class _MyAccountScreenState extends State<MyAccountScreen> {
   @override
   void initState() {
-    logger.d(widget.psmAtStampUser.exportToString());
     super.initState();
   }
 
@@ -41,54 +45,21 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
                         ),
+                        badgeDisplayComponent(
+                          signInServices: widget.psmAtStampUser.signInServices,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            widget.psmAtStampUser.permission ==
-                                    PsmAtStampUserPermission.administrator
-                                ? Tooltip(
-                                    message:
-                                        "บัญชีนี้ได้รับการยืนยันจาก PSM @ STAMP ให้เป็น Administrator แล้ว",
-                                    textStyle: TextStyle(
-                                      fontFamily: "Sukhumwit",
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    child: Icon(
-                                      Icons.verified_user,
-                                      color: Colors.blue,
-                                    ),
-                                  )
-                                : Container(),
-                            widget.psmAtStampUser.permission ==
-                                    PsmAtStampUserPermission.staff
-                                ? Tooltip(
-                                    message:
-                                        "บัญชีนี้ได้รับการยืนยันจาก PSM @ STAMP ให้เป็น Staff ฐานกิจกรรมแล้ว",
-                                    textStyle: TextStyle(
-                                      fontFamily: "Sukhumwit",
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    child: Icon(
-                                      Icons.stars,
-                                      color: Colors.yellow[600],
-                                    ),
-                                  )
-                                : Container(),
+                            badgeDisplayComponent(
+                              psmAtStampUserPermission:
+                                  widget.psmAtStampUser.permission,
+                            ),
                             Padding(
                               padding: const EdgeInsets.only(left: 5),
                             ),
-                            Text(
-                              widget.psmAtStampUser.displayName,
-                              style: TextStyle(
-                                fontFamily: "Sukhumwit",
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 1,
+                            displayNameComponent(
+                              displayName: widget.psmAtStampUser.displayName,
                             ),
                           ],
                         ),
@@ -109,7 +80,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               widget.psmAtStampUser.year +
                               "/" +
                               widget.psmAtStampUser.room +
-                              " " +
+                              " - " +
                               widget.psmAtStampUser.studentId,
                           style: TextStyle(
                             fontFamily: "Sukhumwit",
@@ -117,31 +88,46 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 10, bottom: 20),
+                          child: InkWell(
+                            onTap: () {},
+                            child: QrImage(
+                              size: 150,
+                              version: QrVersions.auto,
+                              embeddedImage: AssetImage(
+                                "assets/images/icons/icon_black.png",
+                              ),
+                              data: json.encode({
+                                "type": "user",
+                                "userId": widget.psmAtStampUser.userId,
+                              }),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
                 ),
                 Center(
                   child: Container(
-                    child: Container(
-                      decoration: BoxDecoration(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
                         color: Colors.white,
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 7,
-                        ),
-                        borderRadius: BorderRadius.circular(100),
+                        width: 7,
                       ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: FadeInImage.assetNetwork(
-                          fit: BoxFit.cover,
-                          width: 140,
-                          height: 140,
-                          fadeInCurve: Curves.easeIn,
-                          placeholder: "assets/images/user.png",
-                          image: widget.psmAtStampUser.profileImageUrl,
-                        ),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: FadeInImage.assetNetwork(
+                        fit: BoxFit.cover,
+                        width: 140,
+                        height: 140,
+                        fadeInCurve: Curves.easeIn,
+                        placeholder: "assets/images/user.png",
+                        image: widget.psmAtStampUser.profileImageUrl,
                       ),
                     ),
                   ),
@@ -152,9 +138,31 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 title: "ออกจากระบบ",
                 buttonColor: Colors.redAccent,
                 onPressHandler: () {
-                  signUserOut(
+                  return showMessageBox(
                     context,
-                    psmAtStampUser: widget.psmAtStampUser,
+                    title: "ออกจากระบบ",
+                    content: "คุณต้องการออกจากระบบใช้หรือไม่?",
+                    icon: FontAwesomeIcons.exclamationTriangle,
+                    iconColor: Colors.yellow,
+                    actionsButton: [
+                      IconButton(
+                        icon: Icon(FontAwesomeIcons.timesCircle),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(FontAwesomeIcons.checkCircle),
+                        color: Colors.redAccent,
+                        onPressed: () {
+                          Navigator.pop(context);
+                          signUserOut(
+                            context,
+                            psmAtStampUser: widget.psmAtStampUser,
+                          );
+                        },
+                      ),
+                    ],
                   );
                 })
           ],

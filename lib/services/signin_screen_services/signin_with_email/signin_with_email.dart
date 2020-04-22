@@ -54,6 +54,7 @@ Future<void> signInWithEmail(BuildContext context,
       signInServices: SignInServices.email,
     );
     Navigator.pop(context);
+    Navigator.pop(context);
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(

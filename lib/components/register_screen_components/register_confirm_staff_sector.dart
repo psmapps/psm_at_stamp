@@ -47,12 +47,12 @@ Widget registerConfirmStaffSector(
                   data: psmAtStampStampData.categories,
                 ),
                 registerStampInfo(
-                  index: "คำอธิบาย:",
-                  data: psmAtStampStampData.detail,
-                ),
-                registerStampInfo(
                   index: "ที่ตั้งฐานกิจกรรม:",
                   data: psmAtStampStampData.location,
+                ),
+                registerStampInfo(
+                  index: "คำอธิบาย:",
+                  data: psmAtStampStampData.detail,
                 ),
               ],
             ),

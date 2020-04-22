@@ -8,7 +8,9 @@ import 'package:psm_at_stamp/screens/signin_screens/signin_screen.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/delete_credential_file.dart';
+import 'package:psm_at_stamp/services/psmatstamp_users_services/permission_converter_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/read_credential_from_file.dart';
+import 'package:psm_at_stamp/services/psmatstamp_users_services/save_credential_to_file.dart';
 
 Future<void> welcomeCredentialCheck(BuildContext context) async {
   PsmAtStampUser psmAtStampUserFromCredentail;
@@ -23,9 +25,33 @@ Future<void> welcomeCredentialCheck(BuildContext context) async {
         .get();
   } catch (e) {
     logger.d(e);
-    return Navigator.pushReplacement(
+    throw Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => SignInScreen()),
+    );
+  }
+  if (!docSnap.exists) {
+    logger.d("User not found.");
+    await deleteCredentialFile();
+    return showMessageBox(
+      context,
+      title: "ไม่พบบัญชีของคุณ",
+      content:
+          "ไม่พบบัญชีที่คุณเข้าสุ่ระบบมาล่าสุด ระบบจะทำการออกจากระบบบนอุปกรณ์นี้อัตโนมัติ หากคิดว่านี่เป็นข้อผิดพลาด กรุณาติดต่อ PSM @ STAMP Team",
+      icon: FontAwesomeIcons.exclamationTriangle,
+      iconColor: Colors.yellow,
+      actionsButton: [
+        IconButton(
+          icon: Icon(FontAwesomeIcons.timesCircle),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => SignInScreen()),
+            );
+          },
+        )
+      ],
     );
   }
 
@@ -55,22 +81,24 @@ Future<void> welcomeCredentialCheck(BuildContext context) async {
     );
   }
   PsmAtStampUser psmAtStampUser = PsmAtStampUser(
-    prefix: psmAtStampUserFromCredentail.prefix,
-    name: psmAtStampUserFromCredentail.name,
-    surname: psmAtStampUserFromCredentail.surname,
+    prefix: docSnap.data["prefix"],
+    name: docSnap.data["name"],
+    surname: docSnap.data["surname"],
     userId: psmAtStampUserFromCredentail.userId,
-    studentId: psmAtStampUserFromCredentail.studentId,
-    year: psmAtStampUserFromCredentail.year,
-    room: psmAtStampUserFromCredentail.room,
-    permission: psmAtStampUserFromCredentail.permission,
+    studentId: docSnap.data["studentId"],
+    year: docSnap.data["year"],
+    room: docSnap.data["room"],
+    permission: psmAtStampStringToPermission(
+        permissionString: docSnap.data["permission"]),
     accessToken: psmAtStampUserFromCredentail.accessToken,
     udid: _udid,
     signInServices: psmAtStampUserFromCredentail.signInServices,
-    displayName: psmAtStampUserFromCredentail.displayName,
-    profileImageUrl: psmAtStampUserFromCredentail.profileImageUrl,
+    displayName: docSnap.data["displayName"],
+    profileImageUrl: docSnap.data["profileImage"],
     otherInfos: {"didOverrideSignIn": false},
   );
   logger.d(psmAtStampUser.exportToString());
+  await saveCredentialToFile(psmAtStampUser: psmAtStampUser);
   Navigator.pushReplacement(
     context,
     MaterialPageRoute(

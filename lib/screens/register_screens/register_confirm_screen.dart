@@ -40,12 +40,25 @@ class _RegisterConfirmScreenState extends State<RegisterConfirmScreen> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(20),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                    widget.psmAtStampRegister.profileImage,
-                    width: 200,
-                    height: 200,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 7,
+                    ),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: FadeInImage.assetNetwork(
+                      fit: BoxFit.cover,
+                      width: 140,
+                      height: 140,
+                      fadeInCurve: Curves.easeIn,
+                      placeholder: "assets/images/user.png",
+                      image: widget.psmAtStampRegister.profileImage,
+                    ),
                   ),
                 ),
               ),
