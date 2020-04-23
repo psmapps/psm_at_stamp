@@ -14,21 +14,21 @@ Future<PsmAtStampUser> readCredentailFromFile() async {
   }
   Map<String, dynamic> credentialDecode = json.decode(data);
   PsmAtStampUser psmAtStampUser = PsmAtStampUser(
-    prefix: credentialDecode["prefix"],
-    name: credentialDecode["name"],
-    surname: credentialDecode["surname"],
-    userId: credentialDecode["userId"],
-    studentId: credentialDecode["studentId"],
-    year: credentialDecode["year"],
-    room: credentialDecode["room"],
-    permission: psmAtStampStringToPermission(
-        permissionString: credentialDecode["permission"]),
-    signInServices: psmAtStampStringToSignInService(
-        signInService: credentialDecode["signInServices"]),
-    accessToken: credentialDecode["accessToken"],
-    udid: credentialDecode["udid"],
-    displayName: credentialDecode["displayName"] ?? "PSM @ STAMP",
-    profileImageUrl: credentialDecode["profileImageUrl"],
-  );
+      prefix: credentialDecode["prefix"],
+      name: credentialDecode["name"],
+      surname: credentialDecode["surname"],
+      userId: credentialDecode["userId"],
+      studentId: credentialDecode["studentId"],
+      year: credentialDecode["year"],
+      room: credentialDecode["room"],
+      permission: psmAtStampStringToPermission(
+          permissionString: credentialDecode["permission"]),
+      signInServices: psmAtStampStringToSignInService(
+          signInService: credentialDecode["signInServices"]),
+      accessToken: credentialDecode["accessToken"],
+      udid: credentialDecode["udid"],
+      displayName: credentialDecode["displayName"] ?? "PSM @ STAMP",
+      profileImageUrl: credentialDecode["profileImageUrl"],
+      otherInfos: {"didOverrideSignIn": false});
   return psmAtStampUser;
 }

@@ -67,16 +67,19 @@ Future<void> signInWithLine(BuildContext context) async {
     "email": _idTokenDecode["email"]
   };
 
-  String _customToken = (await http.post(
-    "https://asia-east2-satitprasarnmit-psm-at-stamp.cloudfunctions.net/SignInWithLine_FirebaseAuth",
-    body: _reqBody,
-  ))
+  String _customToken = (await http
+          .post(
+            "https://asia-east2-satitprasarnmit-psm-at-stamp.cloudfunctions.net/SignInWithLine_FirebaseAuth",
+            body: _reqBody,
+          )
+          .timeout(Duration(seconds: 10)))
       .body;
   logger.d(_customToken);
   AuthResult _authResult;
   try {
-    _authResult =
-        await FirebaseAuth.instance.signInWithCustomToken(token: _customToken);
+    _authResult = await FirebaseAuth.instance
+        .signInWithCustomToken(token: _customToken)
+        .timeout(Duration(seconds: 10));
   } on PlatformException catch (e) {
     Navigator.pop(context);
     signInPlatformExceptionHandler(context, e);

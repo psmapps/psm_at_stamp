@@ -42,5 +42,20 @@ void signUserInErrorHandler(BuildContext context,
         iconColor: Colors.greenAccent,
       );
       break;
+    case "TIMEOUT_EXCEPTION":
+      showMessageBox(context,
+          title: "การเข้าสู่ระบบล้มเหลว",
+          content:
+              "ไม่สามารถเข้าสู่ระบบได้ กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ตของคุณและลองใหม่อีกครั้ง (Code: Timeout)",
+          icon: FontAwesomeIcons.exclamationTriangle,
+          iconColor: Colors.yellow);
+      break;
+    default:
+      showMessageBox(context,
+          title: "ไม่สามารถเข้าสู่ระบบได้",
+          content:
+              "เกิดข้อผิดพลาดขณะทำการเข้าสู่ระบบโดยไม่ทราบสาเหตุ กรุณาลองใหม่อีกครั้งหรือติดต่อ PSM @ STAMP Team",
+          icon: FontAwesomeIcons.exclamationTriangle,
+          iconColor: Colors.yellow);
   }
 }

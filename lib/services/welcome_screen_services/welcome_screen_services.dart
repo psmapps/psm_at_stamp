@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_udid/flutter_udid.dart';
@@ -19,13 +21,51 @@ Future<void> welcomeCredentialCheck(BuildContext context) async {
   try {
     psmAtStampUserFromCredentail = await readCredentailFromFile();
     _udid = await FlutterUdid.udid;
-    docSnap = await Firestore.instance
-        .collection("Stamp_User")
-        .document(psmAtStampUserFromCredentail.userId)
-        .get();
   } catch (e) {
     logger.d(e);
     throw Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => SignInScreen()),
+    );
+  }
+  try {
+    docSnap = await Firestore.instance
+        .collection("Stamp_User")
+        .document(psmAtStampUserFromCredentail.userId)
+        .get()
+        .timeout(
+          Duration(seconds: 10),
+        );
+  } catch (e) {
+    logger.d(e);
+    if (e.toString() ==
+        "TimeoutException after 0:00:10.000000: Future not completed") {
+      return showMessageBox(
+        context,
+        title: "ไม่สามารถติดต่อกับ PSM @ STAMP ได้",
+        content:
+            "กรุณาตรวจสอบการเชื่อมต่อของคุณ อย่างไรก็ตาม คุณจะยังคงสามารถใช้งาน PSM @ STAMP ได้ใน Mode Offline ซึ่งคุณอาจสามารถดูแสตมป์ของคุณที่ระบบสามารถดึงข้อมูลได้เมื่อการเชื่อมต่อกับ PSM @ STAMP ครั้งล่าสุด และ คุณไม่สามารถรับแสตมป์ได้ใน Mode Offline (แนะนำให้เชื่อมต่ออินเตอร์เน็ตเพื่อดูข้อมูลล่าสุดของคุณ)",
+        icon: FontAwesomeIcons.exclamationTriangle,
+        iconColor: Colors.yellow,
+        actionsButton: [
+          IconButton(
+            icon: Icon(FontAwesomeIcons.timesCircle),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                    psmAtStampUser: psmAtStampUserFromCredentail,
+                  ),
+                ),
+              );
+            },
+          )
+        ],
+      );
+    }
+    return Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => SignInScreen()),
     );

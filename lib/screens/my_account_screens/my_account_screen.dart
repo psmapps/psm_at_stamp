@@ -141,7 +141,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   return showMessageBox(
                     context,
                     title: "ออกจากระบบ",
-                    content: "คุณต้องการออกจากระบบใช้หรือไม่?",
+                    content: "คุณต้องการออกจากระบบใช่หรือไม่?",
                     icon: FontAwesomeIcons.exclamationTriangle,
                     iconColor: Colors.yellow,
                     actionsButton: [

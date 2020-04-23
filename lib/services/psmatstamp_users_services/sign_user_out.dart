@@ -18,15 +18,15 @@ Future<void> signUserOut(BuildContext context,
     await Firestore.instance
         .collection("Stamp_User")
         .document(psmAtStampUser.userId)
-        .updateData({"udid": "", "accessToken": ""});
+        .updateData({"udid": "", "accessToken": ""}).timeout(
+            Duration(seconds: 10));
     if (psmAtStampUser.signInServices == SignInServices.google) {
       await GoogleSignIn().signOut();
     }
     if (psmAtStampUser.signInServices == SignInServices.line) {
       await LineSDK.instance.logout();
     }
-    await FirebaseAuth.instance.signOut();
-    await deleteCredentialFile();
+    await FirebaseAuth.instance.signOut().timeout(Duration(seconds: 10));
   } catch (e) {
     Navigator.pop(context);
     logger.d(e);
@@ -61,6 +61,7 @@ Future<void> signUserOut(BuildContext context,
       );
     }
   }
+  await deleteCredentialFile();
   logger.d("Signed out user " + psmAtStampUser.userId);
   Navigator.pop(context);
   Navigator.pushReplacement(

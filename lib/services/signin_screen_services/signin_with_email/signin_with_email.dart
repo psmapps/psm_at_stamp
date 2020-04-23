@@ -19,7 +19,8 @@ Future<void> signInWithEmail(BuildContext context,
   AuthResult _authResult;
   try {
     _authResult = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
+        .signInWithEmailAndPassword(email: email, password: password)
+        .timeout(Duration(seconds: 10));
   } on PlatformException catch (e) {
     Navigator.pop(context);
     return signInPlatformExceptionHandler(context, e);
@@ -29,7 +30,8 @@ Future<void> signInWithEmail(BuildContext context,
     return showMessageBox(
       context,
       title: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
-      content: "เกิดข้อผิดพลาดโดยไม่ทราบสาเหตุ กรุณาลองใหม่อีกครั้ง",
+      content:
+          "เกิดข้อผิดพลาดโดยไม่ทราบสาเหตุ อาจเป็นเพราะการเชื่อมต่อไม่สำเร็จ กรุณาลองใหม่อีกครั้ง",
       icon: FontAwesomeIcons.exclamationCircle,
       iconColor: Colors.red,
     );

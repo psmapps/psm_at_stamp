@@ -28,21 +28,20 @@ Future<void> signInWithApple(BuildContext context) async {
       await AppleSignIn.performRequests([
     AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
   ]);
-  if (_signInWithAppleResult.status == AuthorizationStatus.error ||
-      _signInWithAppleResult.status == AuthorizationStatus.cancelled) {
-    switch (_signInWithAppleResult.status) {
-      case AuthorizationStatus.error:
-        showMessageBox(context,
-            title: "เกิดข้อผิดพลาด",
-            content: _signInWithAppleResult.error.localizedDescription,
-            icon: FontAwesomeIcons.exclamationCircle,
-            iconColor: Colors.red);
-        break;
-      default:
-        break;
-    }
+  if (_signInWithAppleResult.status == AuthorizationStatus.cancelled) {
     Navigator.pop(context);
     return;
+  }
+  if (_signInWithAppleResult.status == AuthorizationStatus.error) {
+    Navigator.pop(context);
+    return showMessageBox(context,
+        title: "เกิดข้อผิดพลาด",
+        content:
+            "ไม่สามารถเข้าสู่ระบบด้วย Apple ได้ กรุณาตรวจสอบการเชื่อมต่อ หรือ ติดต่อ PSM @ STAMP เพื่อรับการช่วยเหลือ (Code: " +
+                _signInWithAppleResult.error.code.toString() +
+                ")",
+        icon: FontAwesomeIcons.exclamationCircle,
+        iconColor: Colors.red);
   }
   final AuthCredential _credential =
       OAuthProvider(providerId: "apple.com").getCredential(
@@ -53,7 +52,9 @@ Future<void> signInWithApple(BuildContext context) async {
   );
   AuthResult _authResult;
   try {
-    _authResult = await FirebaseAuth.instance.signInWithCredential(_credential);
+    _authResult = await FirebaseAuth.instance
+        .signInWithCredential(_credential)
+        .timeout(Duration(seconds: 10));
   } on PlatformException catch (e) {
     Navigator.pop(context);
     signInPlatformExceptionHandler(context, e);
@@ -64,7 +65,7 @@ Future<void> signInWithApple(BuildContext context) async {
       context,
       title: "ไม่สามารถเข้าสู่ระบบได้",
       content:
-          "เกิดข้อผิดพลาดไม่ทราบสาเหตุ ทำให้ไม่สามารถเข้าสู่ระบบด้วย Apple ได้ กรุณาลองใหม่อีกครั้ง",
+          "เกิดข้อผิดพลาดไม่ทราบสาเหตุ อาจเป็นเพราะการเชื่อมต่อไม่สำเร็จ ทำให้ไม่สามารถเข้าสู่ระบบด้วย Apple ได้ กรุณาลองใหม่อีกครั้ง",
       icon: FontAwesomeIcons.exclamationCircle,
       iconColor: Colors.red,
     );

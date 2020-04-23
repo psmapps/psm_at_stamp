@@ -17,9 +17,23 @@ Future<PsmAtStampUser> signUserIn({
   @required SignInServices signInServices,
 }) async {
   String udid = await FlutterUdid.udid;
-  DocumentSnapshot doc =
-      await Firestore.instance.collection("Stamp_User").document(userId).get();
-
+  DocumentSnapshot doc;
+  try {
+    doc = await Firestore.instance
+        .collection("Stamp_User")
+        .document(userId)
+        .get()
+        .timeout(Duration(seconds: 10));
+  } catch (e) {
+    if (e.toString() ==
+        "TimeoutException after 0:00:10.000000: Future not completed") {
+      throw PlatformException(
+          code: "TIMEOUT_EXCEPTION", details: "Timeout exception");
+    } else {
+      throw PlatformException(
+          code: "UNKNWON_EXCEPTION", details: "Unknown exception");
+    }
+  }
   if (!doc.exists) {
     throw PlatformException(
         code: "ACCOUNT_NOT_FOUND",
