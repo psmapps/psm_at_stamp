@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 Widget stampBookWidget(
     {@required String stampTitle,
     @required Function onTapHandler,
+    bool stampBadge,
     String iconUrl}) {
   return Container(
     child: Card(
@@ -13,42 +14,55 @@ Widget stampBookWidget(
         splashColor: Colors.black38,
         borderRadius: BorderRadius.circular(20),
         onTap: onTapHandler,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: iconUrl != null
-                  ? FadeInImage.assetNetwork(
-                      imageScale: 10,
-                      placeholderScale: 10,
-                      fadeInCurve: Curves.decelerate,
-                      fadeInDuration: Duration(milliseconds: 375),
-                      fadeOutCurve: Curves.decelerate,
-                      fadeOutDuration: Duration(milliseconds: 375),
-                      placeholder: "assets/images/icons/icon_gray.png",
-                      image: iconUrl,
-                    )
-                  : Image.asset(
-                      "assets/images/icons/icon_gray.png",
-                      scale: 10,
-                    ),
-            ),
-            ListTile(
-              title: Center(
-                child: Text(
-                  stampTitle,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: "Sukhumwit",
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+            Opacity(
+              opacity: stampBadge == true ? 0.6 : 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: iconUrl != null
+                        ? FadeInImage.assetNetwork(
+                            imageScale: 10,
+                            placeholderScale: 10,
+                            fadeInCurve: Curves.decelerate,
+                            fadeInDuration: Duration(milliseconds: 375),
+                            fadeOutCurve: Curves.decelerate,
+                            fadeOutDuration: Duration(milliseconds: 375),
+                            placeholder: "assets/images/icons/icon_gray.png",
+                            image: iconUrl,
+                          )
+                        : Image.asset(
+                            "assets/images/icons/icon_gray.png",
+                            scale: 10,
+                          ),
                   ),
-                  maxLines: 2,
-                ),
+                  ListTile(
+                    title: Center(
+                      child: Text(
+                        stampTitle,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Sukhumwit",
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 2,
+                      ),
+                    ),
+                  )
+                ],
               ),
-            )
+            ),
+            stampBadge == true
+                ? Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Image.asset("assets/images/stamp_badge.png"),
+                  )
+                : Container(),
           ],
         ),
       ),

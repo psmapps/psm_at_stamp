@@ -92,16 +92,19 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           padding: const EdgeInsets.only(top: 10, bottom: 20),
                           child: InkWell(
                             onTap: () {},
-                            child: QrImage(
-                              size: 150,
-                              version: QrVersions.auto,
-                              embeddedImage: AssetImage(
-                                "assets/images/icons/icon_black.png",
+                            child: Tooltip(
+                              message: widget.psmAtStampUser.userId,
+                              child: QrImage(
+                                size: 150,
+                                version: QrVersions.auto,
+                                embeddedImage: AssetImage(
+                                  "assets/images/icons/icon_black.png",
+                                ),
+                                data: json.encode({
+                                  "type": "user",
+                                  "userId": widget.psmAtStampUser.userId,
+                                }),
                               ),
-                              data: json.encode({
-                                "type": "user",
-                                "userId": widget.psmAtStampUser.userId,
-                              }),
                             ),
                           ),
                         )

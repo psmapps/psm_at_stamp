@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:psm_at_stamp/components/stamp_book_components/stamp_book_component.dart';
+import 'package:psm_at_stamp/screens/stamp_book_screens/stamp_book_stamp_list_screen.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
+import 'package:psm_at_stamp/services/stamp_book_services/stamp_categories_constructure.dart';
 
 class StampBookScreen extends StatefulWidget {
   final PsmAtStampUser psmAtStampUser;
@@ -52,7 +54,22 @@ class _StampBookScreenState extends State<StampBookScreen> {
                   return stampBookWidget(
                     stampTitle: snapshot.data.documents[index].data["title"],
                     iconUrl: snapshot.data.documents[index].data["iconUrl"],
-                    onTapHandler: () {},
+                    onTapHandler: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StampBookStampListScreen(
+                            stampCategories: StampCategories(
+                              categories:
+                                  snapshot.data.documents[index].documentID,
+                              iconUrl: snapshot
+                                  .data.documents[index].data["iconUrl"],
+                            ),
+                            psmAtStampUser: widget.psmAtStampUser,
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
               ),
