@@ -1,30 +1,34 @@
 import 'package:flutter/material.dart';
 
-class StampDetails {
-  String name;
+/// StampIdInfomation used to send the stamp data between page
+/// * Required
+/// [categories, iconUrl, stampId]
+class StampIdInfomation {
   String iconUrl;
   String stampId;
-  String location;
-  String details;
   String categories;
-  bool isOpen;
-  bool isStamped;
-  StampDetails(
-      {@required String name,
-      @required String categories,
-      @required String iconUrl,
-      @required String location,
-      @required String details,
-      @required String stampId,
-      @required bool isOpen,
-      @required bool isStamped}) {
-    this.name = name;
+  String categoriesIconUrl;
+  StampIdInfomation({
+    @required String stampId,
+    @required String categories,
+    @required String iconUrl,
+    @required String categoriesIconUrl,
+  }) {
     this.categories = categories;
     this.iconUrl = iconUrl;
-    this.location = location;
-    this.details = details;
     this.stampId = stampId;
-    this.isOpen = isOpen;
-    this.isStamped = isStamped;
+    this.categoriesIconUrl = categoriesIconUrl;
   }
+}
+
+enum StampStatus { open, close, unknown }
+
+StampStatus convertStampStatusToEnum({@required bool stampStatus}) {
+  if (stampStatus == true) {
+    return StampStatus.open;
+  }
+  if (stampStatus == false) {
+    return StampStatus.close;
+  }
+  return StampStatus.unknown;
 }

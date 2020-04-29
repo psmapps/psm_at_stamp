@@ -8,7 +8,7 @@ Widget stampDetailComponent({
 }) {
   return Flexible(
     child: Container(
-      height: 180,
+      height: 183,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Colors.grey[500],
@@ -21,7 +21,7 @@ Widget stampDetailComponent({
               children: <Widget>[
                 Icon(
                   iconData,
-                  size: 35,
+                  size: 25,
                   color: iconColor ?? Colors.black,
                 ),
                 Padding(

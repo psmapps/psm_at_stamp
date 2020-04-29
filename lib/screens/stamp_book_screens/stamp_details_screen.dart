@@ -1,17 +1,82 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/stamp_book_components/stamp_details_component.dart';
+import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/stamp_book_services/stamp_details_constructure.dart';
 
 class StampDetailScreen extends StatefulWidget {
-  final StampDetails stampDetails;
-  StampDetailScreen({Key key, @required this.stampDetails}) : super(key: key);
+  final StampIdInfomation stampIdInfomation;
+  final PsmAtStampUser psmAtStampUser;
+  StampDetailScreen({
+    Key key,
+    @required this.stampIdInfomation,
+    @required this.psmAtStampUser,
+  }) : super(key: key);
 
   @override
   _StampDetailScreenState createState() => _StampDetailScreenState();
 }
 
 class _StampDetailScreenState extends State<StampDetailScreen> {
+  String iconUrl;
+  String name;
+  String location;
+  String details;
+  bool isStamped;
+  StampStatus isOpen;
+
+  @override
+  void initState() {
+    iconUrl = widget.stampIdInfomation.iconUrl;
+    isStamped = false;
+    streamStampInformation();
+    streamStampInTransaction();
+    super.initState();
+  }
+
+  void streamStampInformation() {
+    Firestore.instance
+        .collection("Stamp_Data")
+        .document(widget.stampIdInfomation.stampId)
+        .snapshots()
+        .listen((doc) {
+      setState(() {
+        if (doc.data["iconUrl"] != null) {
+          iconUrl = doc.data["iconUrl"];
+        } else {
+          iconUrl = widget.stampIdInfomation.iconUrl;
+        }
+        name = doc.data["name"];
+        location = doc.data["location"];
+        details = doc.data["detail"];
+        isOpen = convertStampStatusToEnum(stampStatus: doc.data["isOpen"]);
+      });
+    });
+  }
+
+  void streamStampInTransaction() {
+    Firestore.instance
+        .collection("Stamp_Transaction")
+        .where("userId", isEqualTo: widget.psmAtStampUser.userId)
+        .where(
+          "stampId",
+          isEqualTo: widget.stampIdInfomation.stampId,
+        )
+        .snapshots()
+        .listen((data) {
+      if (data.documents.isNotEmpty) {
+        setState(() {
+          isStamped = true;
+        });
+      } else {
+        setState(() {
+          isStamped = false;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,14 +85,14 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
         backgroundColor: Color.fromRGBO(31, 31, 31, 1),
         title: Row(
           children: <Widget>[
-            widget.stampDetails.iconUrl != null
+            widget.stampIdInfomation.categoriesIconUrl != null
                 ? FadeInImage.assetNetwork(
                     imageScale: 16,
                     placeholderScale: 16,
                     fadeInCurve: Curves.decelerate,
                     fadeOutCurve: Curves.decelerate,
                     placeholder: "assets/images/icons/icon_gray.png",
-                    image: widget.stampDetails.iconUrl,
+                    image: widget.stampIdInfomation.categoriesIconUrl,
                   )
                 : Image.asset(
                     "assets/images/icons/icon_gray.png",
@@ -35,7 +100,7 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
                   ),
             Flexible(
               child: Text(
-                widget.stampDetails.name,
+                name ?? "...",
                 style: TextStyle(
                   fontFamily: "Sukhumwit",
                 ),
@@ -66,7 +131,7 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
                       ),
                       Center(
                         child: Text(
-                          widget.stampDetails.name,
+                          name ?? "...",
                           style: TextStyle(
                             fontFamily: "Sukhumwit",
                             fontSize: 27,
@@ -85,15 +150,16 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
                               iconColor: Colors.redAccent,
                               detailIndex: "ตำแหน่งแสตมป์",
                               detail: Padding(
-                                padding: const EdgeInsets.all(12),
+                                padding:
+                                    const EdgeInsets.fromLTRB(12, 12, 12, 12),
                                 child: Text(
-                                  widget.stampDetails.location,
+                                  location ?? "ไม่มีข้อมูล",
                                   style: TextStyle(
                                     fontFamily: "Sukhumwit",
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                  maxLines: 5,
+                                  maxLines: 3,
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -110,32 +176,39 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
                                   children: <Widget>[
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: widget.stampDetails.isOpen
+                                        color: isOpen == StampStatus.open
                                             ? Colors.greenAccent
-                                            : Colors.redAccent,
+                                            : isOpen == StampStatus.close
+                                                ? Colors.redAccent
+                                                : Colors.grey[300],
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                     ),
                                     Center(
-                                      child: Row(
+                                      child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: <Widget>[
                                           FaIcon(
-                                            widget.stampDetails.isOpen
+                                            isOpen == StampStatus.open
                                                 ? FontAwesomeIcons
                                                     .solidCheckCircle
-                                                : FontAwesomeIcons
-                                                    .solidTimesCircle,
+                                                : isOpen == StampStatus.close
+                                                    ? FontAwesomeIcons
+                                                        .solidTimesCircle
+                                                    : FontAwesomeIcons
+                                                        .solidQuestionCircle,
                                           ),
                                           Padding(
                                             padding:
                                                 const EdgeInsets.only(left: 5),
                                           ),
                                           Text(
-                                            widget.stampDetails.isOpen
+                                            isOpen == StampStatus.open
                                                 ? "เปิดให้เข้าเล่นกิจกรรม"
-                                                : "ไม่เปิดให้เข้าเล่นกิจกรรม",
+                                                : isOpen == StampStatus.close
+                                                    ? "ไม่เปิดให้เข้าเล่นกิจกรรม"
+                                                    : "ไม่มีข้อมูลสถาณะกิจกรรม",
                                             style: TextStyle(
                                               fontFamily: "Sukhumwit",
                                               fontSize: 15,
@@ -199,7 +272,7 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
                                   children: <Widget>[
                                     Flexible(
                                       child: Text(
-                                        widget.stampDetails.details,
+                                        details ?? "ไม่มีคำอธิบายฐานกิจกรรม",
                                         style: TextStyle(
                                           fontFamily: "Sukhumwit",
                                           fontSize: 18,
@@ -231,7 +304,7 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
                           child: Center(
                             child: Padding(
                               padding: const EdgeInsets.all(10),
-                              child: widget.stampDetails.isStamped
+                              child: isStamped
                                   ? Stack(
                                       children: <Widget>[
                                         Image.asset(
@@ -270,14 +343,19 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(100),
-                    child: FadeInImage.assetNetwork(
-                      fit: BoxFit.cover,
-                      width: 140,
-                      height: 140,
-                      fadeInCurve: Curves.easeIn,
-                      placeholder: "assets/images/icons/icon_gray.png",
-                      image: widget.stampDetails.iconUrl,
-                    ),
+                    child: iconUrl != null
+                        ? FadeInImage.assetNetwork(
+                            imageScale: 7,
+                            placeholderScale: 7,
+                            fadeInCurve: Curves.decelerate,
+                            fadeOutCurve: Curves.decelerate,
+                            placeholder: "assets/images/icons/icon_gray.png",
+                            image: iconUrl,
+                          )
+                        : Image.asset(
+                            "assets/images/icons/icon_gray.png",
+                            scale: 7,
+                          ),
                   ),
                 ),
               ),

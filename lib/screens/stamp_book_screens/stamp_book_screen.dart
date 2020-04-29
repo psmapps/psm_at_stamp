@@ -15,6 +15,11 @@ class StampBookScreen extends StatefulWidget {
 
 class _StampBookScreenState extends State<StampBookScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10),
@@ -51,9 +56,15 @@ class _StampBookScreenState extends State<StampBookScreen> {
               children: List.generate(
                 snapshot.data.documents.length,
                 (index) {
-                  return stampBookWidget(
+                  return StampBookComponent(
                     stampTitle: snapshot.data.documents[index].data["title"],
                     iconUrl: snapshot.data.documents[index].data["iconUrl"],
+                    stampCategories: StampCategories(
+                      categories: snapshot.data.documents[index].documentID,
+                      iconUrl: snapshot.data.documents[index].data["iconUrl"],
+                    ),
+                    psmAtStampUser: widget.psmAtStampUser,
+                    displayStampIndocator: true,
                     onTapHandler: () {
                       Navigator.push(
                         context,

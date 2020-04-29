@@ -5,7 +5,7 @@ Future<List> getStampTransactionByCategories(
     {@required String categories, @required String userId}) async {
   List stampIdFromTransactionList = [];
   QuerySnapshot querySnap = await Firestore.instance
-      .collection("Stamp_Transaction_3.1")
+      .collection("Stamp_Transaction")
       .where("userId", isEqualTo: userId)
       .where("categories", isEqualTo: categories)
       .getDocuments();
@@ -13,7 +13,7 @@ Future<List> getStampTransactionByCategories(
     return stampIdFromTransactionList;
   }
   querySnap.documents.forEach((docSnap) {
-    stampIdFromTransactionList.add(docSnap.documentID);
+    stampIdFromTransactionList.add(docSnap.data["stampId"]);
   });
   return stampIdFromTransactionList;
 }
