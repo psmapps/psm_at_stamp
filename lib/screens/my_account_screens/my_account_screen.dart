@@ -4,8 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/my_account_component/badge_display_component.dart';
 import 'package:psm_at_stamp/components/my_account_component/display_name_component.dart';
 import 'package:psm_at_stamp/components/my_account_component/stamp_in_transaction_amount_component.dart';
-import 'package:psm_at_stamp/components/notification_component/message_box.dart';
+import 'package:psm_at_stamp/components/notification_components/message_box.dart';
 import 'package:psm_at_stamp/components/signin_button_components.dart';
+import 'package:psm_at_stamp/screens/setting_screens/setting_screen.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/sign_user_out.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -145,36 +146,51 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               ],
             ),
             signInButtonComponent(
-                title: "ออกจากระบบ",
-                buttonColor: Colors.redAccent,
-                onPressHandler: () {
-                  return showMessageBox(
-                    context,
-                    title: "ออกจากระบบ",
-                    content: "คุณต้องการออกจากระบบใช่หรือไม่?",
-                    icon: FontAwesomeIcons.exclamationTriangle,
-                    iconColor: Colors.yellow,
-                    actionsButton: [
-                      IconButton(
-                        icon: Icon(FontAwesomeIcons.timesCircle),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(FontAwesomeIcons.checkCircle),
-                        color: Colors.redAccent,
-                        onPressed: () {
-                          Navigator.pop(context);
-                          signUserOut(
-                            context,
-                            psmAtStampUser: widget.psmAtStampUser,
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                })
+              icon: FontAwesomeIcons.cog,
+              title: "ตั้งค่า",
+              buttonColor: Colors.grey,
+              onPressHandler: () {
+                return Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingScreen(),
+                  ),
+                );
+              },
+            ),
+            signInButtonComponent(
+              title: "ออกจากระบบ",
+              icon: FontAwesomeIcons.signOutAlt,
+              buttonColor: Colors.redAccent,
+              onPressHandler: () {
+                return showMessageBox(
+                  context,
+                  title: "ออกจากระบบ",
+                  content: "คุณต้องการออกจากระบบใช่หรือไม่?",
+                  icon: FontAwesomeIcons.exclamationTriangle,
+                  iconColor: Colors.yellow,
+                  actionsButton: [
+                    IconButton(
+                      icon: Icon(FontAwesomeIcons.timesCircle),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(FontAwesomeIcons.checkCircle),
+                      color: Colors.redAccent,
+                      onPressed: () {
+                        Navigator.pop(context);
+                        signUserOut(
+                          context,
+                          psmAtStampUser: widget.psmAtStampUser,
+                        );
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
           ],
         ),
       ),

@@ -40,19 +40,23 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
         .collection("Stamp_Data")
         .document(widget.stampIdInfomation.stampId)
         .snapshots()
-        .listen((doc) {
-      setState(() {
-        if (doc.data["iconUrl"] != null) {
-          iconUrl = doc.data["iconUrl"];
-        } else {
-          iconUrl = widget.stampIdInfomation.iconUrl;
-        }
-        name = doc.data["name"];
-        location = doc.data["location"];
-        details = doc.data["detail"];
-        isOpen = convertStampStatusToEnum(stampStatus: doc.data["isOpen"]);
-      });
-    });
+        .listen(
+      (doc) {
+        setState(
+          () {
+            if (doc.data["iconUrl"] != null) {
+              iconUrl = doc.data["iconUrl"];
+            } else {
+              iconUrl = widget.stampIdInfomation.iconUrl;
+            }
+            name = doc.data["name"];
+            location = doc.data["location"];
+            details = doc.data["detail"];
+            isOpen = convertStampStatusToEnum(stampStatus: doc.data["isOpen"]);
+          },
+        );
+      },
+    );
   }
 
   void streamStampInTransaction() {
@@ -64,17 +68,19 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
           isEqualTo: widget.stampIdInfomation.stampId,
         )
         .snapshots()
-        .listen((data) {
-      if (data.documents.isNotEmpty) {
-        setState(() {
-          isStamped = true;
-        });
-      } else {
-        setState(() {
-          isStamped = false;
-        });
-      }
-    });
+        .listen(
+      (data) {
+        setState(
+          () {
+            if (data.documents.isNotEmpty) {
+              isStamped = true;
+            } else {
+              isStamped = false;
+            }
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -201,7 +207,7 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
                                           ),
                                           Padding(
                                             padding:
-                                                const EdgeInsets.only(left: 5),
+                                                const EdgeInsets.only(top: 10),
                                           ),
                                           Text(
                                             isOpen == StampStatus.open

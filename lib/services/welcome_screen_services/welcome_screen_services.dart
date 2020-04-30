@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:psm_at_stamp/components/notification_component/message_box.dart';
+import 'package:psm_at_stamp/components/notification_components/message_box.dart';
 import 'package:psm_at_stamp/screens/home_screens/home_screen.dart';
 import 'package:psm_at_stamp/screens/signin_screens/signin_screen.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';

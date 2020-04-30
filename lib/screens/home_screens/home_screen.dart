@@ -5,6 +5,7 @@ import 'package:psm_at_stamp/screens/my_account_screens/my_account_screen.dart';
 import 'package:psm_at_stamp/screens/stamp_book_screens/stamp_book_screen.dart';
 import 'package:psm_at_stamp/services/home_screen_services/check_did_override_signin.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
+import 'package:psm_at_stamp/services/qr_code_scaner_services/scan_qr_code.dart';
 
 class HomeScreen extends StatefulWidget {
   final PsmAtStampUser psmAtStampUser;
@@ -68,9 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
               controller: tabController,
               unselectedLabelStyle: TextStyle(fontSize: 0),
               labelStyle: TextStyle(
-                  fontFamily: "Sukhumwit",
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16),
+                fontFamily: "Sukhumwit",
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
               tabs: [
                 Tab(
                   icon: Icon(FontAwesomeIcons.book),
@@ -87,7 +89,9 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Icon(FontAwesomeIcons.qrcode),
             tooltip: "สแกน QR Code รับแสตมป์",
             backgroundColor: Colors.green[800],
-            onPressed: () {},
+            onPressed: () {
+              scanQrCode(context);
+            },
           )),
     );
   }

@@ -18,7 +18,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(31, 31, 31, 1),
+      backgroundColor: Color.fromRGBO(30, 30, 30, 1),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
@@ -31,7 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Column(
                       children: <Widget>[
                         Image.asset(
-                          "assets/images/icons/icon.png",
+                          "assets/images/psmatstampintro.gif",
                           scale: 3.7,
                         ),
                         Text(

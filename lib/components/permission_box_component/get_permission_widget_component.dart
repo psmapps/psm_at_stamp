@@ -1,0 +1,75 @@
+import 'package:app_settings/app_settings.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+Future<Widget> permissionStatusWidget(
+    {@required Permission permission,
+    @required Function requestPermission}) async {
+  PermissionStatus permissionStatus = await permission.status;
+  switch (permissionStatus) {
+    case PermissionStatus.granted:
+      return Icon(
+        FontAwesomeIcons.check,
+        color: Colors.green,
+      );
+      break;
+    case PermissionStatus.denied:
+      return RaisedButton(
+        color: Colors.red,
+        child: Row(
+          children: <Widget>[
+            Icon(
+              FontAwesomeIcons.exclamationCircle,
+              color: Colors.white,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 5),
+            ),
+            Text(
+              "ไปที่หน้าตั้งค่าอุปกรณ์",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontFamily: "Sukhumwit",
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        onPressed: () async {
+          await AppSettings.openAppSettings();
+        },
+      );
+      break;
+    case PermissionStatus.permanentlyDenied:
+      return Icon(
+        FontAwesomeIcons.exclamationCircle,
+        color: Colors.red,
+      );
+      break;
+    case PermissionStatus.restricted:
+      return Icon(
+        FontAwesomeIcons.exclamationCircle,
+        color: Colors.red,
+      );
+      break;
+    case PermissionStatus.undetermined:
+      return RaisedButton(
+        color: Colors.grey,
+        child: Text(
+          "อนุญาตตอนนี้",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+            fontFamily: "Sukhumwit",
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        onPressed: requestPermission,
+      );
+      break;
+    default:
+      return Container();
+  }
+}

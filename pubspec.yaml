@@ -17,6 +17,10 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  smooth_page_indicator: ^0.1.5
+  app_settings: ^4.0.0
+  permission_handler: ^5.0.0+hotfix.4
+  barcode_scan: ^3.0.0
   flutter_staggered_animations: ^0.1.2
   qr_flutter: ^3.2.0
   path_provider: ^1.6.5

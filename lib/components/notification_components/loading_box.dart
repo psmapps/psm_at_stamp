@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psm_at_stamp/components/notification_component/notification_component.dart';
+import 'package:psm_at_stamp/components/notification_components/notification_component.dart';
 
 /// showLoadingBox is used to show a box with CircularProgressIndicator in PSM @ STAMP
 /// * Optional

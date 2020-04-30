@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:psm_at_stamp/components/notification_component/message_box.dart';
+import 'package:psm_at_stamp/components/notification_components/message_box.dart';
 import 'package:psm_at_stamp/components/register_screen_components/register_confirm_staff_sector.dart';
 import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/services/psmatstamp_stamp_services/psmatstamp_stamp_data_constructure.dart';
