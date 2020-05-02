@@ -27,24 +27,21 @@ class _PermissionBoxState extends State<PermissionBox> {
     Widget _cameraPermissionWidget = await permissionStatusWidget(
       permission: Permission.camera,
       requestPermission: () async {
-        await requestPermission(permission: Permission.camera);
+        await Permission.camera.request();
+        getPermissionWidget();
       },
     );
     Widget _notificationPermissionWidget = await permissionStatusWidget(
       permission: Permission.notification,
       requestPermission: () async {
-        await requestPermission(permission: Permission.notification);
+        await Permission.notification.request();
+        getPermissionWidget();
       },
     );
     setState(() {
       cameraPermissionWidget = _cameraPermissionWidget;
       notificationPermissionWidget = _notificationPermissionWidget;
     });
-  }
-
-  Future<void> requestPermission({@required Permission permission}) async {
-    await permission.request();
-    getPermissionWidget();
   }
 
   @override

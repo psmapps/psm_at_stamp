@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:psm_at_stamp/components/camera_selection_box_component/camera_selection_box.dart';
 import 'package:psm_at_stamp/components/permission_box_component/permission_box_component.dart';
 import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/screens/intro_slider_screens/intro_slider_screens.dart';
+import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 
 class SettingScreen extends StatelessWidget {
-  const SettingScreen({Key key}) : super(key: key);
+  final PsmAtStampUser psmAtStampUser;
+  const SettingScreen({Key key, @required this.psmAtStampUser})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,15 +78,19 @@ class SettingScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10),
               ),
               PermissionBox(),
+              CameraSelectionBox(),
               signInButtonComponent(
                 icon: FontAwesomeIcons.book,
                 title: "เปิดหน้า Intro อีกครั้ง",
                 buttonColor: Colors.white,
                 onPressHandler: () {
-                  return Navigator.push(
+                  Navigator.pop(context);
+                  return Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => IntroSliderScreen(),
+                      builder: (context) => IntroSliderScreen(
+                        psmAtStampUser: psmAtStampUser,
+                      ),
                     ),
                   );
                 },
@@ -92,10 +100,12 @@ class SettingScreen extends StatelessWidget {
                 title: "ขอสิทธ์การเป็น Staff ฐานกิจกรรม",
                 buttonColor: Colors.white,
                 onPressHandler: () {
-                  return Navigator.push(
+                  return Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => IntroSliderScreen(),
+                      builder: (context) => IntroSliderScreen(
+                        psmAtStampUser: psmAtStampUser,
+                      ),
                     ),
                   );
                 },

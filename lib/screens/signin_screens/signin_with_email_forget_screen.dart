@@ -57,6 +57,7 @@ class _SignInWithEmailForgetPasswordState
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
+                textAlign: TextAlign.center,
               ),
               signInTextField(
                 controller: email,

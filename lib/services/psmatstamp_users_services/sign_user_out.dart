@@ -18,7 +18,7 @@ Future<void> signUserOut(BuildContext context,
     await Firestore.instance
         .collection("Stamp_User")
         .document(psmAtStampUser.userId)
-        .updateData({"udid": "", "accessToken": ""}).timeout(
+        .updateData({"udid": "", "accessToken": "", "fcmToken": ""}).timeout(
             Duration(seconds: 10));
     if (psmAtStampUser.signInServices == SignInServices.google) {
       await GoogleSignIn().signOut();

@@ -9,15 +9,19 @@ Future<Widget> permissionStatusWidget(
   PermissionStatus permissionStatus = await permission.status;
   switch (permissionStatus) {
     case PermissionStatus.granted:
-      return Icon(
-        FontAwesomeIcons.check,
-        color: Colors.green,
+      return Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: Icon(
+          FontAwesomeIcons.check,
+          color: Colors.green,
+        ),
       );
       break;
     case PermissionStatus.denied:
       return RaisedButton(
         color: Colors.red,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(
               FontAwesomeIcons.exclamationCircle,
@@ -27,7 +31,7 @@ Future<Widget> permissionStatusWidget(
               padding: const EdgeInsets.only(left: 5),
             ),
             Text(
-              "ไปที่หน้าตั้งค่าอุปกรณ์",
+              "กดที่นี่เพื่ออนุญาต",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 15,

@@ -23,7 +23,7 @@ Future<void> welcomeCredentialCheck(BuildContext context) async {
     _udid = await FlutterUdid.udid;
   } catch (e) {
     logger.d(e);
-    throw Navigator.pushReplacement(
+    return Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => SignInScreen()),
     );

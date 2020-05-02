@@ -90,23 +90,23 @@ class _StampBookComponentState extends State<StampBookComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: InkWell(
-          splashColor: Colors.black38,
-          borderRadius: BorderRadius.circular(20),
-          onTap: widget.onTapHandler,
-          child: Stack(
-            children: <Widget>[
-              Opacity(
-                opacity: stampBadge == true ? 0.6 : 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: InkWell(
+        splashColor: Colors.black38,
+        borderRadius: BorderRadius.circular(20),
+        onTap: widget.onTapHandler,
+        child: Stack(
+          children: <Widget>[
+            Opacity(
+              opacity: stampBadge == true ? 0.6 : 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Flexible(
+                    child: Padding(
                       padding: const EdgeInsets.only(top: 5),
                       child: widget.iconUrl != null
                           ? FadeInImage.assetNetwork(
@@ -124,56 +124,56 @@ class _StampBookComponentState extends State<StampBookComponent> {
                               scale: 10,
                             ),
                     ),
-                    ListTile(
-                        title: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            widget.stampTitle,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: "Sukhumwit",
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 2,
-                          ),
-                        ],
-                      ),
-                    )),
-                  ],
-                ),
-              ),
-              stampBadge == true
-                  ? Container(
-                      padding: const EdgeInsets.all(10),
-                      child: Image.asset("assets/images/stamp_badge.png"),
-                    )
-                  : Container(),
-              widget.displayStampIndocator
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                  ),
+                  ListTile(
+                      title: Center(
+                    child: Column(
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5, right: 15),
-                          child: Text(
-                            stampInTransactionAmount + "/" + stampAmount,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: "Sukhumwit",
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 2,
+                        Text(
+                          widget.stampTitle,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: "Sukhumwit",
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
+                          maxLines: 2,
                         ),
                       ],
-                    )
-                  : Container(),
-            ],
-          ),
+                    ),
+                  )),
+                ],
+              ),
+            ),
+            stampBadge == true
+                ? Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Image.asset("assets/images/stamp_badge.png"),
+                  )
+                : Container(),
+            widget.displayStampIndocator
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, right: 15),
+                        child: Text(
+                          stampInTransactionAmount + "/" + stampAmount,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: "Sukhumwit",
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 2,
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(),
+          ],
         ),
       ),
     );

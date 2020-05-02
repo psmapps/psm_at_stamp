@@ -153,7 +153,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 return Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SettingScreen(),
+                    builder: (context) => SettingScreen(
+                      psmAtStampUser: widget.psmAtStampUser,
+                    ),
                   ),
                 );
               },
@@ -190,6 +192,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   ],
                 );
               },
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 50),
             ),
           ],
         ),

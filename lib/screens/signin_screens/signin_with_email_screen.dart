@@ -23,9 +23,11 @@ class _SignInWithEmailScreenState extends State<SignInWithEmailScreen> {
         appBar: AppBar(
           title: Row(
             children: <Widget>[
-              Text(
-                "เข้าสู่ระบบด้วย Email/Password",
-                style: TextStyle(fontFamily: "Sukhumwit"),
+              Flexible(
+                child: Text(
+                  "เข้าสู่ระบบด้วย Email/Password",
+                  style: TextStyle(fontFamily: "Sukhumwit"),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),

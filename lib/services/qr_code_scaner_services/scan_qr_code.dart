@@ -5,8 +5,11 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:psm_at_stamp/components/notification_components/message_box.dart';
 import 'package:psm_at_stamp/screens/setting_screens/setting_screen.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
+import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
+import 'package:psm_at_stamp/services/setting_services/get_camera_setting_file.dart';
 
-Future<void> scanQrCode(BuildContext context) async {
+Future<void> scanQrCode(BuildContext context,
+    {@required PsmAtStampUser psmAtStampUser}) async {
   await Permission.camera.request();
   if (!(await Permission.camera.isGranted)) {
     return showMessageBox(context,
@@ -28,7 +31,11 @@ Future<void> scanQrCode(BuildContext context) async {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SettingScreen()),
+                MaterialPageRoute(
+                  builder: (context) => SettingScreen(
+                    psmAtStampUser: psmAtStampUser,
+                  ),
+                ),
               );
             },
           ),
@@ -38,7 +45,7 @@ Future<void> scanQrCode(BuildContext context) async {
   try {
     result = await BarcodeScanner.scan(
       options: ScanOptions(
-        useCamera: -1,
+        useCamera: int.parse((await getCameraSetting())["camera"]),
         android: AndroidOptions(
           useAutoFocus: true,
         ),

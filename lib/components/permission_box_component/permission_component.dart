@@ -5,24 +5,33 @@ Widget permissionComponent({
   @required String permissionTitle,
   @required Widget permissionStatus,
 }) {
-  return Row(
+  return Column(
     children: <Widget>[
-      Icon(
-        icon,
-        size: 20,
+      Row(
+        children: <Widget>[
+          Flexible(
+            flex: 1,
+            child: Icon(
+              icon,
+              size: 20,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+          ),
+          Flexible(
+            flex: 2,
+            child: Text(
+              permissionTitle,
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: "Sukhumwit",
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
       ),
-      Padding(
-        padding: const EdgeInsets.only(left: 10),
-      ),
-      Text(
-        permissionTitle,
-        style: TextStyle(
-          fontSize: 20,
-          fontFamily: "Sukhumwit",
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      Spacer(),
       permissionStatus,
     ],
   );

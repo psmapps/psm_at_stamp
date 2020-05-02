@@ -220,6 +220,7 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                             ),
+                                            textAlign: TextAlign.center,
                                           )
                                         ],
                                       ),

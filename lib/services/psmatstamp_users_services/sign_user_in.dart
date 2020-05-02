@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_udid/flutter_udid.dart';
@@ -63,11 +64,15 @@ Future<PsmAtStampUser> signUserIn({
         details:
             "Some of required data is missing from this account: " + userId);
   }
-
+  String fcmToken = await FirebaseMessaging().getToken();
   await Firestore.instance
       .collection("Stamp_User")
       .document(userId)
-      .updateData({"accessToken": accessToken, "udid": udid});
+      .updateData({
+    "accessToken": accessToken,
+    "udid": udid,
+    "fcmToken": fcmToken,
+  });
 
   if (_remotePermission == "student" || _remotePermission == "Student") {
     _permission = PsmAtStampUserPermission.student;
@@ -81,6 +86,7 @@ Future<PsmAtStampUser> signUserIn({
         code: "UNKNOWN_PERMISSION",
         details: "Unknown permission type: " + docData["permission"]);
   }
+
   PsmAtStampUser psmAtStampUser = PsmAtStampUser(
     prefix: docData["prefix"],
     name: docData["name"],

@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  firebase_messaging: ^6.0.13
   smooth_page_indicator: ^0.1.5
   app_settings: ^4.0.0
   permission_handler: ^5.0.0+hotfix.4
