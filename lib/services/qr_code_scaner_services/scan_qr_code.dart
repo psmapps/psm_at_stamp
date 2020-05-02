@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,6 +8,7 @@ import 'package:psm_at_stamp/components/notification_components/message_box.dart
 import 'package:psm_at_stamp/screens/setting_screens/setting_screen.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
+import 'package:psm_at_stamp/services/qr_code_scaner_services/qr_code_type_user_handler.dart';
 import 'package:psm_at_stamp/services/setting_services/get_camera_setting_file.dart';
 
 Future<void> scanQrCode(BuildContext context,
@@ -68,5 +71,37 @@ Future<void> scanQrCode(BuildContext context,
       iconColor: Colors.redAccent,
     );
   }
+  if (result.rawContent == "" || result.rawContent == null) {
+    return;
+  }
   logger.d(result.rawContent);
+  Map<String, dynamic> qrCodeData;
+  try {
+    qrCodeData = json.decode(result.rawContent);
+    if (qrCodeData["type"] == null || qrCodeData["type"] == "") {
+      throw "Type not correct";
+    }
+    switch (qrCodeData["type"]) {
+      case "user":
+        qrCodeTypeUserHandler(
+          context,
+          qrCodeData: qrCodeData,
+          psmAtStampUser: psmAtStampUser,
+        );
+        break;
+      case "":
+        break;
+      default:
+        throw "Type not correct";
+    }
+  } catch (e) {
+    return showMessageBox(
+      context,
+      title: "QR Code ไม่ถูกต้อง",
+      content:
+          "กรุณาสแกน QR Code ที่มีโลโก้ PSM @ STAMP อยู่ตรงกลางของ QR Code เท่านั้น",
+      icon: FontAwesomeIcons.exclamationTriangle,
+      iconColor: Colors.yellow,
+    );
+  }
 }

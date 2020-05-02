@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
@@ -28,6 +29,9 @@ class StampBookComponent extends StatefulWidget {
 }
 
 class _StampBookComponentState extends State<StampBookComponent> {
+  StreamSubscription stampInTransactionAmountStream;
+  StreamSubscription stampAmountStrean;
+  StreamSubscription stampBadgeStream;
   String stampInTransactionAmount = "-";
   String stampAmount = "-";
   bool stampBadge = false;
@@ -36,13 +40,27 @@ class _StampBookComponentState extends State<StampBookComponent> {
     super.initState();
     widget.displayStampIndocator ? streamStampAmount() : DoNothingAction();
     widget.displayStampIndocator
-        ? streamStampInTransaction()
+        ? streamStampInTransactionAmount()
         : DoNothingAction();
     !widget.displayStampIndocator ? streamSetStampBadge() : DoNothingAction();
   }
 
-  void streamStampInTransaction() {
-    Firestore.instance
+  @override
+  void dispose() {
+    widget.displayStampIndocator
+        ? stampInTransactionAmountStream.cancel()
+        : DoNothingAction();
+    widget.displayStampIndocator
+        ? stampAmountStrean.cancel()
+        : DoNothingAction();
+    !widget.displayStampIndocator
+        ? stampBadgeStream.cancel()
+        : DoNothingAction();
+    super.dispose();
+  }
+
+  void streamStampInTransactionAmount() {
+    stampInTransactionAmountStream = Firestore.instance
         .collection("Stamp_Transaction")
         .where("categories", isEqualTo: widget.stampCategories.categories)
         .where(
@@ -58,7 +76,7 @@ class _StampBookComponentState extends State<StampBookComponent> {
   }
 
   void streamStampAmount() {
-    Firestore.instance
+    stampAmountStrean = Firestore.instance
         .collection("Stamp_Data")
         .where("categories", isEqualTo: widget.stampCategories.categories)
         .snapshots()
@@ -70,7 +88,7 @@ class _StampBookComponentState extends State<StampBookComponent> {
   }
 
   void streamSetStampBadge() {
-    Firestore.instance
+    stampBadgeStream = Firestore.instance
         .collection("Stamp_Transaction")
         .where("stampId", isEqualTo: widget.stampIdInfomation.stampId)
         .where("userId", isEqualTo: widget.psmAtStampUser.userId)

@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/stamp_book_components/stamp_details_component.dart';
+import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/stamp_book_services/stamp_details_constructure.dart';
 
@@ -19,6 +21,8 @@ class StampDetailScreen extends StatefulWidget {
 }
 
 class _StampDetailScreenState extends State<StampDetailScreen> {
+  StreamSubscription stampInfomationStream;
+  StreamSubscription stampInTransactionStream;
   String iconUrl;
   String name;
   String location;
@@ -35,8 +39,15 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    stampInfomationStream.cancel();
+    stampInTransactionStream.cancel();
+    super.dispose();
+  }
+
   void streamStampInformation() {
-    Firestore.instance
+    stampInfomationStream = Firestore.instance
         .collection("Stamp_Data")
         .document(widget.stampIdInfomation.stampId)
         .snapshots()
@@ -60,7 +71,7 @@ class _StampDetailScreenState extends State<StampDetailScreen> {
   }
 
   void streamStampInTransaction() {
-    Firestore.instance
+    stampInTransactionStream = Firestore.instance
         .collection("Stamp_Transaction")
         .where("userId", isEqualTo: widget.psmAtStampUser.userId)
         .where(

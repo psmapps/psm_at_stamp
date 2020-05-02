@@ -9,56 +9,63 @@ import 'package:psm_at_stamp/components/notification_components/message_box.dart
 import 'package:psm_at_stamp/screens/signin_screens/signin_screen.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
+import 'package:psm_at_stamp/services/psmatstamp_users_services/cancel_all_subscription.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/delete_credential_file.dart';
 
 Future<void> signUserOut(BuildContext context,
-    {@required PsmAtStampUser psmAtStampUser, bool failureAsk}) async {
+    {@required PsmAtStampUser psmAtStampUser,
+    bool failureAsk,
+    bool updateCredentailInDatabase}) async {
+  Navigator.popUntil(context, ((route) => route.isFirst));
   showLoadingBox(context, loadingMessage: "กำลังออกจากระบบ");
-  try {
-    await Firestore.instance
-        .collection("Stamp_User")
-        .document(psmAtStampUser.userId)
-        .updateData({"udid": "", "accessToken": "", "fcmToken": ""}).timeout(
-            Duration(seconds: 10));
-    if (psmAtStampUser.signInServices == SignInServices.google) {
-      await GoogleSignIn().signOut();
-    }
-    if (psmAtStampUser.signInServices == SignInServices.line) {
-      await LineSDK.instance.logout();
-    }
-    await FirebaseAuth.instance.signOut().timeout(Duration(seconds: 10));
-  } catch (e) {
-    Navigator.pop(context);
-    logger.d(e);
-    if (failureAsk == null || failureAsk == true) {
-      return showMessageBox(
-        context,
-        title: "ออกจากระบบไม่สำเร็จ",
-        content:
-            "เกิดข้อผิดพลาดบางอย่างทำให้การลงชื่อออกจากระบบกับ PSM @ STAMP ไม่สำเร็จ อย่างไรก็ตาม คุณยังคงต้องการออกจากระบบอยู่หรือไม่ ? หากออกจากระบบตอนนี้ คุณอาจได้รับข้อความเตือนเรื่องการเข้าสู่ระบบซ้ำในการเข้าสู่ระบบครั้งถัดไป",
-        icon: FontAwesomeIcons.exclamationTriangle,
-        iconColor: Colors.yellow,
-        actionsButton: [
-          IconButton(
-            icon: Icon(FontAwesomeIcons.timesCircle),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          IconButton(
-            icon: Icon(FontAwesomeIcons.checkCircle),
-            color: Colors.redAccent,
-            onPressed: () {
-              Navigator.pop(context);
-              signUserOut(
-                context,
-                psmAtStampUser: psmAtStampUser,
-                failureAsk: false,
-              );
-            },
-          ),
-        ],
-      );
+  cancelAllSubscription();
+  if (updateCredentailInDatabase ?? true) {
+    try {
+      await Firestore.instance
+          .collection("Stamp_User")
+          .document(psmAtStampUser.userId)
+          .updateData({"udid": "", "accessToken": "", "fcmToken": ""}).timeout(
+              Duration(seconds: 10));
+      if (psmAtStampUser.signInServices == SignInServices.google) {
+        await GoogleSignIn().signOut();
+      }
+      if (psmAtStampUser.signInServices == SignInServices.line) {
+        await LineSDK.instance.logout();
+      }
+      await FirebaseAuth.instance.signOut().timeout(Duration(seconds: 10));
+    } catch (e) {
+      Navigator.pop(context);
+      logger.d(e);
+      if (failureAsk == null || failureAsk == true) {
+        return showMessageBox(
+          context,
+          title: "ออกจากระบบไม่สำเร็จ",
+          content:
+              "เกิดข้อผิดพลาดบางอย่างทำให้การลงชื่อออกจากระบบกับ PSM @ STAMP ไม่สำเร็จ อย่างไรก็ตาม คุณยังคงต้องการออกจากระบบอยู่หรือไม่ ? หากออกจากระบบตอนนี้ คุณอาจได้รับข้อความเตือนเรื่องการเข้าสู่ระบบซ้ำในการเข้าสู่ระบบครั้งถัดไป",
+          icon: FontAwesomeIcons.exclamationTriangle,
+          iconColor: Colors.yellow,
+          actionsButton: [
+            IconButton(
+              icon: Icon(FontAwesomeIcons.timesCircle),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            IconButton(
+              icon: Icon(FontAwesomeIcons.checkCircle),
+              color: Colors.redAccent,
+              onPressed: () {
+                Navigator.pop(context);
+                signUserOut(
+                  context,
+                  psmAtStampUser: psmAtStampUser,
+                  failureAsk: false,
+                );
+              },
+            ),
+          ],
+        );
+      }
     }
   }
   await deleteCredentialFile();
