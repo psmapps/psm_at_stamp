@@ -9,23 +9,29 @@ import 'package:psm_at_stamp/components/notification_components/message_box.dart
 import 'package:psm_at_stamp/screens/signin_screens/signin_screen.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
-import 'package:psm_at_stamp/services/psmatstamp_users_services/cancel_all_subscription.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/delete_credential_file.dart';
+import 'package:psm_at_stamp/services/psmatstamp_users_services/listener_on_user_update.dart';
 
-Future<void> signUserOut(BuildContext context,
-    {@required PsmAtStampUser psmAtStampUser,
-    bool failureAsk,
-    bool updateCredentailInDatabase}) async {
+Future<void> signUserOut(
+  BuildContext context, {
+  @required PsmAtStampUser psmAtStampUser,
+  bool failureAsk,
+  bool updateCredentailInDatabase,
+}) async {
   Navigator.popUntil(context, ((route) => route.isFirst));
   showLoadingBox(context, loadingMessage: "กำลังออกจากระบบ");
-  cancelAllSubscription();
+  onUserUpdateStreamSubscription.cancel();
   if (updateCredentailInDatabase ?? true) {
     try {
       await Firestore.instance
           .collection("Stamp_User")
           .document(psmAtStampUser.userId)
-          .updateData({"udid": "", "accessToken": "", "fcmToken": ""}).timeout(
-              Duration(seconds: 10));
+          .updateData({
+        "udid": "",
+        "accessToken": "",
+        "fcmToken": "",
+        "isFourceSignOut": false
+      }).timeout(Duration(seconds: 10));
       if (psmAtStampUser.signInServices == SignInServices.google) {
         await GoogleSignIn().signOut();
       }

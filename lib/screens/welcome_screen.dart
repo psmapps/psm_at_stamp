@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psm_at_stamp/services/firebase_message_service/firebase_message_config.dart';
 import 'package:psm_at_stamp/services/welcome_screen_services/welcome_screen_services.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void initState() {
     super.initState();
     welcomeCredentialCheck(context);
+    firebaseMessageConfig();
   }
 
   @override

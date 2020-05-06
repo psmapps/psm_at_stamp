@@ -4,10 +4,12 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:psm_at_stamp/components/notification_components/loading_box.dart';
 import 'package:psm_at_stamp/components/notification_components/message_box.dart';
 import 'package:psm_at_stamp/screens/setting_screens/setting_screen.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
+import 'package:psm_at_stamp/services/qr_code_scaner_services/qr_code_type_stamp_handler.dart';
 import 'package:psm_at_stamp/services/qr_code_scaner_services/qr_code_type_user_handler.dart';
 import 'package:psm_at_stamp/services/setting_services/get_camera_setting_file.dart';
 
@@ -76,25 +78,39 @@ Future<void> scanQrCode(BuildContext context,
   }
   logger.d(result.rawContent);
   Map<String, dynamic> qrCodeData;
+  showLoadingBox(context, loadingMessage: "กำลังตรวจสอบ QR Code");
   try {
     qrCodeData = json.decode(result.rawContent);
     if (qrCodeData["type"] == null || qrCodeData["type"] == "") {
       throw "Type not correct";
     }
+
     switch (qrCodeData["type"]) {
       case "user":
+        if (qrCodeData["userId"] == null || qrCodeData["userId"] == "") {
+          throw "Type not correct";
+        }
         qrCodeTypeUserHandler(
           context,
           qrCodeData: qrCodeData,
           psmAtStampUser: psmAtStampUser,
         );
         break;
-      case "":
+      case "stamp":
+        if (qrCodeData["token"] == null || qrCodeData["token"] == "") {
+          throw "Type not correct";
+        }
+        qrCodeTypeStampHandler(
+          context,
+          qrCodeData: qrCodeData,
+          psmAtStampUser: psmAtStampUser,
+        );
         break;
       default:
         throw "Type not correct";
     }
   } catch (e) {
+    Navigator.pop(context);
     return showMessageBox(
       context,
       title: "QR Code ไม่ถูกต้อง",

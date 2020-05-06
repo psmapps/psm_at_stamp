@@ -45,5 +45,29 @@ void listenerOnUserUpdate(BuildContext context,
         ],
       );
     }
+    if (docSnap.data["isFourceSignOut"] ?? false == true) {
+      logger.d("onUserUpdate: isFourceSignOut is triggered, Signing User Out");
+      return showMessageBox(
+        context,
+        title: "คุณถูกบังคับให้ออกจากระบบ",
+        content:
+            "คุณถูกบังคับให้ออกจากระบบโดย Administrator. ระบบจะดำเนินการออกจากระบบอัตโนมัติ",
+        icon: FontAwesomeIcons.exclamationTriangle,
+        iconColor: Colors.yellow,
+        actionsButton: [
+          IconButton(
+            icon: Icon(FontAwesomeIcons.timesCircle),
+            onPressed: () {
+              Navigator.popUntil(context, ((route) => route.isFirst));
+              signUserOut(
+                context,
+                psmAtStampUser: psmAtStampUser,
+                updateCredentailInDatabase: true,
+              );
+            },
+          )
+        ],
+      );
+    }
   });
 }

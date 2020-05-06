@@ -5,9 +5,15 @@ void firebaseMessageConfig() async {
   FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
   String fcmToken = await firebaseMessaging.getToken();
   logger.d("Firebase Cloud Messaging Token: " + fcmToken);
+  firebaseMessaging.subscribeToTopic("NEWS");
   firebaseMessaging.configure(
     onMessage: (Map<String, dynamic> message) async {
-      logger.d('onMessage called: $message');
+      try {
+        logger.d('onMessage called: ' + message.toString());
+      } catch (e) {
+        logger.e(e);
+        logger.d('onMessage called Error: ' + message.toString());
+      }
     },
     onResume: (Map<String, dynamic> message) async {
       logger.d('onResume called: $message');
