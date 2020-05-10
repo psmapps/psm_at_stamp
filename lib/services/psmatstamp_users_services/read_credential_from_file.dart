@@ -27,6 +27,7 @@ Future<PsmAtStampUser> readCredentailFromFile() async {
           signInService: credentialDecode["signInServices"]),
       accessToken: credentialDecode["accessToken"],
       udid: credentialDecode["udid"],
+      stampId: credentialDecode["stampId"],
       displayName: credentialDecode["displayName"] ?? "PSM @ STAMP",
       profileImageUrl: credentialDecode["profileImageUrl"],
       otherInfos: {"didOverrideSignIn": false});

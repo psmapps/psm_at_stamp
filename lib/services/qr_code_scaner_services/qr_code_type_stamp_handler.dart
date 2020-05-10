@@ -17,7 +17,7 @@ Future<void> qrCodeTypeStampHandler(
       "https://asia-east2-satitprasarnmit-psm-at-stamp.cloudfunctions.net/stampValidate_v3d1";
 
   logger.d(qrCodeData["token"]);
-  var response;
+  http.Response response;
   var udid = await FlutterUdid.udid;
   try {
     response = await http.post(

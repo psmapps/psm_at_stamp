@@ -98,6 +98,7 @@ Future<PsmAtStampUser> signUserIn({
     permission: _permission,
     accessToken: accessToken,
     udid: udid,
+    stampId: docData["stampId"],
     signInServices: signInServices,
     displayName: docData["displayName"] ?? "PSM @ STAMP",
     profileImageUrl: docData["profileImage"] ??

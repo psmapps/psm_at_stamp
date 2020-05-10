@@ -134,6 +134,7 @@ Future<void> welcomeCredentialCheck(BuildContext context) async {
     udid: _udid,
     signInServices: psmAtStampUserFromCredentail.signInServices,
     displayName: docSnap.data["displayName"],
+    stampId: docSnap.data["stampId"],
     profileImageUrl: docSnap.data["profileImage"],
     otherInfos: {"didOverrideSignIn": false},
   );

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/screens/home_screens/custom_tab_indicator.dart';
-import 'package:psm_at_stamp/screens/my_account_screens/my_account_screen.dart';
-import 'package:psm_at_stamp/screens/stamp_book_screens/stamp_book_screen.dart';
+import 'package:psm_at_stamp/screens/home_screens/screen_data_manager.dart';
+import 'package:psm_at_stamp/screens/home_screens/screen_widget_constructure.dart';
 import 'package:psm_at_stamp/services/home_screen_services/check_did_override_signin.dart';
 import 'package:psm_at_stamp/services/intro_screen_services/check_open_intro.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
@@ -19,18 +18,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TabController tabController;
+  ScreenWidget screenWidget;
   @override
   void initState() {
     super.initState();
     checkDidOverrideSignIn(context, psmAtStampUser: widget.psmAtStampUser);
     checkOpenIntro(context, psmAtStampUser: widget.psmAtStampUser);
     listenerOnUserUpdate(context, psmAtStampUser: widget.psmAtStampUser);
+    screenWidget = screenDataManager(psmAtStampUser: widget.psmAtStampUser);
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: screenWidget.tabBarCount,
       child: Scaffold(
         backgroundColor: Color.fromRGBO(90, 90, 90, 1),
         appBar: AppBar(
@@ -50,14 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: TabBarView(
           controller: tabController,
-          children: <Widget>[
-            StampBookScreen(
-              psmAtStampUser: widget.psmAtStampUser,
-            ),
-            MyAccountScreen(
-              psmAtStampUser: widget.psmAtStampUser,
-            )
-          ],
+          children: screenWidget.screenList,
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
@@ -77,36 +71,30 @@ class _HomeScreenState extends State<HomeScreen> {
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
-            tabs: [
-              Tab(
-                icon: Icon(FontAwesomeIcons.book),
-                child: Text("สมุดแสตมป์"),
-              ),
-              Tab(
-                icon: Icon(FontAwesomeIcons.userAlt),
-                child: Text("บัญชีของฉัน"),
-              ),
-            ],
+            tabs: screenWidget.tabBarList,
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Container(
-            padding: const EdgeInsets.all(7),
-            child: Image.asset(
-              "assets/images/icons/scanQr.png",
-              scale: 20,
-            ),
-          ),
-          tooltip: "สแกน QR Code",
-          splashColor: Colors.grey,
-          backgroundColor: Color.fromRGBO(255, 213, 127, 1),
-          onPressed: () {
-            scanQrCode(
-              context,
-              psmAtStampUser: widget.psmAtStampUser,
-            );
-          },
-        ),
+        floatingActionButton:
+            widget.psmAtStampUser.permission == PsmAtStampUserPermission.staff
+                ? Container()
+                : FloatingActionButton(
+                    child: Container(
+                      padding: const EdgeInsets.all(7),
+                      child: Image.asset(
+                        "assets/images/icons/scanQr.png",
+                        scale: 20,
+                      ),
+                    ),
+                    tooltip: "สแกน QR Code",
+                    splashColor: Colors.grey,
+                    backgroundColor: Color.fromRGBO(255, 213, 127, 1),
+                    onPressed: () {
+                      scanQrCode(
+                        context,
+                        psmAtStampUser: widget.psmAtStampUser,
+                      );
+                    },
+                  ),
       ),
     );
   }

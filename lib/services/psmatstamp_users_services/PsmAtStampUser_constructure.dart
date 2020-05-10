@@ -20,6 +20,7 @@ class PsmAtStampUser {
   String displayName;
   String accessToken;
   String udid;
+  String stampId;
   PsmAtStampUserPermission permission;
   SignInServices signInServices;
   Map<String, dynamic> otherInfos;
@@ -37,6 +38,7 @@ class PsmAtStampUser {
       @required String udid,
       @required SignInServices signInServices,
       String profileImageUrl,
+      String stampId,
       Map<String, dynamic> otherInfos}) {
     this.prefix = prefix;
     this.name = name;
@@ -52,6 +54,7 @@ class PsmAtStampUser {
     this.profileImageUrl = profileImageUrl;
     this.signInServices = signInServices;
     this.otherInfos = otherInfos;
+    this.stampId = stampId;
   }
   String exportToString() {
     Map<String, dynamic> psmAtStampUser = {
@@ -70,6 +73,7 @@ class PsmAtStampUser {
       "profileImageUrl": this.profileImageUrl,
       "signInServices":
           psmAtStampSignInServiceToString(signInService: this.signInServices),
+      "stampId": this.stampId,
       "otherInfos":
           this.otherInfos != null ? json.encode(this.otherInfos) : "{}"
     };
