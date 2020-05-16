@@ -140,13 +140,11 @@ class _StampBookStampListScreenState extends State<StampBookStampListScreen> {
                                 MaterialPageRoute(
                                   builder: (context) => StampDetailScreen(
                                     stampIdInfomation: StampIdInfomation(
+                                      displayStampBadge: true,
                                       categories:
                                           widget.stampCategories.categories,
                                       stampId: snapshot
                                           .data.documents[index].documentID,
-                                      iconUrl: snapshot.data.documents[index]
-                                              .data["iconUrl"] ??
-                                          widget.stampCategories.iconUrl,
                                       categoriesIconUrl:
                                           widget.stampCategories.iconUrl,
                                     ),
@@ -156,12 +154,10 @@ class _StampBookStampListScreenState extends State<StampBookStampListScreen> {
                               );
                             },
                             stampIdInfomation: StampIdInfomation(
+                              displayStampBadge: true,
                               categories: widget.stampCategories.categories,
                               stampId:
                                   snapshot.data.documents[index].documentID,
-                              iconUrl: snapshot
-                                      .data.documents[index].data["iconUrl"] ??
-                                  widget.stampCategories.iconUrl,
                               categoriesIconUrl: widget.stampCategories.iconUrl,
                             ),
                             psmAtStampUser: widget.psmAtStampUser,

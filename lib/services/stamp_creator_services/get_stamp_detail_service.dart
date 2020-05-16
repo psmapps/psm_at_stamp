@@ -22,7 +22,10 @@ Future<Map<String, dynamic>> getStampDetailService(BuildContext context,
         details: "ไม่สามารถติดต่อ PSM @ STAMP ได้ กรุณาลองใหม่อีกครั้ง");
   }
   if (!stampDoc.exists) {
-    throw PlatformException(code: "stamp_not_found");
+    throw PlatformException(
+      code: "stamp_not_found",
+      details: "ไม่พบแสตมป์ที่คุณเป็น Staff ของฐานกิจกรรม",
+    );
   }
   DocumentSnapshot permissionDoc;
   try {

@@ -29,6 +29,7 @@ Widget inActiveStampCreatorComponent({@required String displayText}) {
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
         ],

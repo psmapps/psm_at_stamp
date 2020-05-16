@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 /// * Required
 /// [categories, iconUrl, stampId]
 class StampIdInfomation {
-  String iconUrl;
   String stampId;
   String categories;
   String categoriesIconUrl;
+  bool displayStampBadge;
   StampIdInfomation({
-    @required String stampId,
-    @required String categories,
-    @required String iconUrl,
-    @required String categoriesIconUrl,
+    String stampId,
+    String categories,
+    String categoriesIconUrl,
+    @required bool displayStampBadge,
   }) {
     this.categories = categories;
-    this.iconUrl = iconUrl;
     this.stampId = stampId;
     this.categoriesIconUrl = categoriesIconUrl;
+    this.displayStampBadge = displayStampBadge;
   }
 }
 

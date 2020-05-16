@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget stampDetailComponent({
+Widget stampDetailInfoComponent({
   @required IconData iconData,
   @required String detailIndex,
   @required Widget detail,

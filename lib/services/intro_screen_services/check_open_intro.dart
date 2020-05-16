@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:psm_at_stamp/screens/intro_slider_screens/intro_slider_screens.dart';
 import 'package:psm_at_stamp/services/file_system_manager_services/read_data_from_file.dart';
 import 'package:psm_at_stamp/services/file_system_manager_services/write_data_to_file.dart';
+import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 
 Future<void> checkOpenIntro(BuildContext context,
@@ -16,7 +17,7 @@ Future<void> checkOpenIntro(BuildContext context,
     await writeDataToFile(
       fileName: "intro.json",
       fileData: json.encode(
-        {"displayIntro": "false"},
+        {"displayIntro": false},
       ),
     );
     return Navigator.pushReplacement(
@@ -28,8 +29,8 @@ Future<void> checkOpenIntro(BuildContext context,
       ),
     );
   }
-
-  if (data["displayIntro"]) {
+  logger.d(data);
+  if (data["displayIntro"] == "true") {
     return Navigator.pushReplacement(
       context,
       MaterialPageRoute(

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/screens/home_screens/screen_widget_constructure.dart';
 import 'package:psm_at_stamp/screens/my_account_screens/my_account_screen.dart';
+import 'package:psm_at_stamp/screens/staff_screens/stamp_detail_staff_screens/stamp_detail_staff.dart';
 import 'package:psm_at_stamp/screens/stamp_book_screens/stamp_book_screen.dart';
-import 'package:psm_at_stamp/screens/stamp_creator_screens/stamp_creator_screen.dart';
+import 'package:psm_at_stamp/screens/staff_screens/stamp_creator_screens/stamp_creator_screen.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 
 ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
@@ -34,7 +35,7 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
     case PsmAtStampUserPermission.staff:
       return ScreenWidget(
         screenList: [
-          MyAccountScreen(
+          StampDetailStaff(
             psmAtStampUser: psmAtStampUser,
           ),
           StampCreatorScreen(

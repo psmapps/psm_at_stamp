@@ -48,8 +48,8 @@ class _StampCreatorScreenState extends State<StampCreatorScreen> {
     } on PlatformException catch (e) {
       logger.e(e);
       setState(() {
-        qrCodeSection = inActiveStampCreatorComponent(displayText: e.details);
         isFailed = true;
+        qrCodeSection = inActiveStampCreatorComponent(displayText: e.details);
       });
       return DoNothingAction();
     }
@@ -182,7 +182,7 @@ class _StampCreatorScreenState extends State<StampCreatorScreen> {
                                 size: 200,
                                 version: QrVersions.auto,
                                 embeddedImage: AssetImage(
-                                  "assets/images/icons/icon_black.png",
+                                  "assets/images/icons/icon_curve_black.png",
                                 ),
                                 data: json.encode(
                                   {
