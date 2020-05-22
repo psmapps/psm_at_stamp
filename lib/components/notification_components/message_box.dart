@@ -7,12 +7,14 @@ import 'package:psm_at_stamp/components/notification_components/notification_com
 /// [title, content]
 /// * Optional
 /// [actionsButton, icon, iconColor]
-void showMessageBox(BuildContext context,
-    {@required String title,
-    @required String content,
-    List<Widget> actionsButton,
-    IconData icon,
-    Color iconColor}) {
+void showMessageBox(
+  BuildContext context, {
+  @required String title,
+  @required String content,
+  List<Widget> actionsButton,
+  IconData icon,
+  Color iconColor,
+}) {
   Widget notificationWidget = AlertDialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     title: Row(
