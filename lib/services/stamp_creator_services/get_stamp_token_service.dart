@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 Future<String> getStampTokenService(BuildContext context,
     {@required PsmAtStampUser psmAtStampUser}) async {
   String createStampTokenApiUrl =
-      "https://asia-east2-satitprasarnmit-psm-at-stamp.cloudfunctions.net/createStampToken/";
+      "https://asia-east2-satitprasarnmit-psm-at-stamp.cloudfunctions.net/v4-createStampToken";
   var udid = await FlutterUdid.udid;
   http.Response response;
   try {

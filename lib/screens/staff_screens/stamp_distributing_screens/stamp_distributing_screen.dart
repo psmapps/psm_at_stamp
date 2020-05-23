@@ -1,39 +1,43 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/signin_button_components.dart';
-import 'package:psm_at_stamp/components/stamp_creator_component/in_active_component.dart';
-import 'package:psm_at_stamp/components/stamp_creator_component/loading_component.dart';
-import 'package:psm_at_stamp/components/stamp_creator_component/stamp_timer_component.dart';
+import 'package:psm_at_stamp/components/stamp_distributing_component/in_active_component.dart';
+import 'package:psm_at_stamp/components/stamp_distributing_component/loading_component.dart';
+import 'package:psm_at_stamp/components/stamp_distributing_component/qr_code_distributing.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/stamp_creator_services/get_stamp_detail_service.dart';
 import 'package:psm_at_stamp/services/stamp_creator_services/get_stamp_token_service.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
-class StampCreatorScreen extends StatefulWidget {
+enum DistributingType { qrCode, manual }
+
+class StampDistributingScreen extends StatefulWidget {
   final PsmAtStampUser psmAtStampUser;
-  StampCreatorScreen({Key key, @required this.psmAtStampUser})
-      : super(key: key);
+  final DistributingType distributingType;
+  StampDistributingScreen({
+    Key key,
+    @required this.psmAtStampUser,
+    @required this.distributingType,
+  }) : super(key: key);
 
   @override
-  _StampCreatorScreenState createState() => _StampCreatorScreenState();
+  _StampDistributingScreenState createState() =>
+      _StampDistributingScreenState();
 }
 
-class _StampCreatorScreenState extends State<StampCreatorScreen> {
+class _StampDistributingScreenState extends State<StampDistributingScreen> {
   String stampTokenData = "-";
   String stampName = "-";
   String stampCategories = "-";
   String stampIconUrl = "";
   bool isActive = false;
   bool isFailed = false;
-  Widget qrCodeSection;
+  Widget distributingSection;
 
   @override
   void initState() {
-    qrCodeSection = stampCreatorLoadingComponent();
+    distributingSection = stampCreatorLoadingComponent();
     getStampDetail();
     super.initState();
   }
@@ -49,7 +53,8 @@ class _StampCreatorScreenState extends State<StampCreatorScreen> {
       logger.e(e);
       setState(() {
         isFailed = true;
-        qrCodeSection = inActiveStampCreatorComponent(displayText: e.details);
+        distributingSection =
+            inActiveStampCreatorComponent(displayText: e.details);
       });
       return DoNothingAction();
     }
@@ -58,10 +63,12 @@ class _StampCreatorScreenState extends State<StampCreatorScreen> {
       stampCategories = stampDetail["stampCategories"];
       stampIconUrl = stampDetail["iconUrl"] ?? "";
     });
-    try {
-      await getStampToken();
-    } catch (e) {
-      return DoNothingAction();
+    if (widget.distributingType == DistributingType.qrCode) {
+      try {
+        await getStampToken();
+      } catch (e) {
+        return DoNothingAction();
+      }
     }
     setState(() {
       isActive = true;
@@ -81,7 +88,8 @@ class _StampCreatorScreenState extends State<StampCreatorScreen> {
     } on PlatformException catch (e) {
       logger.e(e);
       setState(() {
-        qrCodeSection = inActiveStampCreatorComponent(displayText: e.details);
+        distributingSection =
+            inActiveStampCreatorComponent(displayText: e.details);
         isActive = false;
         isFailed = true;
       });
@@ -170,43 +178,20 @@ class _StampCreatorScreenState extends State<StampCreatorScreen> {
                 ),
               ),
               isActive
-                  ? Column(
-                      children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.only(top: 10, bottom: 20),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Tooltip(
-                              message: "Stamp",
-                              child: QrImage(
-                                size: 200,
-                                version: QrVersions.auto,
-                                embeddedImage: AssetImage(
-                                  "assets/images/icons/icon_curve_black.png",
-                                ),
-                                data: json.encode(
-                                  {
-                                    "type": "stamp",
-                                    "token": stampTokenData,
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        StampTimerComponent(
-                          timerTriggeredCallback: () {
+                  ? widget.distributingType == DistributingType.qrCode
+                      ? qrCodeDistributing(
+                          stampTokenData: stampTokenData,
+                          isActive: isActive,
+                          timeTriggerCallback: () {
                             getStampToken();
                           },
-                          isActive: isActive,
-                        ),
-                      ],
-                    )
+                        )
+                      : Container()
                   : Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Column(
                         children: <Widget>[
-                          qrCodeSection,
+                          distributingSection,
                         ],
                       ),
                     ),
@@ -222,7 +207,8 @@ class _StampCreatorScreenState extends State<StampCreatorScreen> {
                         icon: FontAwesomeIcons.syncAlt,
                         onPressHandler: () {
                           setState(() {
-                            qrCodeSection = stampCreatorLoadingComponent();
+                            distributingSection =
+                                stampCreatorLoadingComponent();
                             isFailed = false;
                             isActive = false;
                           });

@@ -69,7 +69,7 @@ Future<void> signInWithLine(BuildContext context) async {
 
   String _customToken = (await http
           .post(
-            "https://asia-east2-satitprasarnmit-psm-at-stamp.cloudfunctions.net/SignInWithLine_FirebaseAuth",
+            "https://asia-east2-satitprasarnmit-psm-at-stamp.cloudfunctions.net/v4-SignInWithLine_FirebaseAuth",
             body: _reqBody,
           )
           .timeout(Duration(seconds: 10)))

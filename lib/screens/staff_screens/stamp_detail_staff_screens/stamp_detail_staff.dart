@@ -6,24 +6,10 @@ import 'package:psm_at_stamp/screens/staff_screens/stamp_info_editor_screens/sta
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/stamp_book_services/stamp_details_constructure.dart';
 
-class StampDetailStaff extends StatefulWidget {
+class StampDetailStaff extends StatelessWidget {
   final PsmAtStampUser psmAtStampUser;
-  StampDetailStaff({Key key, @required this.psmAtStampUser}) : super(key: key);
-
-  @override
-  _StampDetailStaffState createState() => _StampDetailStaffState();
-}
-
-class _StampDetailStaffState extends State<StampDetailStaff> {
-  StampIdInfomation stampIdInfomation;
-  @override
-  void initState() {
-    stampIdInfomation = StampIdInfomation(
-      stampId: widget.psmAtStampUser.stampId,
-      displayStampBadge: false,
-    );
-    super.initState();
-  }
+  const StampDetailStaff({Key key, @required this.psmAtStampUser})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +18,11 @@ class _StampDetailStaffState extends State<StampDetailStaff> {
         child: Column(
           children: <Widget>[
             StampDetailCardComponent(
-              psmAtStampUser: widget.psmAtStampUser,
-              stampIdInfomation: stampIdInfomation,
+              psmAtStampUser: psmAtStampUser,
+              stampIdInfomation: StampIdInfomation(
+                stampId: psmAtStampUser.stampId,
+                displayStampBadge: false,
+              ),
             ),
             signInButtonComponent(
               title: "ตั้งค่าฐานกิจกรรม",
@@ -43,7 +32,7 @@ class _StampDetailStaffState extends State<StampDetailStaff> {
                   context,
                   MaterialPageRoute(
                     builder: (route) => StampInfoEditorScreen(
-                      psmAtStampUser: widget.psmAtStampUser,
+                      psmAtStampUser: psmAtStampUser,
                     ),
                   ),
                 );

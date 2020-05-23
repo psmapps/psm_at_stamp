@@ -57,7 +57,7 @@ class SettingScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                "Version 3.1",
+                "Version 4",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,

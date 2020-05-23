@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:psm_at_stamp/components/notification_components/message_box.dart';
 import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/stamp_info_editor_services/update_stamp_detail.dart';

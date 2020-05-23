@@ -41,14 +41,16 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>PSM @ STAMP ต้องการใช้กล้องเพื่อ Scan QR Code รับแสตมป์</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>PSM @ STAMP ต้องการเข้าถึงคลังภาพของคุณ</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>PSM @ STAMP ต้องการเข้าถึง Mcrophone ของคุณ</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>PSM @ STAMP ต้องการเข้าถึงคลังภาพของคุณ</string>
 	<key>PermissionGroupNotification</key>
 	<string>เพื่อรับข่าวสารแจ้งเตือนล่าสุดจาก PSM @ STAMP กรุณาอนุญาติการแจ้งเตือน</string>
 	<key>UIBackgroundModes</key>
@@ -76,8 +78,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 </dict>
 </plist>

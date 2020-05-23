@@ -14,7 +14,7 @@ Future<void> qrCodeTypeStampHandler(
   @required PsmAtStampUser psmAtStampUser,
 }) async {
   const stampValidateApiUrl =
-      "https://asia-east2-satitprasarnmit-psm-at-stamp.cloudfunctions.net/stampValidate_v3d1";
+      "https://asia-east2-satitprasarnmit-psm-at-stamp.cloudfunctions.net/v4-stampValidate";
 
   logger.d(qrCodeData["token"]);
   http.Response response;

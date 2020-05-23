@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:psm_at_stamp/components/stamp_creator_component/in_active_component.dart';
+import 'package:psm_at_stamp/components/stamp_distributing_component/in_active_component.dart';
 import 'package:psm_at_stamp/components/stamp_detail_components/on_active_stamp_detail_info_component.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
