@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-Widget stampInfoEditComponent({
+Widget stampInfoEditCard({
   @required String infoName,
   @required IconData infoIcon,
-  TextEditingController textController,
-  Widget infoWidget,
+  @required Widget infoWidget,
 }) {
   return Card(
     shape: RoundedRectangleBorder(
@@ -35,11 +34,7 @@ Widget stampInfoEditComponent({
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-          child: textController != null
-              ? TextField(
-                  controller: textController,
-                )
-              : infoWidget,
+          child: infoWidget,
         )
       ],
     ),
