@@ -4,11 +4,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/components/stamp_distributing_component/in_active_component.dart';
 import 'package:psm_at_stamp/components/stamp_distributing_component/loading_component.dart';
+import 'package:psm_at_stamp/components/stamp_distributing_component/manual_distributing.dart';
 import 'package:psm_at_stamp/components/stamp_distributing_component/qr_code_distributing.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
-import 'package:psm_at_stamp/services/stamp_creator_services/get_stamp_detail_service.dart';
-import 'package:psm_at_stamp/services/stamp_creator_services/get_stamp_token_service.dart';
+import 'package:psm_at_stamp/services/stamp_distributing_services/get_stamp_detail_service.dart';
+import 'package:psm_at_stamp/services/stamp_distributing_services/get_stamp_token_service.dart';
 
 enum DistributingType { qrCode, manual }
 
@@ -186,7 +187,9 @@ class _StampDistributingScreenState extends State<StampDistributingScreen> {
                             getStampToken();
                           },
                         )
-                      : Container()
+                      : ManualDistributing(
+                          psmAtStampUser: widget.psmAtStampUser,
+                        )
                   : Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Column(

@@ -44,6 +44,12 @@ class _StampTimerComponentState extends State<StampTimerComponent> {
   }
 
   @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       child: Stack(

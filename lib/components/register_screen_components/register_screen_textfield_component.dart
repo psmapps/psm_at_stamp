@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 
 Widget registerScreenTextFieldComponent(BuildContext context,
     {@required FocusNode beforeFocusNode,
@@ -11,6 +12,7 @@ Widget registerScreenTextFieldComponent(BuildContext context,
     child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        autofocus: false,
         focusNode: currentFocusNode,
         controller: textEditingController,
         inputFormatters: [
