@@ -1,15 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:package_info/package_info.dart';
 import 'package:psm_at_stamp/components/camera_selection_box_component/camera_selection_box.dart';
 import 'package:psm_at_stamp/components/permission_box_component/permission_box_component.dart';
 import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/screens/intro_slider_screens/intro_slider_screens.dart';
+import 'package:psm_at_stamp/screens/staff_screens/request_staff_privilege_screens/request_staff_privilege_screen.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends StatefulWidget {
   final PsmAtStampUser psmAtStampUser;
-  const SettingScreen({Key key, @required this.psmAtStampUser})
-      : super(key: key);
+  SettingScreen({
+    Key key,
+    @required this.psmAtStampUser,
+  }) : super(key: key);
+
+  @override
+  _SettingScreenState createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
+  String buildNumber = "-";
+  String version = "-";
+  bool isShowStaffRegButton = false;
+
+  @override
+  void initState() {
+    getPackageInfo();
+    super.initState();
+  }
+
+  Future<void> getPackageInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      buildNumber = packageInfo.buildNumber;
+      version = packageInfo.version;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +70,16 @@ class SettingScreen extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: <Widget>[
-              Image.asset(
-                "assets/images/icons/icon_transparent.png",
-                scale: 5,
+              GestureDetector(
+                onDoubleTap: () {
+                  setState(() {
+                    isShowStaffRegButton = true;
+                  });
+                },
+                child: Image.asset(
+                  "assets/images/icons/icon_transparent.png",
+                  scale: 5,
+                ),
               ),
               Text(
                 "PSM @ STAMP",
@@ -57,7 +91,7 @@ class SettingScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                "Version 4",
+                "Version " + version + " ( Build " + buildNumber + " )",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -89,27 +123,33 @@ class SettingScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => IntroSliderScreen(
-                        psmAtStampUser: psmAtStampUser,
+                        psmAtStampUser: widget.psmAtStampUser,
                       ),
                     ),
                   );
                 },
               ),
-              signInButtonComponent(
-                icon: FontAwesomeIcons.userAlt,
-                title: "ขอสิทธ์การเป็น Staff ฐานกิจกรรม",
-                buttonColor: Colors.white,
-                onPressHandler: () {
-                  return Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => IntroSliderScreen(
-                        psmAtStampUser: psmAtStampUser,
-                      ),
-                    ),
-                  );
-                },
-              ),
+              widget.psmAtStampUser.permission ==
+                      PsmAtStampUserPermission.student
+                  ? isShowStaffRegButton
+                      ? signInButtonComponent(
+                          icon: FontAwesomeIcons.userAlt,
+                          title: "ขอสิทธ์การเป็น Staff ฐานกิจกรรม",
+                          buttonColor: Colors.white,
+                          onPressHandler: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    RequestStaffPrivilegeScreen(
+                                  psmAtStampUser: widget.psmAtStampUser,
+                                ),
+                              ),
+                            );
+                          },
+                        )
+                      : Container()
+                  : Container(),
             ],
           ),
         ),

@@ -17,10 +17,9 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  package_info: ^0.4.0+18
   image: ^2.1.12
-  firebase_storage: ^3.1.5
   image_picker: ^0.6.6+1
-  firebase_messaging: ^6.0.13
   smooth_page_indicator: ^0.1.5
   app_settings: ^4.0.0
   permission_handler: ^5.0.0+hotfix.4
@@ -29,14 +28,17 @@ dependencies:
   qr_flutter: ^3.2.0
   path_provider: ^1.6.5
   http: ^0.12.1
-  flutter_line_sdk: ^1.2.9
+  flutter_line_sdk: ^1.2.10
   apple_sign_in: ^0.1.0
   flutter_udid: ^1.0.1
-  cloud_firestore: ^0.13.4+2
   logger: ^0.8.3
   google_sign_in: ^4.4.1
-  firebase_auth: ^0.16.0
   font_awesome_flutter: ^8.8.1
+  firebase_crashlytics: ^0.1.3+3
+  firebase_storage: ^3.1.5
+  firebase_messaging: ^6.0.13
+  cloud_firestore: ^0.13.4+2
+  firebase_auth: ^0.16.0
   flutter:
     sdk: flutter
 

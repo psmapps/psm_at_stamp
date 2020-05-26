@@ -29,7 +29,7 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
   Widget stampDetailWidget = Center(
     child: CircularProgressIndicator(),
   );
-  String iconUrl;
+  String iconUrl = "";
   String name;
   String location;
   String details;
@@ -229,7 +229,7 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: iconUrl != null
+                  child: iconUrl != ""
                       ? FadeInImage.assetNetwork(
                           imageScale: 7,
                           placeholderScale: 7,

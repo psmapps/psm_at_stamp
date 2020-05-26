@@ -8,10 +8,12 @@ import 'package:psm_at_stamp/services/psmatstamp_stamp_services/psmatstamp_stamp
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/register_services/psmatstampregister_constructure.dart';
 
-Future<void> registerValidate(BuildContext context,
-    {@required String studentId,
-    @required PsmAtStampRegister psmAtStampRegister,
-    String stampLinkCode}) async {
+Future<void> registerValidate(
+  BuildContext context, {
+  @required String studentId,
+  @required PsmAtStampRegister psmAtStampRegister,
+  String stampLinkCode,
+}) async {
   if (studentId.length < 6) {
     return showMessageBox(
       context,

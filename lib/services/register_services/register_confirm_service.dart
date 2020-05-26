@@ -55,7 +55,8 @@ Future<void> registerConfirm(BuildContext context,
         .document()
         .setData({
       "stampId": psmAtStampStampData.stampId,
-      "studentId": psmAtStampRegister.studentId
+      "studentId": psmAtStampRegister.studentId,
+      "userId": psmAtStampRegister.userId,
     });
   }
   String permission;
@@ -131,17 +132,19 @@ Future<void> registerConfirm(BuildContext context,
         " สำหรับผู้ดูแลฐานกิจกรรม จะรอการตรวจสอบความถูกต้องของบัญชีและคุณจะได้รับสิทธิในการจัดการฐานกิจกรรมของคุณหลังจากคุณได้รับการยืนยันแล้ว";
   }
   Navigator.pop(context);
-  showMessageBox(context,
-      title: "ผูกบัญชีเรียบร้อย",
-      content: content,
-      icon: FontAwesomeIcons.infoCircle,
-      iconColor: Colors.green,
-      actionsButton: [
-        IconButton(
-          icon: Icon(FontAwesomeIcons.timesCircle),
-          onPressed: () {
-            Navigator.popUntil(context, (route) => route.isFirst);
-          },
-        )
-      ]);
+  showMessageBox(
+    context,
+    title: "ผูกบัญชีเรียบร้อย",
+    content: content,
+    icon: FontAwesomeIcons.infoCircle,
+    iconColor: Colors.green,
+    actionsButton: [
+      IconButton(
+        icon: Icon(FontAwesomeIcons.timesCircle),
+        onPressed: () {
+          Navigator.popUntil(context, (route) => route.isFirst);
+        },
+      )
+    ],
+  );
 }

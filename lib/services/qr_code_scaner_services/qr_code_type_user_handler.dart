@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/notification_components/message_box.dart';
-import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 
-void qrCodeTypeUserHandler(BuildContext context,
-    {@required Map<String, dynamic> qrCodeData,
-    @required PsmAtStampUser psmAtStampUser}) {
+Future<void> qrCodeTypeUserHandler(
+  BuildContext context, {
+  @required Map<String, dynamic> qrCodeData,
+  @required PsmAtStampUser psmAtStampUser,
+}) async {
   if (psmAtStampUser.permission != PsmAtStampUserPermission.administrator) {
     Navigator.pop(context);
     return showMessageBox(
@@ -18,6 +20,13 @@ void qrCodeTypeUserHandler(BuildContext context,
       iconColor: Colors.yellow,
     );
   }
-  //TODO: Navigate to administrator page!
-  logger.d("Administrator Member Page");
+  await Clipboard.setData(ClipboardData(text: qrCodeData["userId"]));
+  Navigator.pop(context);
+  return showMessageBox(
+    context,
+    title: "User ID Copied",
+    content: qrCodeData["userId"],
+    icon: FontAwesomeIcons.checkCircle,
+    iconColor: Colors.green,
+  );
 }

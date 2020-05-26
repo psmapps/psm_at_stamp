@@ -99,7 +99,7 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
     case PsmAtStampUserPermission.administrator:
       return ScreenWidget(
         screenList: [
-          MyAccountScreen(
+          StampBookScreen(
             psmAtStampUser: psmAtStampUser,
           ),
           MyAccountScreen(
@@ -108,8 +108,8 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
         ],
         tabBarList: [
           Tab(
-            icon: Icon(FontAwesomeIcons.calendarDay),
-            child: Text("ฐานกิจกรรม"),
+            icon: Icon(FontAwesomeIcons.book),
+            child: Text("สมุดแสตมป์"),
           ),
           Tab(
             icon: Icon(FontAwesomeIcons.userAlt),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 
 Widget registerScreenTextFieldComponent(BuildContext context,
     {@required FocusNode beforeFocusNode,
