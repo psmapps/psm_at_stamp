@@ -106,7 +106,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 size: 150,
                                 version: QrVersions.auto,
                                 embeddedImage: AssetImage(
-                                  "assets/images/icons/icon_black.png",
+                                  "assets/images/icons/icon_curve_black.png",
                                 ),
                                 data: json.encode({
                                   "type": "user",
