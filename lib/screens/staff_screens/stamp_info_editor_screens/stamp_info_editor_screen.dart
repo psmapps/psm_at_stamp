@@ -80,7 +80,7 @@ class _StampInfoEditorScreenState extends State<StampInfoEditorScreen> {
                   psmAtStampUser: widget.psmAtStampUser,
                   settingName: "detail",
                   maxTextFieldLine: 5,
-                  maxLength: 500,
+                  maxLength: 400,
                 ),
               ),
               stampInfoEditCard(
