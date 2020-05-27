@@ -52,7 +52,7 @@ class _StampInfoEditorScreenState extends State<StampInfoEditorScreen> {
                   psmAtStampUser: widget.psmAtStampUser,
                   settingName: "name",
                   maxTextFieldLine: 1,
-                  maxLength: 30,
+                  maxLength: 55,
                 ),
               ),
               stampInfoEditCard(
@@ -62,7 +62,7 @@ class _StampInfoEditorScreenState extends State<StampInfoEditorScreen> {
                   psmAtStampUser: widget.psmAtStampUser,
                   settingName: "location",
                   maxTextFieldLine: 1,
-                  maxLength: 30,
+                  maxLength: 35,
                 ),
               ),
               stampInfoEditCard(

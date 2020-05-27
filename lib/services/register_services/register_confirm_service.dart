@@ -59,24 +59,6 @@ Future<void> registerConfirm(BuildContext context,
       "userId": psmAtStampRegister.userId,
     });
   }
-  String permission;
-  switch (psmAtStampRegister.permission) {
-    case (PsmAtStampUserPermission.student):
-      permission = "Student";
-      break;
-    case (PsmAtStampUserPermission.staff):
-      permission = "Staff";
-      break;
-    default:
-      Navigator.pop(context);
-      return showMessageBox(
-        context,
-        title: "Administrator not allowed",
-        content: "Administrator is not allowed to register via this method.",
-        icon: FontAwesomeIcons.exclamationCircle,
-        iconColor: Colors.red,
-      );
-  }
   String signInServices;
   switch (psmAtStampRegister.signInServices) {
     case (SignInServices.apple):
@@ -110,7 +92,7 @@ Future<void> registerConfirm(BuildContext context,
       "studentId": psmAtStampRegister.studentId,
       "userId": psmAtStampRegister.userId,
       "profileImage": psmAtStampRegister.profileImage,
-      "permission": permission
+      "permission": "Student",
     });
   } catch (e) {
     logger.d(e);

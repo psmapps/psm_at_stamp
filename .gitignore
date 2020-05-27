@@ -40,3 +40,4 @@ lib/generated_plugin_registrant.dart
 /.blackbox/secring.gpg
 /ios/Runner/GoogleService-Info.plist
 /android/app/google-services.json
+/android/app/release
