@@ -12,6 +12,7 @@ import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_c
 import 'package:psm_at_stamp/services/qr_code_scaner_services/qr_code_type_stamp_handler.dart';
 import 'package:psm_at_stamp/services/qr_code_scaner_services/qr_code_type_user_handler.dart';
 import 'package:psm_at_stamp/services/setting_services/get_camera_setting_file.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 Future<void> scanQrCode(BuildContext context,
     {@required PsmAtStampUser psmAtStampUser}) async {
@@ -46,20 +47,14 @@ Future<void> scanQrCode(BuildContext context,
           ),
         ]);
   }
-  ScanResult result;
+
+  String result;
   try {
-    result = await BarcodeScanner.scan(
-      options: ScanOptions(
-        useCamera: int.parse((await getCameraSetting())["camera"]),
-        android: AndroidOptions(
-          useAutoFocus: true,
-        ),
-        strings: {
-          "cancel": "< กลับไปยังแอพ",
-          "flash_on": "เปิด Flash",
-          "flash_off": "ปิด Flash"
-        },
-      ),
+    result = await FlutterBarcodeScanner.scanBarcode(
+      "#0ee874",
+      "กลับ",
+      true,
+      ScanMode.QR,
     );
   } on FormatException {
     return;
@@ -73,14 +68,14 @@ Future<void> scanQrCode(BuildContext context,
       iconColor: Colors.redAccent,
     );
   }
-  if (result.rawContent == "" || result.rawContent == null) {
+  if (result == "" || result == null || result == "-1") {
     return;
   }
-  logger.d(result.rawContent);
+  logger.d(result);
   Map<String, dynamic> qrCodeData;
   showLoadingBox(context, loadingMessage: "กำลังตรวจสอบ QR Code");
   try {
-    qrCodeData = json.decode(result.rawContent);
+    qrCodeData = json.decode(result);
     if (qrCodeData["type"] == null || qrCodeData["type"] == "") {
       throw "Type not correct";
     }

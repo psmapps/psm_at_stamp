@@ -286,6 +286,8 @@ PODS:
     - FirebaseCore (~> 6.0)
     - GTMSessionFetcher/Core (~> 1.1)
   - Flutter (1.0.0)
+  - flutter_barcode_scanner (1.0.1):
+    - Flutter
   - flutter_line_sdk (1.2.10):
     - Flutter
     - LineSDKSwift (~> 5.3)
@@ -393,6 +395,7 @@ DEPENDENCIES:
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
+  - flutter_barcode_scanner (from `.symlinks/plugins/flutter_barcode_scanner/ios`)
   - flutter_line_sdk (from `.symlinks/plugins/flutter_line_sdk/ios`)
   - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
   - flutter_udid (from `.symlinks/plugins/flutter_udid/ios`)
@@ -467,6 +470,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
     :path: Flutter
+  flutter_barcode_scanner:
+    :path: ".symlinks/plugins/flutter_barcode_scanner/ios"
   flutter_line_sdk:
     :path: ".symlinks/plugins/flutter_line_sdk/ios"
   flutter_plugin_android_lifecycle:
@@ -519,6 +524,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 089b7a4991425783384acc8bcefcd78c0af913bd
   FirebaseStorage: 93fe2f8190a01bfb2b2c4932df7d679744c4ef1d
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_barcode_scanner: 49cd22fac3304077a6c1672f63bee4a2572ffd85
   flutter_line_sdk: d33d7fe40d317ee9d6e7a1ce61392d833e664140
   flutter_plugin_android_lifecycle: dc0b544e129eebb77a6bfb1239d4d1c673a60a35
   flutter_udid: c9d59b0a440e137882faa5cf53a3501e906fb8c2
@@ -546,6 +552,6 @@ SPEC CHECKSUMS:
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SwiftProtobuf: 2cbd9409689b7df170d82a92a33443c8e3e14a70
 
-PODFILE CHECKSUM: 5cc645e3ffe0b8145a8e45a726f140838425dfec
+PODFILE CHECKSUM: 1406d0cc5e3e520a061c6be74c9b4eb7d7d387d7
 
 COCOAPODS: 1.8.4

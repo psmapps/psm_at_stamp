@@ -127,15 +127,19 @@ class _StampBookComponentState extends State<StampBookComponent> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 5),
                       child: widget.iconUrl != null
-                          ? FadeInImage.assetNetwork(
-                              imageScale: 10,
-                              placeholderScale: 10,
-                              fadeInCurve: Curves.decelerate,
-                              fadeInDuration: Duration(milliseconds: 375),
-                              fadeOutCurve: Curves.decelerate,
-                              fadeOutDuration: Duration(milliseconds: 375),
-                              placeholder: "assets/images/icons/icon_gray.png",
-                              image: widget.iconUrl,
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: FadeInImage.assetNetwork(
+                                imageScale: 10,
+                                placeholderScale: 10,
+                                fadeInCurve: Curves.decelerate,
+                                fadeInDuration: Duration(milliseconds: 375),
+                                fadeOutCurve: Curves.decelerate,
+                                fadeOutDuration: Duration(milliseconds: 375),
+                                placeholder:
+                                    "assets/images/icons/icon_gray.png",
+                                image: widget.iconUrl,
+                              ),
                             )
                           : Image.asset(
                               "assets/images/icons/icon_gray.png",

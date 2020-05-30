@@ -15,7 +15,7 @@ Future<void> qrCodeTypeUserHandler(
       context,
       title: "QR Code นี้ไม่ใช่ Stamp QR Code",
       content:
-          "​QR Code นี้เป็น User QR Code. กรุณาสแกน QR Code จากพี่ฐานกิจกรรมต่างๆ เพื่อรับแสตมป์",
+          "​QR Code นี้เป็น User QR Code. กรุณาแสกน QR Code จากพี่ฐานกิจกรรมต่างๆ เพื่อรับแสตมป์",
       icon: FontAwesomeIcons.exclamationTriangle,
       iconColor: Colors.yellow,
     );

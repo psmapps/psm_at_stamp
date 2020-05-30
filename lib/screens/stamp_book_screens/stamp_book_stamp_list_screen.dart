@@ -35,13 +35,16 @@ class _StampBookStampListScreenState extends State<StampBookStampListScreen> {
         title: Row(
           children: <Widget>[
             widget.stampCategories.iconUrl != null
-                ? FadeInImage.assetNetwork(
-                    imageScale: 16,
-                    placeholderScale: 16,
-                    fadeInCurve: Curves.decelerate,
-                    fadeOutCurve: Curves.decelerate,
-                    placeholder: "assets/images/icons/icon_gray.png",
-                    image: widget.stampCategories.iconUrl,
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: FadeInImage.assetNetwork(
+                      imageScale: 16,
+                      placeholderScale: 16,
+                      fadeInCurve: Curves.decelerate,
+                      fadeOutCurve: Curves.decelerate,
+                      placeholder: "assets/images/icons/icon_gray.png",
+                      image: widget.stampCategories.iconUrl,
+                    ),
                   )
                 : Image.asset(
                     "assets/images/icons/icon_gray.png",
