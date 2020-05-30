@@ -7,6 +7,7 @@ import 'package:psm_at_stamp/screens/signin_screens/signin_with_email_screen.dar
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_apple/signin_with_apple.dart';
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_google/signin_with_google.dart';
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_line/signin_with_line.dart';
+import 'package:apple_sign_in/apple_sign_in_button.dart';
 
 class SignInScreen extends StatefulWidget {
   SignInScreen({Key key}) : super(key: key);
@@ -86,6 +87,33 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
+                        Platform.isIOS
+                            ? Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: AppleSignInButton(
+                                      style: ButtonStyle.white,
+                                      cornerRadius: 30,
+                                      onPressed: () {
+                                        signInWithApple(context);
+                                      },
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(7),
+                                    child: Text(
+                                      "หรือ",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "Sukhumwit",
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Container(),
                         signInButtonComponent(
                           title: "เข้าสู่ระบบด้วย Google",
                           icon: FontAwesomeIcons.google,
@@ -93,15 +121,6 @@ class _SignInScreenState extends State<SignInScreen> {
                             signInWithGoogle(context);
                           },
                         ),
-                        Platform.isIOS
-                            ? signInButtonComponent(
-                                title: "เข้าสู่ระบบด้วย Apple",
-                                icon: FontAwesomeIcons.apple,
-                                onPressHandler: () {
-                                  signInWithApple(context);
-                                },
-                              )
-                            : Container(),
                         signInButtonComponent(
                           title: "เข้าสู่ระบบด้วย LINE",
                           icon: FontAwesomeIcons.line,
