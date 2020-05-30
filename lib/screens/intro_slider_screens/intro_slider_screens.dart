@@ -35,7 +35,7 @@ class _IntroSliderScreenState extends State<IntroSliderScreen> {
                 });
               },
               children: <Widget>[
-                sliderPageWelcomePage(),
+                SliderPageWelcomePage(),
                 sliderPageStampHowToGetStampPage(),
                 sliderPageStampMyAccountPage(),
                 sliderPageStampIndicatorPage(),
