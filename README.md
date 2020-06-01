@@ -1,5 +1,3 @@
 <!-- @format -->
 
-# PSM_AT_STAMP_New
-
-PSM_AT_STAMP
+# PSM_AT_STAMP v1.0.0
