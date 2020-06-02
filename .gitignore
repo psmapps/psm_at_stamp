@@ -74,3 +74,5 @@
 
 pubspec.lock
 .flutter-plugins-dependecies
+android/app/release/output.json
+android/app/release/app-release.apk
