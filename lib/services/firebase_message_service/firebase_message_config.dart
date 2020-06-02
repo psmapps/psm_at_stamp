@@ -3,8 +3,15 @@ import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 
 void firebaseMessageConfig() async {
   FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
-  String fcmToken = await firebaseMessaging.getToken();
-  logger.d("Firebase Cloud Messaging Token: " + fcmToken);
+  String fcmToken = "No Data";
+  try {
+    fcmToken = await firebaseMessaging.getToken();
+    logger.d("Firebase Cloud Messaging Token: " + fcmToken);
+  } catch (e) {
+    logger.e(e);
+    return;
+  }
+
   firebaseMessaging.subscribeToTopic("NEWS");
   firebaseMessaging.configure(
     onMessage: (Map<String, dynamic> message) async {

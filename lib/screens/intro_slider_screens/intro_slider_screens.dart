@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:psm_at_stamp/screens/intro_slider_screens/slider_pages/slider_page_how_to_get_stamp_page.dart';
 import 'package:psm_at_stamp/screens/intro_slider_screens/slider_pages/slider_page_my_account_page.dart';
 import 'package:psm_at_stamp/screens/intro_slider_screens/slider_pages/slider_page_permission_page.dart';
-import 'package:psm_at_stamp/screens/intro_slider_screens/slider_pages/slider_page_camera_selection_page.dart';
 import 'package:psm_at_stamp/screens/intro_slider_screens/slider_pages/slider_page_stamp_indicator_page.dart';
 import 'package:psm_at_stamp/screens/intro_slider_screens/slider_pages/slider_page_welcome_page.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
@@ -39,11 +38,10 @@ class _IntroSliderScreenState extends State<IntroSliderScreen> {
                 sliderPageStampHowToGetStampPage(),
                 sliderPageStampMyAccountPage(),
                 sliderPageStampIndicatorPage(),
-                sliderPageStampPermissionPage(),
-                sliderPageStampCameraSelectionPage(
+                sliderPageStampPermissionPage(
                   context,
                   psmAtStampUser: widget.psmAtStampUser,
-                )
+                ),
               ],
             ),
             Column(
@@ -52,7 +50,7 @@ class _IntroSliderScreenState extends State<IntroSliderScreen> {
                 Center(
                   child: SmoothPageIndicator(
                     controller: controller,
-                    count: 6,
+                    count: 5,
                     effect: WormEffect(
                       spacing: 8.0,
                       radius: 26,

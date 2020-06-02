@@ -17,14 +17,13 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  flutter_barcode_scanner: ^1.0.1
+  qr_code_scanner: ^0.0.13
   package_info: ^0.4.0+18
   image: ^2.1.12
   image_picker: ^0.6.6+1
   smooth_page_indicator: ^0.1.5
   app_settings: ^4.0.0
   permission_handler: ^5.0.0+hotfix.4
-  barcode_scan: ^3.0.1
   flutter_staggered_animations: ^0.1.2
   qr_flutter: ^3.2.0
   path_provider: ^1.6.5

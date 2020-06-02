@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info/package_info.dart';
-import 'package:psm_at_stamp/components/camera_selection_box_component/camera_selection_box.dart';
 import 'package:psm_at_stamp/components/permission_box_component/permission_box_component.dart';
 import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/screens/intro_slider_screens/intro_slider_screens.dart';
@@ -112,7 +111,6 @@ class _SettingScreenState extends State<SettingScreen> {
                 padding: const EdgeInsets.only(top: 10),
               ),
               PermissionBox(),
-              CameraSelectionBox(),
               signInButtonComponent(
                 icon: FontAwesomeIcons.book,
                 title: "เปิดหน้า Intro อีกครั้ง",
