@@ -1,8 +1,6 @@
 # PSM @ STAMP (psm_at_stamp)
 
-![](https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/full_logo.png?alt=media&token=b128128f-d44f-41b7-a4d1-432aaa8ca6ab)
-
-![Build Status](https://api.codemagic.io/apps/5e9190511838ac398d17dedf/5e9190511838ac398d17dede/status_badge.svg)
+![](https://raw.githubusercontent.com/psmapps/psm_at_stamp/master/git_assets/git_logo.png?token=AGAFSB3RFNJYB6R3SBKRO7C62ZPQO)
 
 ### This project is not an open source!
 
