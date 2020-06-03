@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/psmapps/psm_at_stamp/master/git_assets/git_logo.png?token=AGAFSB3RFNJYB6R3SBKRO7C62ZPQO)
+![](https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/Github%20Assets%2Fgit_logo.png?alt=media&token=dbc39628-447f-4e31-bcf5-ef00a3f0977a)
 
 # PSM @ STAMP (psm_at_stamp)
 
