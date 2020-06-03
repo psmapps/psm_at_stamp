@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/components/my_account_component/badge_display_component.dart';
 import 'package:psm_at_stamp/components/my_account_component/display_name_component.dart';
 import 'package:psm_at_stamp/components/my_account_component/stamp_in_transaction_amount_component.dart';
 import 'package:psm_at_stamp/components/notification_components/message_box.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/screens/setting_screens/setting_screen.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/sign_user_out.dart';
@@ -145,7 +145,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 ),
               ],
             ),
-            signInButtonComponent(
+            appButtonComponent(
               icon: FontAwesomeIcons.cog,
               title: "ตั้งค่า",
               buttonColor: Colors.grey,
@@ -160,7 +160,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 );
               },
             ),
-            signInButtonComponent(
+            appButtonComponent(
               title: "ออกจากระบบ",
               icon: FontAwesomeIcons.signOutAlt,
               buttonColor: Colors.redAccent,

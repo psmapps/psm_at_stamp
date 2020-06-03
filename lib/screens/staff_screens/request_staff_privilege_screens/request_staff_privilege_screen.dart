@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/components/register_screen_components/register_staff_component.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/register_services/register_staff/register_staff_add_to_request.dart';
-
-import '../../../components/signin_button_components.dart';
 
 class RequestStaffPrivilegeScreen extends StatefulWidget {
   final PsmAtStampUser psmAtStampUser;
@@ -43,7 +41,7 @@ class _RequestStaffPrivilegeScreenState
               context,
               textEditingController: stampLinkCodeTextController,
             ),
-            signInButtonComponent(
+            appButtonComponent(
               title: "ขอสิทธิการเป็น Staff",
               icon: FontAwesomeIcons.userAlt,
               onPressHandler: () {

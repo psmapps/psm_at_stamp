@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/notification_components/message_box.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 Future<void> qrCodeTypeUserHandler(
   BuildContext context, {
   @required Map<String, dynamic> qrCodeData,
   @required PsmAtStampUser psmAtStampUser,
+  @required QRViewController controller,
 }) async {
   if (psmAtStampUser.permission != PsmAtStampUserPermission.administrator) {
     Navigator.pop(context);
@@ -18,6 +20,15 @@ Future<void> qrCodeTypeUserHandler(
           "​QR Code นี้เป็น User QR Code. กรุณาแสกน QR Code จากพี่ฐานกิจกรรมต่างๆ เพื่อรับแสตมป์",
       icon: FontAwesomeIcons.exclamationTriangle,
       iconColor: Colors.yellow,
+      actionsButton: [
+        IconButton(
+          icon: Icon(FontAwesomeIcons.timesCircle),
+          onPressed: () {
+            Navigator.pop(context);
+            controller.resumeCamera();
+          },
+        )
+      ],
     );
   }
   await Clipboard.setData(ClipboardData(text: qrCodeData["userId"]));
@@ -28,5 +39,14 @@ Future<void> qrCodeTypeUserHandler(
     content: qrCodeData["userId"],
     icon: FontAwesomeIcons.checkCircle,
     iconColor: Colors.green,
+    actionsButton: [
+      IconButton(
+        icon: Icon(FontAwesomeIcons.timesCircle),
+        onPressed: () {
+          Navigator.pop(context);
+          controller.resumeCamera();
+        },
+      )
+    ],
   );
 }

@@ -29,7 +29,7 @@ class _SliderPageWelcomePageState extends State<SliderPageWelcomePage> {
   @override
   Widget build(BuildContext context) {
     return sliderComponent(
-      imageAsset: "assets/images/psmatstampintro.gif",
+      imageAsset: "assets/images/animation/psmatstampintro.gif",
       title: "ยินดีต้อนรับเข้าสู่ PSM @ STAMP",
       subTitle: "มารู้จักกับ PSM @ STAMP v." +
           version +

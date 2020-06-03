@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info/package_info.dart';
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/components/permission_box_component/permission_box_component.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/screens/intro_slider_screens/intro_slider_screens.dart';
 import 'package:psm_at_stamp/screens/staff_screens/request_staff_privilege_screens/request_staff_privilege_screen.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
@@ -111,7 +111,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 padding: const EdgeInsets.only(top: 10),
               ),
               PermissionBox(),
-              signInButtonComponent(
+              appButtonComponent(
                 icon: FontAwesomeIcons.book,
                 title: "เปิดหน้า Intro อีกครั้ง",
                 buttonColor: Colors.white,
@@ -130,7 +130,7 @@ class _SettingScreenState extends State<SettingScreen> {
               widget.psmAtStampUser.permission ==
                       PsmAtStampUserPermission.student
                   ? isShowStaffRegButton
-                      ? signInButtonComponent(
+                      ? appButtonComponent(
                           icon: FontAwesomeIcons.userAlt,
                           title: "ขอสิทธ์การเป็น Staff ฐานกิจกรรม",
                           buttonColor: Colors.white,

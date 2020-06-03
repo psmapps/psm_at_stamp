@@ -171,7 +171,7 @@ class _StampBookComponentState extends State<StampBookComponent> {
             stampBadge == true
                 ? Container(
                     padding: const EdgeInsets.all(10),
-                    child: Image.asset("assets/images/stamp_badge.png"),
+                    child: Image.asset("assets/images/icons/stamp_badge.png"),
                   )
                 : Container(),
             widget.displayStampIndocator

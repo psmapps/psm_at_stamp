@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:psm_at_stamp/components/notification_components/message_box.dart';
 import 'package:psm_at_stamp/screens/setting_screens/setting_screen.dart';
-import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/qr_code_scaner_services/scan_qr_code.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -29,12 +28,28 @@ class _QrReaderScreenState extends State<QrReaderScreen> {
       color: Color.fromRGBO(31, 31, 31, 1),
     ),
   );
+  bool isFlashOn = false;
   bool isFrontCamera = false;
 
   @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     cameraPermissionCheck();
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
   }
 
   Future<void> delaySetState() async {
@@ -94,37 +109,161 @@ class _QrReaderScreenState extends State<QrReaderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: Column(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              Expanded(
-                flex: 5,
-                child: qrView,
-              ),
-              Expanded(
-                flex: 1,
-                child: Text("นำกล้องไปแสกน QR Code ที่มี อยู่ตรงกลาง"),
-              )
-            ],
+          Expanded(
+            flex: 6,
+            child: Stack(
+              children: <Widget>[
+                qrView,
+                Column(
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.only(
+                        top: 40,
+                        left: 10,
+                        right: 10,
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () {},
+                            child: IconButton(
+                              color: Colors.white,
+                              iconSize: 40,
+                              icon: Icon(FontAwesomeIcons.times),
+                              splashColor: Colors.grey,
+                              enableFeedback: true,
+                              onPressed: () {
+                                HapticFeedback.mediumImpact();
+                                Navigator.popUntil(
+                                  context,
+                                  (route) => route.isFirst,
+                                );
+                              },
+                            ),
+                          ),
+                          Spacer(),
+                          IconButton(
+                            color: Colors.white,
+                            iconSize: 40,
+                            icon: Icon(
+                              isFlashOn ? Icons.flash_off : Icons.flash_on,
+                            ),
+                            enableFeedback: true,
+                            onPressed: () {
+                              HapticFeedback.heavyImpact();
+                              controller.toggleFlash();
+                              setState(() {
+                                if (isFlashOn) {
+                                  isFlashOn = false;
+                                } else {
+                                  isFlashOn = true;
+                                }
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                    Container(
+                      padding: const EdgeInsets.all(30),
+                      child: RaisedButton(
+                        splashColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        color: Color.fromRGBO(31, 31, 31, 0.8),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 10),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Icon(
+                                FontAwesomeIcons.camera,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                              ),
+                              Text(
+                                "สลับกล้อง",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Sukhumwit",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        onPressed: () async {
+                          await HapticFeedback.mediumImpact();
+                          controller.flipCamera();
+                        },
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
-          Container(
-              padding: const EdgeInsets.only(top: 40, right: 10),
+          Expanded(
+            flex: 2,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              padding: const EdgeInsets.all(10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  IconButton(
-                    color: Colors.white,
-                    iconSize: 40,
-                    icon: Icon(Icons.switch_camera),
-                    splashColor: Colors.grey,
-                    enableFeedback: true,
-                    onPressed: () {
-                      controller.flipCamera();
-                    },
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Flexible(
+                        child: Text(
+                          "นำกล้องไปแสกน QR Code ที่มี",
+                          style: TextStyle(
+                            fontFamily: "Sukhumwit",
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 8,
+                        ),
+                      ),
+                      Flexible(
+                        child: Image.asset(
+                          "assets/images/icons/icon_curve_black.png",
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 8,
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          "อยู่ตรงกลาง",
+                          style: TextStyle(
+                            fontFamily: "Sukhumwit",
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
-              ))
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -133,73 +272,16 @@ class _QrReaderScreenState extends State<QrReaderScreen> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen(
-      (scanData) async {
+      (scanData) {
         controller.pauseCamera();
-        try {
-          await scanQrCode(
-            context,
-            psmAtStampUser: widget.psmAtStampUser,
-            result: scanData,
-          );
-        } on PlatformException catch (e) {
-          if (e.code != "QRNOTCORRECT") {
-            showMessageBox(
-              context,
-              title: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
-              content: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ (Code " + e.code + " )",
-              icon: FontAwesomeIcons.exclamationTriangle,
-              iconColor: Colors.yellow,
-              actionsButton: [
-                IconButton(
-                  icon: Icon(FontAwesomeIcons.timesCircle),
-                  onPressed: () {
-                    Navigator.popUntil(context, (route) => route.isFirst);
-                  },
-                )
-              ],
-            );
-          }
-          showMessageBox(
-            context,
-            title: "QR Code ไม่ถูกต้อง",
-            content:
-                "กรุณาสแกน QR Code ที่มีโลโก้ PSM @ STAMP อยู่ตรงกลางของ QR Code เท่านั้น",
-            icon: FontAwesomeIcons.exclamationTriangle,
-            iconColor: Colors.yellow,
-            actionsButton: [
-              IconButton(
-                icon: Icon(FontAwesomeIcons.timesCircle),
-                onPressed: () {
-                  Navigator.pop(context);
-                  controller.resumeCamera();
-                },
-              )
-            ],
-          );
-        } catch (e) {
-          showMessageBox(
-            context,
-            title: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
-            content: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ (Code " + e.code + " )",
-            icon: FontAwesomeIcons.exclamationTriangle,
-            iconColor: Colors.yellow,
-            actionsButton: [
-              IconButton(
-                icon: Icon(FontAwesomeIcons.timesCircle),
-                onPressed: () {
-                  Navigator.popUntil(context, (route) => route.isFirst);
-                },
-              )
-            ],
-          );
-        }
+        HapticFeedback.mediumImpact();
+        scanQrCode(
+          context,
+          psmAtStampUser: widget.psmAtStampUser,
+          result: scanData,
+          controller: controller,
+        );
       },
     );
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 }

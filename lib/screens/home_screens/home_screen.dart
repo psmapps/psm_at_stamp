@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:psm_at_stamp/screens/home_screens/custom_tab_indicator.dart';
 import 'package:psm_at_stamp/screens/home_screens/screen_data_manager.dart';
 import 'package:psm_at_stamp/screens/home_screens/screen_widget_constructure.dart';
@@ -71,6 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
+            onTap: (index) {
+              HapticFeedback.mediumImpact();
+            },
             tabs: screenWidget.tabBarList,
           ),
         ),
@@ -88,7 +92,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     tooltip: "สแกน QR Code",
                     splashColor: Colors.grey,
                     backgroundColor: Color.fromRGBO(255, 213, 127, 1),
-                    onPressed: () {
+                    onPressed: () async {
+                      await HapticFeedback.heavyImpact();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -97,10 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       );
-                      /* scanQrCode(
-                        context,
-                        psmAtStampUser: widget.psmAtStampUser,
-                      ); */
                     },
                   ),
       ),

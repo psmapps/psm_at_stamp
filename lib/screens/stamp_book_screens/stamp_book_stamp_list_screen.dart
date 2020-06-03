@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/stamp_book_components/stamp_book_component.dart';
@@ -138,6 +139,7 @@ class _StampBookStampListScreenState extends State<StampBookStampListScreen> {
                                 widget.stampCategories.iconUrl,
                             displayStampIndocator: false,
                             onTapHandler: () {
+                              HapticFeedback.mediumImpact();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

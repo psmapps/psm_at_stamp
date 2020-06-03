@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/components/register_screen_components/register_screen_textfield_component.dart';
 import 'package:psm_at_stamp/components/register_screen_components/register_staff_component.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/register_services/psmatstampregister_constructure.dart';
 import 'package:psm_at_stamp/services/register_services/register_validate_service.dart';
@@ -133,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       textEditingController: stampLinkCode,
                     )
                   : Container(),
-              signInButtonComponent(
+              appButtonComponent(
                 title: "ผูกรหัสนักเรียนหรือรหัสบัญชีนี้",
                 onPressHandler: () {
                   String studentId = studentIdTextDigit1.text +

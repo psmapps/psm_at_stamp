@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/components/stamp_distributing_component/in_active_component.dart';
 import 'package:psm_at_stamp/components/stamp_distributing_component/loading_component.dart';
 import 'package:psm_at_stamp/components/stamp_distributing_component/manual_distributing.dart';
@@ -108,7 +108,7 @@ class _StampDistributingScreenState extends State<StampDistributingScreen> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -204,7 +204,7 @@ class _StampDistributingScreenState extends State<StampDistributingScreen> {
                         left: 10,
                         right: 10,
                       ),
-                      child: signInButtonComponent(
+                      child: appButtonComponent(
                         title: "กดที่นี่ เพื่อลองเชื่อมต่อใหม่อีกครั้ง",
                         buttonColor: Colors.yellow,
                         icon: FontAwesomeIcons.syncAlt,

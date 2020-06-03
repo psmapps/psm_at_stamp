@@ -192,7 +192,7 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
                                       ? Stack(
                                           children: <Widget>[
                                             Image.asset(
-                                              "assets/images/stamp_badge.png",
+                                              "assets/images/icons/stamp_badge.png",
                                             ),
                                           ],
                                         )
