@@ -55,7 +55,8 @@ Future<void> manualDistributingService({
       case "400-2":
         throw PlatformException(
           code: "STUDENTID_NOTFOUND",
-          details: "ไม่พบรหัสนักเรียนนี้ กรุณาลองใหม่อีกครั้ง",
+          details:
+              "ไม่พบรหัสนักเรียนนี้ หากนักเรียนยังไม่เคยเปิดบัญชี กรุณาแจ้งนักเรียนให้เปิดบัญชี PSM @ STAMP หรือลองใหม่อีกครั้ง",
         );
         break;
       case "400-3":

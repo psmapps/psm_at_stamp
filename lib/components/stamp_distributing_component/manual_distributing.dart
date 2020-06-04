@@ -132,6 +132,12 @@ class _ManualDistributingState extends State<ManualDistributing> {
                   studentIdTextDigit4.text +
                   studentIdTextDigit5.text +
                   studentIdTextDigit6.text;
+              studentIdTextDigit1.text = "";
+              studentIdTextDigit2.text = "";
+              studentIdTextDigit3.text = "";
+              studentIdTextDigit4.text = "";
+              studentIdTextDigit5.text = "";
+              studentIdTextDigit6.text = "";
               try {
                 await manualDistributingService(
                   context: context,
@@ -148,12 +154,6 @@ class _ManualDistributingState extends State<ManualDistributing> {
                 );
                 return;
               }
-              studentIdTextDigit1.text = "";
-              studentIdTextDigit2.text = "";
-              studentIdTextDigit3.text = "";
-              studentIdTextDigit4.text = "";
-              studentIdTextDigit5.text = "";
-              studentIdTextDigit6.text = "";
               return showMessageBox(
                 context,
                 icon: FontAwesomeIcons.check,
