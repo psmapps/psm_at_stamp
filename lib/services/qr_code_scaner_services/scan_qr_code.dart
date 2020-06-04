@@ -18,11 +18,10 @@ Future<void> scanQrCode(
 }) async {
   logger.d(result);
   Map<String, dynamic> qrCodeData;
-  showLoadingBox(context, loadingMessage: "กำลังตรวจสอบ QR Code");
   try {
     qrCodeData = json.decode(result);
     if (qrCodeData["type"] == null || qrCodeData["type"] == "") {
-      showMessageBox(
+      return showMessageBox(
         context,
         title: "QR Code ไม่ถูกต้อง",
         content:
@@ -40,6 +39,7 @@ Future<void> scanQrCode(
         ],
       );
     }
+    showLoadingBox(context, loadingMessage: "กำลังตรวจสอบ QR Code");
 
     switch (qrCodeData["type"]) {
       case "user":
@@ -62,7 +62,7 @@ Future<void> scanQrCode(
             ],
           );
         }
-        qrCodeTypeUserHandler(
+        return await qrCodeTypeUserHandler(
           context,
           qrCodeData: qrCodeData,
           psmAtStampUser: psmAtStampUser,
@@ -89,7 +89,7 @@ Future<void> scanQrCode(
             ],
           );
         }
-        qrCodeTypeStampHandler(
+        return await qrCodeTypeStampHandler(
           context,
           qrCodeData: qrCodeData,
           psmAtStampUser: psmAtStampUser,
@@ -116,8 +116,7 @@ Future<void> scanQrCode(
         );
     }
   } catch (e) {
-    Navigator.pop(context);
-    showMessageBox(
+    return showMessageBox(
       context,
       title: "QR Code ไม่ถูกต้อง",
       content:
