@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:psm_at_stamp/components/permission_box_component/get_permission_widget_component.dart';
@@ -27,6 +28,7 @@ class _PermissionBoxState extends State<PermissionBox> {
     Widget _cameraPermissionWidget = await permissionStatusWidget(
       permission: Permission.camera,
       requestPermission: () async {
+        HapticFeedback.mediumImpact();
         await Permission.camera.request();
         getPermissionWidget();
       },
@@ -34,6 +36,7 @@ class _PermissionBoxState extends State<PermissionBox> {
     Widget _notificationPermissionWidget = await permissionStatusWidget(
       permission: Permission.notification,
       requestPermission: () async {
+        HapticFeedback.mediumImpact();
         await Permission.notification.request();
         getPermissionWidget();
       },
