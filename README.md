@@ -2,12 +2,8 @@
 
 Current Build: Build 3
 
-![](https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/full_logo.png?alt=media&token=b128128f-d44f-41b7-a4d1-432aaa8ca6ab)
-
-![Build Status](https://api.codemagic.io/apps/5e9190511838ac398d17dedf/5e9190511838ac398d17dede/status_badge.svg)
+![](https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/Github%20Assets%2Fgit_logo.png?alt=media&token=dbc39628-447f-4e31-bcf5-ef00a3f0977a)
 
 ### This project is not an open source!
 
-## Re-Build Project
-
-This project is currently under re-building.
+You are not allowed to Copy or Modify code in this repository
