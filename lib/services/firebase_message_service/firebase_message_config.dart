@@ -31,13 +31,23 @@ void firebaseMessageConfig() async {
     onMessage: (Map<String, dynamic> message) async {
       try {
         logger.d('onMessage called: ' + message.toString());
-
         HapticFeedback.heavyImpact();
         await Future.delayed(Duration(milliseconds: 500));
         HapticFeedback.heavyImpact();
         pool.play(soundId);
+
         showSimpleNotification(
-          Text("this is a message from simple notification"),
+          Text(
+            message["aps"]["alert"]["title"] ?? "Notification",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          subtitle: Text(
+            message["aps"]["alert"]["body"] ?? "-",
+            style: TextStyle(fontSize: 17),
+          ),
           leading: BellNotificationAnimation(),
           background: Colors.grey[850],
           autoDismiss: true,

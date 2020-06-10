@@ -23,6 +23,7 @@ class PSMATSTAMP extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'PSM @ STAMP',
         theme: ThemeData(
+          fontFamily: "Sukhumwit",
           primarySwatch: Colors.blue,
         ),
         home: WelcomeScreen(),
