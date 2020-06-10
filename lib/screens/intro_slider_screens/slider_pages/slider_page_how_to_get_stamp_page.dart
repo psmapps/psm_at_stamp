@@ -3,7 +3,7 @@ import 'package:psm_at_stamp/components/intro_slider_components/slider_component
 
 Widget sliderPageStampHowToGetStampPage() {
   return sliderComponent(
-    imageAsset: "assets/images/howtoGetStamp.gif",
+    imageAsset: "assets/images/animation/howtoGetStamp.gif",
     title: "วิธีการรับแสตมป์ 3 ขั้นตอน ง่ายๆ",
     titleColor: Colors.green[300],
     subTitle:

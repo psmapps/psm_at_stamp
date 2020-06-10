@@ -1,13 +1,12 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info/package_info.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
+import 'package:psm_at_stamp/components/button_components/signin_icon_only_button.dart';
 import 'package:psm_at_stamp/screens/signin_screens/signin_with_email_screen.dart';
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_apple/signin_with_apple.dart';
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_google/signin_with_google.dart';
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_line/signin_with_line.dart';
-import 'package:apple_sign_in/apple_sign_in_button.dart';
 
 class SignInScreen extends StatefulWidget {
   SignInScreen({Key key}) : super(key: key);
@@ -49,7 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: Column(
                     children: <Widget>[
                       Image.asset(
-                        "assets/images/psmatstampintro.gif",
+                        "assets/images/animation/psmatstampintro.gif",
                         scale: 3.7,
                       ),
                       Text(
@@ -83,64 +82,103 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                 ),
                 Container(
-                    padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Platform.isIOS
-                            ? Column(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(12),
-                                    child: AppleSignInButton(
-                                      style: ButtonStyle.white,
-                                      cornerRadius: 30,
-                                      onPressed: () {
-                                        signInWithApple(context);
-                                      },
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(7),
-                                    child: Text(
-                                      "หรือ",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "Sukhumwit",
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : Container(),
-                        signInButtonComponent(
-                          title: "เข้าสู่ระบบด้วย Google",
-                          icon: FontAwesomeIcons.google,
-                          onPressHandler: () {
-                            signInWithGoogle(context);
-                          },
-                        ),
-                        signInButtonComponent(
-                          title: "เข้าสู่ระบบด้วย LINE",
-                          icon: FontAwesomeIcons.line,
-                          onPressHandler: () {
-                            signInWithLine(context);
-                          },
-                        ),
-                        signInButtonComponent(
-                          title: "เข้าสู่ระบบด้วย Email",
-                          icon: Icons.email,
-                          onPressHandler: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        SignInWithEmailScreen()));
-                          },
-                        ),
-                      ],
-                    ))
+                  padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      appButtonComponent(
+                        title: "ลงชื่อเข้าด้วย Email",
+                        icon: Icons.email,
+                        onPressHandler: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignInWithEmailScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: new Container(
+                                margin: const EdgeInsets.only(
+                                  left: 10.0,
+                                  right: 20.0,
+                                ),
+                                child: Divider(
+                                  color: Colors.white,
+                                  height: 36,
+                                )),
+                          ),
+                          Text(
+                            "เข้าสู่ระบบด้วยวิธีอื่น",
+                            style: TextStyle(
+                              fontFamily: "Sukhumwit",
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                            ),
+                          ),
+                          Expanded(
+                            child: new Container(
+                                margin: const EdgeInsets.only(
+                                  left: 20.0,
+                                  right: 10.0,
+                                ),
+                                child: Divider(
+                                  color: Colors.white,
+                                  height: 36,
+                                )),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          signInIconOnlyButton(
+                            svgAsset: "assets/images/button_icons/google.svg",
+                            buttonColor: Colors.white,
+                            onPressed: () {
+                              signInWithGoogle(context);
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                          ),
+                          signInIconOnlyButton(
+                            svgAsset:
+                                "assets/images/button_icons/line_white.svg",
+                            buttonColor: Color.fromRGBO(0, 176, 3, 1),
+                            onPressed: () {
+                              signInWithLine(context);
+                            },
+                          ),
+                          Platform.isIOS
+                              ? Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                )
+                              : Container(),
+                          Platform.isIOS
+                              ? signInIconOnlyButton(
+                                  svgAsset:
+                                      "assets/images/button_icons/apple.svg",
+                                  buttonColor: Colors.white,
+                                  onPressed: () {
+                                    signInWithApple(context);
+                                  },
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

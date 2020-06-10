@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/screens/register_screens/register_screen_input_studentId.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/register_services/psmatstampregister_constructure.dart';
@@ -73,7 +73,7 @@ class RegisterSelectRole extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              signInButtonComponent(
+              appButtonComponent(
                 title: "ฉันเป็นนักเรียน",
                 icon: Icons.account_box,
                 onPressHandler: () {
@@ -94,7 +94,7 @@ class RegisterSelectRole extends StatelessWidget {
                   );
                 },
               ),
-              signInButtonComponent(
+              appButtonComponent(
                 title: "ฉันเป็นพี่ดูแลฐานกิจกรรม",
                 icon: FontAwesomeIcons.solidBookmark,
                 onPressHandler: () {

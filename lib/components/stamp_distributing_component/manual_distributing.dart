@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/components/notification_components/message_box.dart';
 import 'package:psm_at_stamp/components/register_screen_components/register_screen_textfield_component.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/stamp_distributing_services/manual_distributing_service.dart';
 
@@ -121,7 +121,7 @@ class _ManualDistributingState extends State<ManualDistributing> {
           Padding(
             padding: const EdgeInsets.only(top: 20),
           ),
-          signInButtonComponent(
+          appButtonComponent(
             title: "เพิ่มแสตมป์ให้กับรหัสนักเรียนนี้",
             icon: FontAwesomeIcons.plusCircle,
             buttonColor: Colors.yellow,
@@ -132,6 +132,12 @@ class _ManualDistributingState extends State<ManualDistributing> {
                   studentIdTextDigit4.text +
                   studentIdTextDigit5.text +
                   studentIdTextDigit6.text;
+              studentIdTextDigit1.text = "";
+              studentIdTextDigit2.text = "";
+              studentIdTextDigit3.text = "";
+              studentIdTextDigit4.text = "";
+              studentIdTextDigit5.text = "";
+              studentIdTextDigit6.text = "";
               try {
                 await manualDistributingService(
                   context: context,
@@ -148,12 +154,6 @@ class _ManualDistributingState extends State<ManualDistributing> {
                 );
                 return;
               }
-              studentIdTextDigit1.text = "";
-              studentIdTextDigit2.text = "";
-              studentIdTextDigit3.text = "";
-              studentIdTextDigit4.text = "";
-              studentIdTextDigit5.text = "";
-              studentIdTextDigit6.text = "";
               return showMessageBox(
                 context,
                 icon: FontAwesomeIcons.check,

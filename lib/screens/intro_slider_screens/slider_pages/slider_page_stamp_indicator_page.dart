@@ -3,7 +3,7 @@ import 'package:psm_at_stamp/components/intro_slider_components/slider_component
 
 Widget sliderPageStampIndicatorPage() {
   return sliderComponent(
-    imageAsset: "assets/images/stampindicator.gif",
+    imageAsset: "assets/images/animation/stampindicator.gif",
     title: "Stamp Indicator",
     titleColor: Colors.lightBlue,
     subTitle:

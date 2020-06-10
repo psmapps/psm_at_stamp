@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:psm_at_stamp/components/stamp_book_components/stamp_book_component.dart';
 import 'package:psm_at_stamp/screens/stamp_book_screens/stamp_book_stamp_list_screen.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
@@ -65,7 +66,8 @@ class _StampBookScreenState extends State<StampBookScreen> {
                     ),
                     psmAtStampUser: widget.psmAtStampUser,
                     displayStampIndocator: true,
-                    onTapHandler: () {
+                    onTapHandler: () async {
+                      await HapticFeedback.mediumImpact();
                       Navigator.push(
                         context,
                         MaterialPageRoute(

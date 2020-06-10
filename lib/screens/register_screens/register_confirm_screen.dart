@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/components/notification_components/message_box.dart';
 import 'package:psm_at_stamp/components/register_screen_components/register_confirm_staff_sector.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/services/psmatstamp_stamp_services/psmatstamp_stamp_data_constructure.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/register_services/psmatstampregister_constructure.dart';
@@ -114,7 +114,7 @@ class _RegisterConfirmScreenState extends State<RegisterConfirmScreen> {
               Row(
                 children: <Widget>[
                   Flexible(
-                    child: signInButtonComponent(
+                    child: appButtonComponent(
                       title: "ข้อมูลไม่ถูกต้อง",
                       buttonColor: Colors.red,
                       textAlign: TextAlign.center,
@@ -140,7 +140,7 @@ class _RegisterConfirmScreenState extends State<RegisterConfirmScreen> {
                     ),
                   ),
                   Flexible(
-                    child: signInButtonComponent(
+                    child: appButtonComponent(
                       title: "ยืนยันการผูกบัญชี",
                       buttonColor: Colors.green,
                       textAlign: TextAlign.center,

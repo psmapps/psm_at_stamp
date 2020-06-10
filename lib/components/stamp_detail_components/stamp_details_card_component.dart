@@ -34,6 +34,7 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
   String location;
   String details;
   bool isStamped = false;
+  String refId = "-";
   StampStatus isOpen;
 
   @override
@@ -135,6 +136,7 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
           "stampId",
           isEqualTo: widget.stampIdInfomation.stampId,
         )
+        .limit(1)
         .snapshots()
         .listen(
       (data) {
@@ -142,8 +144,10 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
           () {
             if (data.documents.isNotEmpty) {
               isStamped = true;
+              refId = data.documents[0].documentID;
             } else {
               isStamped = false;
+              refId = "-";
             }
           },
         );
@@ -178,35 +182,53 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
                     ),
                     widget.stampIdInfomation.displayStampBadge
                         ? Center(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.grey[300],
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              width: 160,
-                              height: 160,
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: isStamped
-                                      ? Stack(
-                                          children: <Widget>[
-                                            Image.asset(
-                                              "assets/images/stamp_badge.png",
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  width: 160,
+                                  height: 160,
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: isStamped
+                                          ? Image.asset(
+                                              "assets/images/icons/stamp_badge.png",
+                                            )
+                                          : Text(
+                                              "สแกน QR Code ที่ฐานกิจกรรมเพื่อรับแสตมป์",
+                                              style: TextStyle(
+                                                fontFamily: "Sukhumwit",
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              textAlign: TextAlign.center,
                                             ),
-                                          ],
-                                        )
-                                      : Text(
-                                          "สแกน QR Code ที่ฐานกิจกรรมเพื่อรับแสตมป์",
-                                          style: TextStyle(
-                                            fontFamily: "Sukhumwit",
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                isStamped
+                                    ? Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 15),
+                                          ),
+                                          Text(
+                                            "RefID: " + refId,
+                                            style: TextStyle(
+                                              color: Colors.grey[400],
+                                              fontFamily: "Sukhumwit",
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    : Container(),
+                              ],
                             ),
                           )
                         : Container(),

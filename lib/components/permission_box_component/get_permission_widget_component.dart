@@ -1,5 +1,6 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -42,6 +43,7 @@ Future<Widget> permissionStatusWidget(
           ],
         ),
         onPressed: () async {
+          HapticFeedback.mediumImpact();
           await AppSettings.openAppSettings();
         },
       );

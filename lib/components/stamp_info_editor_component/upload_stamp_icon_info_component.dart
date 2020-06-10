@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as ImageResider;
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/components/notification_components/loading_box.dart';
 import 'package:psm_at_stamp/components/notification_components/message_box.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/upload_stamp_logo_services/image_uploader_service.dart';
 
@@ -32,7 +32,9 @@ class _UploadStampIconInfoComponentState
   }
 
   Future<void> imagePicker() async {
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    PickedFile pickaedImage =
+        await ImagePicker().getImage(source: ImageSource.gallery);
+    File image = File(pickaedImage.path);
     if (!(await image.exists())) {
       throw null;
     }
@@ -82,7 +84,7 @@ class _UploadStampIconInfoComponentState
                             ),
                           ),
                           subtitle: Text(
-                            "1.รูปภาพต้องมีขนาด 1024 x 1024 px หากเป็นขนาดอื่นจะถูก Resize มาเป็นขนาดตามที่กำหนดโดยอัตโนมัติ \n\n ** หากพบรูปภาพฐานกิจกรรมผิดข้อกำหนด จะถูกลบและอาจไม่สามารถเปลี่ยน Logo ฐานกิจกรรมได้อีก **",
+                            "1.รูปภาพต้องมีขนาด 1024 x 1024 px หากเป็นขนาดอื่นจะถูก Resize มาเป็นขนาดตามที่กำหนดโดยอัตโนมัติ \n 2. รูปภาพไม่ควรมีพื้นหลัง (Transparent Background) \n\n ** หากพบรูปภาพฐานกิจกรรมผิดข้อกำหนด จะถูกลบและอาจไม่สามารถเปลี่ยน Logo ฐานกิจกรรมได้อีก **",
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: "Sukhumwit",
@@ -121,7 +123,7 @@ class _UploadStampIconInfoComponentState
                 ),
               ),
         imageFile == null
-            ? signInButtonComponent(
+            ? appButtonComponent(
                 title: "เลือกรูป Logo ฐานกิจกรรม",
                 onPressHandler: () {
                   if (!isInDelay) {
@@ -145,7 +147,7 @@ class _UploadStampIconInfoComponentState
                   children: <Widget>[
                     Flexible(
                       flex: 1,
-                      child: signInButtonComponent(
+                      child: appButtonComponent(
                         title: "ยกเลิก",
                         buttonColor: Colors.redAccent,
                         onPressHandler: () {
@@ -157,7 +159,7 @@ class _UploadStampIconInfoComponentState
                     ),
                     Flexible(
                       flex: 2,
-                      child: signInButtonComponent(
+                      child: appButtonComponent(
                         title: "เปลี่ยน Logo",
                         buttonColor: Colors.green,
                         onPressHandler: () {

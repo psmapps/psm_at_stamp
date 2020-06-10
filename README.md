@@ -1,8 +1,8 @@
-# PSM @ STAMP V4.0.0 (psm_at_stamp)
+![](https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/Github%20Assets%2Fgit_logo.png?alt=media&token=dbc39628-447f-4e31-bcf5-ef00a3f0977a)
 
-![](https://raw.githubusercontent.com/sirateek/psm_at_stamp/rebuild/assets/images/icons/icon_black.png?token=AGAFSB5GQMGMHH62RDPUEB263ZZJW)
+# PSM @ STAMP (psm_at_stamp)
 
-![Build Status](https://api.codemagic.io/apps/5e9190511838ac398d17dedf/5e9190511838ac398d17dede/status_badge.svg)
+Current Build: Build 3
 
 ### This project is not an open source!
 

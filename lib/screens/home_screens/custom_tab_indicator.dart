@@ -25,8 +25,9 @@ class _CustomPainter extends BoxPainter {
     paint.color = Colors.blueAccent;
     paint.style = PaintingStyle.fill;
     canvas.drawRRect(
-        RRect.fromRectAndCorners(rect,
-            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        paint);
+      RRect.fromRectAndCorners(rect,
+          topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+      paint,
+    );
   }
 }

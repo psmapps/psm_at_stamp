@@ -3,7 +3,7 @@ import 'package:psm_at_stamp/components/intro_slider_components/slider_component
 
 Widget sliderPageStampMyAccountPage() {
   return sliderComponent(
-    imageAsset: "assets/images/stampAccountProfile.gif",
+    imageAsset: "assets/images/animation/stampAccountProfile.gif",
     title: "บัญชีของคุณ",
     titleColor: Colors.pink,
     subTitle:

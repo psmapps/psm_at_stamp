@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/components/signin_textfield_components.dart';
 import 'package:psm_at_stamp/screens/signin_screens/signin_with_email_forget_screen.dart';
 import 'package:psm_at_stamp/screens/signin_screens/signin_with_email_register_screen.dart';
@@ -62,7 +62,7 @@ class _SignInWithEmailScreenState extends State<SignInWithEmailScreen> {
                     children: <Widget>[
                       Flexible(
                         flex: 2,
-                        child: signInButtonComponent(
+                        child: appButtonComponent(
                           title: "ลืมรหัสผ่าน",
                           onPressHandler: () {
                             Navigator.push(
@@ -77,7 +77,7 @@ class _SignInWithEmailScreenState extends State<SignInWithEmailScreen> {
                       ),
                       Flexible(
                         flex: 3,
-                        child: signInButtonComponent(
+                        child: appButtonComponent(
                           title: "เข้าสู่ระบบ",
                           icon: Icons.account_circle,
                           onPressHandler: () {
@@ -104,7 +104,7 @@ class _SignInWithEmailScreenState extends State<SignInWithEmailScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
-                  child: signInButtonComponent(
+                  child: appButtonComponent(
                     title: "สมัครบัญชีด้วย Email",
                     onPressHandler: () {
                       Navigator.push(

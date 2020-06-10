@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/components/signin_textfield_components.dart';
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_email/reset_password_request.dart';
 
@@ -66,7 +66,7 @@ class _SignInWithEmailForgetPasswordState
               Padding(
                 padding: const EdgeInsets.only(top: 15),
               ),
-              signInButtonComponent(
+              appButtonComponent(
                 title: "ส่งคำขอเปลี่ยนรหัส",
                 onPressHandler: () {
                   resetPasswordRequest(context, email: email.text);

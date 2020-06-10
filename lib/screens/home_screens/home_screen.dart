@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:psm_at_stamp/screens/home_screens/custom_tab_indicator.dart';
 import 'package:psm_at_stamp/screens/home_screens/screen_data_manager.dart';
 import 'package:psm_at_stamp/screens/home_screens/screen_widget_constructure.dart';
+import 'package:psm_at_stamp/screens/qr_reader_screens/qr_reader_screen.dart';
 import 'package:psm_at_stamp/services/home_screen_services/check_did_override_signin.dart';
 import 'package:psm_at_stamp/services/intro_screen_services/check_open_intro.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/listener_on_user_update.dart';
-import 'package:psm_at_stamp/services/qr_code_scaner_services/scan_qr_code.dart';
 
 class HomeScreen extends StatefulWidget {
   final PsmAtStampUser psmAtStampUser;
@@ -71,6 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
+            onTap: (index) {
+              HapticFeedback.mediumImpact();
+            },
             tabs: screenWidget.tabBarList,
           ),
         ),
@@ -88,10 +92,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     tooltip: "สแกน QR Code",
                     splashColor: Colors.grey,
                     backgroundColor: Color.fromRGBO(255, 213, 127, 1),
-                    onPressed: () {
-                      scanQrCode(
+                    onPressed: () async {
+                      await HapticFeedback.heavyImpact();
+                      Navigator.push(
                         context,
-                        psmAtStampUser: widget.psmAtStampUser,
+                        MaterialPageRoute(
+                          builder: (context) => QrReaderScreen(
+                            psmAtStampUser: widget.psmAtStampUser,
+                          ),
+                        ),
                       );
                     },
                   ),

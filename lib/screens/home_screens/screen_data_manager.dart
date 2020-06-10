@@ -74,10 +74,10 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
           Tab(
             icon: Icon(FontAwesomeIcons.pencilRuler),
             child: Text(
-              "กรอกรหัสนักเรียน",
+              "เพิ่มแสตมป์",
               style: TextStyle(
                 fontFamily: "Sukhumwit",
-                fontSize: 10,
+                fontSize: 13,
               ),
             ),
           ),

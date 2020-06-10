@@ -7,11 +7,13 @@ import 'package:psm_at_stamp/components/notification_components/message_box.dart
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:http/http.dart' as http;
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 Future<void> qrCodeTypeStampHandler(
   BuildContext context, {
   @required Map<String, dynamic> qrCodeData,
   @required PsmAtStampUser psmAtStampUser,
+  @required QRViewController controller,
 }) async {
   const stampValidateApiUrl =
       "https://asia-east2-satitprasarnmit-psm-at-stamp.cloudfunctions.net/v4-stampValidate";
@@ -37,9 +39,19 @@ Future<void> qrCodeTypeStampHandler(
     return showMessageBox(
       context,
       title: "เกิดข้อผิดพลาดไม่ทราบสาเหตุ",
-      content: "ขออภัย เกิดข้อผิดพลาดไม่ทราบสาเหตุ กรุณาลองใหม่อีกครัง",
+      content:
+          "ขออภัย เกิดข้อผิดพลาดไม่ทราบสาเหตุ อาจเป็นไปได้ว่า ไม่สามารถเชื่อมต่อกับ PSM @ STAMP ได้ กรุณาลองใหม่อีกครัง",
       icon: FontAwesomeIcons.exclamationTriangle,
       iconColor: Colors.yellow,
+      actionsButton: [
+        IconButton(
+          icon: Icon(FontAwesomeIcons.timesCircle),
+          onPressed: () {
+            Navigator.pop(context);
+            controller.resumeCamera();
+          },
+        )
+      ],
     );
   }
   logger.d(response.statusCode);
@@ -57,6 +69,14 @@ Future<void> qrCodeTypeStampHandler(
           " เรียบร้อยแล้ว",
       icon: FontAwesomeIcons.infoCircle,
       iconColor: Colors.green,
+      actionsButton: [
+        IconButton(
+          icon: Icon(FontAwesomeIcons.timesCircle),
+          onPressed: () {
+            Navigator.popUntil(context, (route) => route.isFirst);
+          },
+        )
+      ],
     );
   }
   switch (json.decode(response.body)["inAppStatusCode"]) {
@@ -68,6 +88,15 @@ Future<void> qrCodeTypeStampHandler(
             "ไม่สามารถยืนยันความถูกต้องของแสตมป์ได้ เป็นไปได้ว่าแสตมป์นี้หมดอายุแล้ว (1 แสตมป์จะมีอายุ 30 วินาที) กรุณาสแกน Stamp QR Code ใหม่จากพี่ฐานกิจกรรมอีกครั้ง",
         icon: FontAwesomeIcons.exclamationTriangle,
         iconColor: Colors.yellow,
+        actionsButton: [
+          IconButton(
+            icon: Icon(FontAwesomeIcons.timesCircle),
+            onPressed: () {
+              Navigator.pop(context);
+              controller.resumeCamera();
+            },
+          )
+        ],
       );
       break;
     case "400":
@@ -78,6 +107,15 @@ Future<void> qrCodeTypeStampHandler(
             "QR Code ไม่ถูกต้อง กรุณาสแกน QR Code ที่มีโลโก้ PSM @ STAMP จากพี่ฐานกิจกรรมเท่านั้น",
         icon: FontAwesomeIcons.exclamationTriangle,
         iconColor: Colors.yellow,
+        actionsButton: [
+          IconButton(
+            icon: Icon(FontAwesomeIcons.timesCircle),
+            onPressed: () {
+              Navigator.pop(context);
+              controller.resumeCamera();
+            },
+          )
+        ],
       );
       break;
     case "401-2":
@@ -88,6 +126,15 @@ Future<void> qrCodeTypeStampHandler(
             "คุณไม่สามารถรับแสตมป์ได้ กรุณาออกจากระบบ และเข้าสู่ระบบอีกครั้ง ก่อนทำการรับแสตมป์",
         icon: FontAwesomeIcons.exclamationCircle,
         iconColor: Colors.redAccent,
+        actionsButton: [
+          IconButton(
+            icon: Icon(FontAwesomeIcons.timesCircle),
+            onPressed: () {
+              Navigator.pop(context);
+              controller.resumeCamera();
+            },
+          )
+        ],
       );
 
       break;
@@ -97,8 +144,17 @@ Future<void> qrCodeTypeStampHandler(
         title: "เกิดข้อผิดพลาด",
         content:
             "คุณมีแสตมป์นี้อยู่ในสมุดแสตมป์อยู่แล้ว ไม่สามารถรับแสตมป์ซ้ำได้",
-        icon: FontAwesomeIcons.exclamationTriangle,
-        iconColor: Colors.yellow,
+        icon: FontAwesomeIcons.exclamationCircle,
+        iconColor: Colors.redAccent,
+        actionsButton: [
+          IconButton(
+            icon: Icon(FontAwesomeIcons.timesCircle),
+            onPressed: () {
+              Navigator.pop(context);
+              controller.resumeCamera();
+            },
+          )
+        ],
       );
       break;
     default:
@@ -110,6 +166,15 @@ Future<void> qrCodeTypeStampHandler(
             ")",
         icon: FontAwesomeIcons.exclamationTriangle,
         iconColor: Colors.yellow,
+        actionsButton: [
+          IconButton(
+            icon: Icon(FontAwesomeIcons.timesCircle),
+            onPressed: () {
+              Navigator.pop(context);
+              controller.resumeCamera();
+            },
+          )
+        ],
       );
   }
 }

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/stamp_info_editor_services/update_stamp_detail.dart';
 
@@ -122,7 +122,7 @@ class _StampInfoEditTextInputState extends State<StampInfoEditTextInput> {
                       children: <Widget>[
                         Flexible(
                           flex: 2,
-                          child: signInButtonComponent(
+                          child: appButtonComponent(
                             title: "จบการแก้ไข",
                             buttonColor: Colors.grey,
                             onPressHandler: () {
@@ -135,7 +135,7 @@ class _StampInfoEditTextInputState extends State<StampInfoEditTextInput> {
                         ),
                         Flexible(
                           flex: 2,
-                          child: signInButtonComponent(
+                          child: appButtonComponent(
                             title: "บันทึกการแก้ไข",
                             buttonColor: Colors.green,
                             onPressHandler: () async {
@@ -158,7 +158,7 @@ class _StampInfoEditTextInputState extends State<StampInfoEditTextInput> {
                         )
                       ],
                     ),
-                    signInButtonComponent(
+                    appButtonComponent(
                       title: "ยกเลิกการแก้ไข",
                       buttonColor: Colors.red[300],
                       onPressHandler: () {

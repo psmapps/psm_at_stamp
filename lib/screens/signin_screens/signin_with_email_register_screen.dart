@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psm_at_stamp/components/signin_button_components.dart';
+import 'package:psm_at_stamp/components/button_components/app_button_components.dart';
 import 'package:psm_at_stamp/components/signin_textfield_components.dart';
 import 'package:psm_at_stamp/services/signin_screen_services/signin_with_email/register_with_email.dart';
 
@@ -60,7 +60,7 @@ class _SignInWithEmailRegisterScreenState
                 Padding(
                   padding: const EdgeInsets.only(top: 15),
                 ),
-                signInButtonComponent(
+                appButtonComponent(
                     title: "สมัครบัญชี",
                     onPressHandler: () {
                       registerWithEmail(
