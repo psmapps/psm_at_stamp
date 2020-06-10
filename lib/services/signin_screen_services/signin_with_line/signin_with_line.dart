@@ -23,8 +23,12 @@ Future<void> signInWithLine(BuildContext context) async {
   LoginResult _lineLoginResult;
   Map<String, dynamic> _idTokenDecode;
   try {
-    _lineLoginResult =
-        await LineSDK.instance.login(scopes: ["profile", "openid", "email"]);
+    _lineLoginResult = await LineSDK.instance.login(
+        scopes: ["profile", "openid", "email"],
+        option: LoginOption(
+          false,
+          "aggressive",
+        ));
     logger.d(json.encode(_lineLoginResult.data));
     if (Platform.isIOS) {
       _idTokenDecode =

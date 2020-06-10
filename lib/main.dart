@@ -1,6 +1,7 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:psm_at_stamp/screens/welcome_screen.dart';
 import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 
@@ -17,13 +18,15 @@ void main() {
 class PSMATSTAMP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'PSM @ STAMP',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return OverlaySupport(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'PSM @ STAMP',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: WelcomeScreen(),
       ),
-      home: WelcomeScreen(),
     );
   }
 }

@@ -20,7 +20,9 @@ class QrReaderScreen extends StatefulWidget {
   _QrReaderScreenState createState() => _QrReaderScreenState();
 }
 
-class _QrReaderScreenState extends State<QrReaderScreen> {
+class _QrReaderScreenState extends State<QrReaderScreen>
+    with WidgetsBindingObserver {
+  AppLifecycleState _appState;
   var qrText = "";
   QRViewController controller;
   Widget qrView = Container(
@@ -32,17 +34,29 @@ class _QrReaderScreenState extends State<QrReaderScreen> {
   bool isFrontCamera = false;
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    setState(() {
+      _appState = state;
+    });
+    if (_appState.index == 0) {
+      this.controller.resumeCamera();
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+    WidgetsBinding.instance.addObserver(this);
     cameraPermissionCheck();
   }
 
   @override
   void dispose() {
     controller?.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.landscapeLeft,
@@ -50,10 +64,6 @@ class _QrReaderScreenState extends State<QrReaderScreen> {
       DeviceOrientation.portraitDown,
     ]);
     super.dispose();
-  }
-
-  Future<void> delaySetState() async {
-    await Future.delayed(Duration(milliseconds: 300));
   }
 
   Future<void> cameraPermissionCheck() async {
