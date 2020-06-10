@@ -6,4 +6,6 @@ Current Build: Build 3
 
 ### This project is not an open source!
 
-You are not allowed to Copy or Modify code in this repository
+## Current Build
+
+Build Number: 2
