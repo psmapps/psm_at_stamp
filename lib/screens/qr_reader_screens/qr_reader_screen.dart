@@ -235,7 +235,7 @@ class _QrReaderScreenState extends State<QrReaderScreen>
                     children: <Widget>[
                       Flexible(
                         child: Text(
-                          "นำกล้องไปแสกน QR Code ที่มี",
+                          "นำกล้องไปสแกน QR Code ที่มี",
                           style: TextStyle(
                             fontFamily: "Sukhumwit",
                             fontSize: 20,

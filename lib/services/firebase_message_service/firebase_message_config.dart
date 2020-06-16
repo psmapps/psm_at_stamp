@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,9 +9,9 @@ import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:soundpool/soundpool.dart';
 
 Soundpool pool = Soundpool(streamType: StreamType.notification);
+FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
 
 void firebaseMessageConfig() async {
-  FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
   String fcmToken = "No Data";
   try {
     fcmToken = await firebaseMessaging.getToken().timeout(
@@ -26,7 +28,7 @@ void firebaseMessageConfig() async {
       .then((ByteData soundData) {
     return pool.load(soundData);
   });
-  firebaseMessaging.subscribeToTopic("NEWS");
+  firebaseMessaging.subscribeToTopic("users_notificaion");
   firebaseMessaging.configure(
     onMessage: (Map<String, dynamic> message) async {
       try {
@@ -35,24 +37,43 @@ void firebaseMessageConfig() async {
         await Future.delayed(Duration(milliseconds: 500));
         HapticFeedback.heavyImpact();
         pool.play(soundId);
-
-        showSimpleNotification(
-          Text(
-            message["aps"]["alert"]["title"] ?? "Notification",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
+        if (Platform.isIOS) {
+          showSimpleNotification(
+            Text(
+              message["aps"]["alert"]["title"] ?? "Notification",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
-          ),
-          subtitle: Text(
-            message["aps"]["alert"]["body"] ?? "-",
-            style: TextStyle(fontSize: 17),
-          ),
-          leading: BellNotificationAnimation(),
-          background: Colors.grey[850],
-          autoDismiss: true,
-          position: NotificationPosition.top,
-        );
+            subtitle: Text(
+              message["aps"]["alert"]["body"] ?? "-",
+              style: TextStyle(fontSize: 17),
+            ),
+            leading: BellNotificationAnimation(),
+            background: Colors.grey[850],
+            autoDismiss: true,
+            position: NotificationPosition.top,
+          );
+        } else if (Platform.isAndroid) {
+          showSimpleNotification(
+            Text(
+              message["notification"]["title"] ?? "Notification",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            subtitle: Text(
+              message["notification"]["body"] ?? "-",
+              style: TextStyle(fontSize: 17),
+            ),
+            leading: BellNotificationAnimation(),
+            background: Colors.grey[850],
+            autoDismiss: true,
+            position: NotificationPosition.top,
+          );
+        }
       } catch (e) {
         logger.e(e);
         logger.d('onMessage called Error: ' + message.toString());

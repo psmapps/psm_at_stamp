@@ -27,7 +27,7 @@ Future<void> signInWithLine(BuildContext context) async {
         scopes: ["profile", "openid", "email"],
         option: LoginOption(
           false,
-          "aggressive",
+          "normal",
         ));
     logger.d(json.encode(_lineLoginResult.data));
     if (Platform.isIOS) {
