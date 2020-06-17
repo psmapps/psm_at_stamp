@@ -22,11 +22,17 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
         tabBarList: [
           Tab(
             icon: Icon(FontAwesomeIcons.book),
-            child: Text("สมุดแสตมป์"),
+            child: Text(
+              "สมุดแสตมป์",
+              textAlign: TextAlign.center,
+            ),
           ),
           Tab(
             icon: Icon(FontAwesomeIcons.userAlt),
-            child: Text("บัญชีของฉัน"),
+            child: Text(
+              "บัญชีของฉัน",
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
         tabBarCount: 2,
@@ -59,6 +65,7 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
                 fontFamily: "Sukhumwit",
                 fontSize: 13,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
           Tab(
@@ -69,6 +76,7 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
                 fontFamily: "Sukhumwit",
                 fontSize: 13,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
           Tab(
@@ -79,6 +87,7 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
                 fontFamily: "Sukhumwit",
                 fontSize: 13,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
           Tab(
@@ -89,6 +98,7 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
                 fontFamily: "Sukhumwit",
                 fontSize: 13,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
         ],
@@ -109,11 +119,17 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
         tabBarList: [
           Tab(
             icon: Icon(FontAwesomeIcons.book),
-            child: Text("สมุดแสตมป์"),
+            child: Text(
+              "สมุดแสตมป์",
+              textAlign: TextAlign.center,
+            ),
           ),
           Tab(
             icon: Icon(FontAwesomeIcons.userAlt),
-            child: Text("บัญชีของฉัน"),
+            child: Text(
+              "บัญชีของฉัน",
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
         tabBarCount: 2,

@@ -165,6 +165,7 @@ class _StampDistributingScreenState extends State<StampDistributingScreen> {
                         fontSize: 20,
                         color: Colors.amber[600],
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     Text(
                       "กลุ่มสาระ: " + stampCategories,
