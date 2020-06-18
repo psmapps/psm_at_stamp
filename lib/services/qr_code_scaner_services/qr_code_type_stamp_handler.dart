@@ -66,7 +66,7 @@ Future<void> qrCodeTypeStampHandler(
           responseBody["stampDetail"]["name"] +
           " ในกลุ่มสาระ " +
           responseBody["stampDetail"]["categories"] +
-          " เรียบร้อยแล้ว",
+          " เรียบร้อยแล้ว. อีกสักครู่จะมีข้อความยืนยันอีกครั้ง.",
       icon: FontAwesomeIcons.infoCircle,
       iconColor: Colors.green,
       actionsButton: [

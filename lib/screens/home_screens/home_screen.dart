@@ -4,8 +4,10 @@ import 'package:psm_at_stamp/screens/home_screens/custom_tab_indicator.dart';
 import 'package:psm_at_stamp/screens/home_screens/screen_data_manager.dart';
 import 'package:psm_at_stamp/screens/home_screens/screen_widget_constructure.dart';
 import 'package:psm_at_stamp/screens/qr_reader_screens/qr_reader_screen.dart';
+import 'package:psm_at_stamp/services/firebase_message_service/firebase_message_config.dart';
 import 'package:psm_at_stamp/services/home_screen_services/check_did_override_signin.dart';
 import 'package:psm_at_stamp/services/intro_screen_services/check_open_intro.dart';
+import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/PsmAtStampUser_constructure.dart';
 import 'package:psm_at_stamp/services/psmatstamp_users_services/listener_on_user_update.dart';
 
@@ -23,6 +25,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    if (widget.psmAtStampUser.permission == PsmAtStampUserPermission.staff ||
+        widget.psmAtStampUser.permission ==
+            PsmAtStampUserPermission.administrator) {
+      logger.d("Subscribed to Staff Notification Channels");
+      firebaseMessaging.subscribeToTopic("staffs_notification");
+    }
     checkDidOverrideSignIn(context, psmAtStampUser: widget.psmAtStampUser);
     checkOpenIntro(context, psmAtStampUser: widget.psmAtStampUser);
     listenerOnUserUpdate(context, psmAtStampUser: widget.psmAtStampUser);

@@ -43,6 +43,7 @@ Future<void> signInWithApple(BuildContext context) async {
         icon: FontAwesomeIcons.exclamationCircle,
         iconColor: Colors.red);
   }
+  logger.d(_signInWithAppleResult.credential.user);
   final AuthCredential _credential =
       OAuthProvider(providerId: "apple.com").getCredential(
     idToken:

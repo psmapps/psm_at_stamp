@@ -93,6 +93,7 @@ Future<void> registerConfirm(BuildContext context,
       "userId": psmAtStampRegister.userId,
       "profileImage": psmAtStampRegister.profileImage,
       "permission": "Student",
+      "registerService": signInServices,
     });
   } catch (e) {
     logger.d(e);
