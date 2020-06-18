@@ -40,7 +40,6 @@ class _StampInTransactionAmountComponentState
           "จำนวนแสตมป์ทั้งหมดของคุณคือ " + stampInTransactionAmount + " แสตมป์",
       textStyle: TextStyle(
         color: Colors.white,
-        fontFamily: "Sukhumwit",
         fontSize: 20,
         fontWeight: FontWeight.bold,
       ),
@@ -56,7 +55,6 @@ class _StampInTransactionAmountComponentState
             Text(
               "x " + stampInTransactionAmount,
               style: TextStyle(
-                fontFamily: "Sukhumwit",
                 fontSize: 21,
                 fontWeight: FontWeight.bold,
               ),

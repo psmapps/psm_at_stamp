@@ -36,7 +36,6 @@ Future<Widget> permissionStatusWidget(
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 15,
-                fontFamily: "Sukhumwit",
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -68,7 +67,6 @@ Future<Widget> permissionStatusWidget(
           style: TextStyle(
             color: Colors.white,
             fontSize: 15,
-            fontFamily: "Sukhumwit",
             fontWeight: FontWeight.bold,
           ),
         ),

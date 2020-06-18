@@ -29,7 +29,6 @@ class _RequestStaffPrivilegeScreenState
         title: Text(
           "ขอสิทธิการเป็น Staff ฐานกิจกรรม",
           style: TextStyle(
-            fontFamily: "Sukhumwit",
             fontWeight: FontWeight.bold,
           ),
         ),

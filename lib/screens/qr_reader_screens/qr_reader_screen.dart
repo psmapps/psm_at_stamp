@@ -202,7 +202,6 @@ class _QrReaderScreenState extends State<QrReaderScreen>
                                 "สลับกล้อง",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontFamily: "Sukhumwit",
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -237,7 +236,6 @@ class _QrReaderScreenState extends State<QrReaderScreen>
                         child: Text(
                           "นำกล้องไปสแกน QR Code ที่มี",
                           style: TextStyle(
-                            fontFamily: "Sukhumwit",
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -262,7 +260,6 @@ class _QrReaderScreenState extends State<QrReaderScreen>
                         child: Text(
                           "อยู่ตรงกลาง",
                           style: TextStyle(
-                            fontFamily: "Sukhumwit",
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),

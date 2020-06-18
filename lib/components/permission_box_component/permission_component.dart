@@ -25,7 +25,6 @@ Widget permissionComponent({
               permissionTitle,
               style: TextStyle(
                 fontSize: 20,
-                fontFamily: "Sukhumwit",
                 fontWeight: FontWeight.bold,
               ),
             ),

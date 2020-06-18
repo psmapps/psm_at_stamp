@@ -34,7 +34,6 @@ class _SignInWithEmailForgetPasswordState
               Text(
                 "เปลี่ยนรหัสผ่านบัญชี",
                 style: TextStyle(
-                  fontFamily: "Sukhumwit",
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -43,7 +42,6 @@ class _SignInWithEmailForgetPasswordState
               Text(
                 "กรุณากรอก Email ที่คุณใช้ลงทะเบียน",
                 style: TextStyle(
-                  fontFamily: "Sukhumwit",
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -52,7 +50,6 @@ class _SignInWithEmailForgetPasswordState
               Text(
                 "** หากคุณจำ Email ไม่ได้ กรุณาติดต่อ PSM @ STAMP Team **",
                 style: TextStyle(
-                  fontFamily: "Sukhumwit",
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,

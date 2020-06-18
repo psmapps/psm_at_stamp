@@ -15,7 +15,6 @@ Widget onActiveStampDetailInfoComponent({
         Text(
           name ?? "...",
           style: TextStyle(
-            fontFamily: "Sukhumwit",
             fontSize: 27,
             fontWeight: FontWeight.bold,
           ),
@@ -35,7 +34,6 @@ Widget onActiveStampDetailInfoComponent({
                   child: Text(
                     location ?? "ไม่มีข้อมูล",
                     style: TextStyle(
-                      fontFamily: "Sukhumwit",
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
@@ -85,7 +83,6 @@ Widget onActiveStampDetailInfoComponent({
                                       ? "ไม่เปิดให้เข้าเล่นกิจกรรม"
                                       : "ไม่มีข้อมูลสถาณะกิจกรรม",
                               style: TextStyle(
-                                fontFamily: "Sukhumwit",
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -128,7 +125,6 @@ Widget onActiveStampDetailInfoComponent({
                         child: Text(
                           "คำอธิบายฐานกิจกรรม",
                           style: TextStyle(
-                            fontFamily: "Sukhumwit",
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -148,7 +144,6 @@ Widget onActiveStampDetailInfoComponent({
                         child: Text(
                           details ?? "ไม่มีคำอธิบายฐานกิจกรรม",
                           style: TextStyle(
-                            fontFamily: "Sukhumwit",
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),

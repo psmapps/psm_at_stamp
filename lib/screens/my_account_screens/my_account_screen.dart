@@ -71,7 +71,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               " " +
                               widget.psmAtStampUser.surname,
                           style: TextStyle(
-                            fontFamily: "Sukhumwit",
                             fontSize: 23,
                             fontWeight: FontWeight.bold,
                           ),
@@ -85,7 +84,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               " - " +
                               widget.psmAtStampUser.studentId,
                           style: TextStyle(
-                            fontFamily: "Sukhumwit",
                             fontSize: 21,
                             fontWeight: FontWeight.bold,
                           ),

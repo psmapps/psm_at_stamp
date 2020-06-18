@@ -50,7 +50,6 @@ class _ManualDistributingState extends State<ManualDistributing> {
                   "กรอกรหัสนักเรียนที่ต้องการเพิ่มแสตมป์ลงในช่องด่านล่างนี้",
                   style: TextStyle(
                     color: Colors.white,
-                    fontFamily: "Sukhumwit",
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),

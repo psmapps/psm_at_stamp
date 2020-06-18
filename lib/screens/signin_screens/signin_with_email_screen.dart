@@ -96,10 +96,7 @@ class _SignInWithEmailScreenState extends State<SignInWithEmailScreen> {
                   padding: const EdgeInsets.only(top: 10),
                   child: Text(
                     "หรือ",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Sukhumwit",
-                        color: Colors.white),
+                    style: TextStyle(fontSize: 15, color: Colors.white),
                   ),
                 ),
                 Padding(

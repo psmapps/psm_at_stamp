@@ -76,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
             controller: tabController,
             unselectedLabelStyle: TextStyle(fontSize: 0),
             labelStyle: TextStyle(
-              fontFamily: "Sukhumwit",
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),

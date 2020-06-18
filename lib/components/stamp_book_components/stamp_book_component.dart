@@ -156,7 +156,6 @@ class _StampBookComponentState extends State<StampBookComponent> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black,
-                            fontFamily: "Sukhumwit",
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -185,7 +184,6 @@ class _StampBookComponentState extends State<StampBookComponent> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black,
-                            fontFamily: "Sukhumwit",
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),

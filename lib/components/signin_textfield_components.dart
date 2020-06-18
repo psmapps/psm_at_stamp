@@ -25,10 +25,10 @@ Widget signInTextField({
       labelText: labelText,
       alignLabelWithHint: true,
       labelStyle: TextStyle(
-          color: Colors.grey[600],
-          fontWeight: FontWeight.bold,
-          fontFamily: "Sukhumwit",
-          fontSize: 24),
+        color: Colors.grey[600],
+        fontWeight: FontWeight.bold,
+        fontSize: 24,
+      ),
       hoverColor: Colors.white,
     ),
   );

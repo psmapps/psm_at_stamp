@@ -30,7 +30,6 @@ Widget sliderComponent({
                       title,
                       style: TextStyle(
                         color: titleColor ?? Colors.white,
-                        fontFamily: "Sukhumwit",
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
@@ -46,7 +45,6 @@ Widget sliderComponent({
                       subTitle,
                       style: TextStyle(
                         color: Colors.white,
-                        fontFamily: "Sukhumwit",
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),

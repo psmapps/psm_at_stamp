@@ -54,7 +54,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       Text(
                         "ยินดีต้อนรับเข้าสู่ PSM @ STAMP",
                         style: TextStyle(
-                            fontFamily: "Sukhumwit",
                             color: Color.fromRGBO(225, 223, 26, 1),
                             fontSize: 25,
                             fontWeight: FontWeight.bold),
@@ -63,7 +62,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       Text(
                         "กรุณาเข้าสู่ระบบก่อนเริ่มต้นใช้งาน",
                         style: TextStyle(
-                          fontFamily: "Sukhumwit",
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
@@ -72,7 +70,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       Text(
                         "Version " + version + " (Build: " + buildNumber + ")",
                         style: TextStyle(
-                          fontFamily: "Sukhumwit",
                           color: Colors.grey[800],
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
@@ -117,7 +114,6 @@ class _SignInScreenState extends State<SignInScreen> {
                           Text(
                             "เข้าสู่ระบบด้วยวิธีอื่น",
                             style: TextStyle(
-                              fontFamily: "Sukhumwit",
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 17,

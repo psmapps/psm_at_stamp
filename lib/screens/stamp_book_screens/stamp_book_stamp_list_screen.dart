@@ -54,9 +54,7 @@ class _StampBookStampListScreenState extends State<StampBookStampListScreen> {
             Flexible(
               child: Text(
                 widget.stampCategories.categories,
-                style: TextStyle(
-                  fontFamily: "Sukhumwit",
-                ),
+                style: TextStyle(),
                 maxLines: 1,
               ),
             ),
@@ -84,7 +82,6 @@ class _StampBookStampListScreenState extends State<StampBookStampListScreen> {
                       "กำลังโหลดข้อมูลสมุดแสตมป์",
                       style: TextStyle(
                         color: Colors.white,
-                        fontFamily: "Sukhumwit",
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
@@ -109,7 +106,6 @@ class _StampBookStampListScreenState extends State<StampBookStampListScreen> {
                       "ไม่มีแสตมป์ในกลุ่มสาระนี้",
                       style: TextStyle(
                         color: Colors.white,
-                        fontFamily: "Sukhumwit",
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),

@@ -42,7 +42,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: Text(
           "ผูกบัญชีกับรหัสนักเรียนหรือรหัสบัญชี",
           style: TextStyle(
-            fontFamily: "Sukhumwit",
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -65,7 +64,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 17,
-                  fontFamily: "Sukhumwit",
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

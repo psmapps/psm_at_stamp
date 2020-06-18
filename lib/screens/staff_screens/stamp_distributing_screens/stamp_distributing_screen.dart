@@ -149,7 +149,6 @@ class _StampDistributingScreenState extends State<StampDistributingScreen> {
                     Text(
                       "แสตมป์ฐานกิจกรรม",
                       style: TextStyle(
-                        fontFamily: "Sukhumwit",
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -160,7 +159,6 @@ class _StampDistributingScreenState extends State<StampDistributingScreen> {
                     Text(
                       stampName,
                       style: TextStyle(
-                        fontFamily: "Sukhumwit",
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                         color: Colors.amber[600],
@@ -170,7 +168,6 @@ class _StampDistributingScreenState extends State<StampDistributingScreen> {
                     Text(
                       "กลุ่มสาระ: " + stampCategories,
                       style: TextStyle(
-                        fontFamily: "Sukhumwit",
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),

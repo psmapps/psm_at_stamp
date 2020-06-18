@@ -68,7 +68,6 @@ class _StampInfoEditTextInputState extends State<StampInfoEditTextInput> {
             maxLines: widget.maxTextFieldLine,
             autocorrect: false,
             style: TextStyle(
-              fontFamily: "Sukhumwit",
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),
@@ -83,7 +82,6 @@ class _StampInfoEditTextInputState extends State<StampInfoEditTextInput> {
                   currentLength.toString() + "/" + widget.maxLength.toString(),
                   style: TextStyle(
                     color: Colors.white,
-                    fontFamily: "Sukhumwit",
                   ),
                 ),
               ),

@@ -32,7 +32,6 @@ class _StampInfoEditorScreenState extends State<StampInfoEditorScreen> {
             Text(
               "ตั้งค่าฐานกิจกรรม",
               style: TextStyle(
-                fontFamily: "Sukhumwit",
                 fontWeight: FontWeight.bold,
               ),
             )

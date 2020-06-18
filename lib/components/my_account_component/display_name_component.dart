@@ -9,7 +9,6 @@ Widget displayNameComponent({@required String displayName}) {
   return Text(
     displayName,
     style: TextStyle(
-      fontFamily: "Sukhumwit",
       fontSize: 30,
       fontWeight: FontWeight.bold,
     ),

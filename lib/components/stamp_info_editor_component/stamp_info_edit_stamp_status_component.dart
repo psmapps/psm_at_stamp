@@ -99,7 +99,6 @@ class _StampInfoEditStampStatusState extends State<StampInfoEditStampStatus> {
             child: Text(
               isOpen ? "เปิดให้เข้าเล่นกิจกรรม" : "ไม่เปิดให้เข้าเล่นกิจกรรม",
               style: TextStyle(
-                fontFamily: "Sukhumwit",
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),

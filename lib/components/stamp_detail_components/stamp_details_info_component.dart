@@ -31,7 +31,6 @@ Widget stampDetailInfoComponent({
                   child: Text(
                     detailIndex,
                     style: TextStyle(
-                      fontFamily: "Sukhumwit",
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),

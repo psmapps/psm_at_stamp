@@ -57,7 +57,6 @@ class _SettingScreenState extends State<SettingScreen> {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
-                fontFamily: "Sukhumwit",
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -85,7 +84,6 @@ class _SettingScreenState extends State<SettingScreen> {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
-                  fontFamily: "Sukhumwit",
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -94,7 +92,6 @@ class _SettingScreenState extends State<SettingScreen> {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
-                  fontFamily: "Sukhumwit",
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -103,7 +100,6 @@ class _SettingScreenState extends State<SettingScreen> {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
-                  fontFamily: "Sukhumwit",
                   fontWeight: FontWeight.bold,
                 ),
               ),

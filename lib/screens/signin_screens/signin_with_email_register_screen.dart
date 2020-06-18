@@ -36,7 +36,6 @@ class _SignInWithEmailRegisterScreenState
                   "กรุณากรอกที่อยู่ Email และ Password สำหรับบัญชี PSM @ STAMP ของคุณ",
                   style: TextStyle(
                     color: Colors.white,
-                    fontFamily: "Sukhumwit",
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),

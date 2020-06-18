@@ -24,7 +24,6 @@ Widget stampInfoEditCard({
               Text(
                 infoName,
                 style: TextStyle(
-                  fontFamily: "Sukhumwit",
                   fontWeight: FontWeight.bold,
                   fontSize: 17,
                 ),

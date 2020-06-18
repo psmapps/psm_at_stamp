@@ -78,7 +78,6 @@ class _UploadStampIconInfoComponentState
                             "ข้อกำหนดของ Logo​ ฐานกิจกรรม",
                             style: TextStyle(
                               color: Colors.yellowAccent,
-                              fontFamily: "Sukhumwit",
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
@@ -87,7 +86,6 @@ class _UploadStampIconInfoComponentState
                             "1.รูปภาพต้องมีขนาด 1024 x 1024 px หากเป็นขนาดอื่นจะถูก Resize มาเป็นขนาดตามที่กำหนดโดยอัตโนมัติ \n 2. รูปภาพไม่ควรมีพื้นหลัง (Transparent Background) \n\n ** หากพบรูปภาพฐานกิจกรรมผิดข้อกำหนด จะถูกลบและอาจไม่สามารถเปลี่ยน Logo ฐานกิจกรรมได้อีก **",
                             style: TextStyle(
                               color: Colors.white,
-                              fontFamily: "Sukhumwit",
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
                             ),
@@ -104,7 +102,6 @@ class _UploadStampIconInfoComponentState
                     Text(
                       "ตัวอย่าง Logo หลังเปลี่ยน",
                       style: TextStyle(
-                        fontFamily: "Sukhumwit",
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
                       ),

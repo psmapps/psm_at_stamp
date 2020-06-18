@@ -20,7 +20,6 @@ class RegisterSelectRole extends StatelessWidget {
         title: Text(
           "เลือกรูปแบบของบัญชี",
           style: TextStyle(
-            fontFamily: "Sukhumwit",
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -42,7 +41,6 @@ class RegisterSelectRole extends StatelessWidget {
                 "ยินดีต้อนรับเข้าสู่การผูกบัญชี",
                 style: TextStyle(
                   fontSize: 23,
-                  fontFamily: "Sukhumwit",
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -54,7 +52,6 @@ class RegisterSelectRole extends StatelessWidget {
                 "การผูกบัญชีคือการผูกบัญชีที่ใช้เข้าสู่ระบบกับรหัสนักเรียนของคุณ โดยจะทำเพียงครั้งแรกครั้งเดียว และ รหัสนักเรียน 1 รหัส จะสามารถผูกได้ 1 ครั้งเท่านั้น",
                 style: TextStyle(
                   fontSize: 17,
-                  fontFamily: "Sukhumwit",
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -67,7 +64,6 @@ class RegisterSelectRole extends StatelessWidget {
                 "กรุณาเลือกรูปแบบบัญชีที่คุณต้องการผูก",
                 style: TextStyle(
                   fontSize: 17,
-                  fontFamily: "Sukhumwit",
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

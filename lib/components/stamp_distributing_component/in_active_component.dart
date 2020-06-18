@@ -25,7 +25,6 @@ Widget inActiveStampCreatorComponent({@required String displayText}) {
               displayText,
               style: TextStyle(
                 color: Colors.white,
-                fontFamily: "Sukhumwit",
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),

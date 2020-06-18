@@ -34,7 +34,6 @@ void showMessageBox(
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              fontFamily: "Sukhumwit",
             ),
             maxLines: 2,
           ),
@@ -45,7 +44,6 @@ void showMessageBox(
       content,
       style: TextStyle(
         fontSize: 18,
-        fontFamily: "Sukhumwit",
       ),
     ),
     actions: actionsButton ??

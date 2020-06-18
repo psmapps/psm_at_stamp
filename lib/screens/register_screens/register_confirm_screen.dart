@@ -29,7 +29,6 @@ class _RegisterConfirmScreenState extends State<RegisterConfirmScreen> {
         title: Text(
           "ผูกบัญชีกับรหัสนักเรียนหรือรหัสบัญชี",
           style: TextStyle(
-            fontFamily: "Sukhumwit",
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -66,7 +65,6 @@ class _RegisterConfirmScreenState extends State<RegisterConfirmScreen> {
                 widget.psmAtStampRegister.displayName,
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: "Sukhumwit",
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
@@ -82,7 +80,6 @@ class _RegisterConfirmScreenState extends State<RegisterConfirmScreen> {
                     widget.psmAtStampRegister.surname,
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: "Sukhumwit",
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
@@ -97,7 +94,6 @@ class _RegisterConfirmScreenState extends State<RegisterConfirmScreen> {
                     widget.psmAtStampRegister.studentId,
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: "Sukhumwit",
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),

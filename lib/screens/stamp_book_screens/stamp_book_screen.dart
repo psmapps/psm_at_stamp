@@ -43,7 +43,6 @@ class _StampBookScreenState extends State<StampBookScreen> {
                   "กำลังโหลดข้อมูลสมุดแสตมป์",
                   style: TextStyle(
                     color: Colors.white,
-                    fontFamily: "Sukhumwit",
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),

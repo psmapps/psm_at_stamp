@@ -82,7 +82,6 @@ class _PermissionBoxState extends State<PermissionBox> {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
-                          fontFamily: "Sukhumwit",
                           fontWeight: FontWeight.bold,
                         ),
                       ),

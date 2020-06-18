@@ -25,7 +25,6 @@ Widget registerConfirmStaffSector(
                 Text(
                   "ฐานกิจกรรมที่ดูแล",
                   style: TextStyle(
-                    fontFamily: "Sukhumwit",
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -62,7 +61,6 @@ Widget registerConfirmStaffSector(
             child: Text(
               "หากข้อมูลไม่ถูกต้อง คุณสามารถแก้ไขได้ด้วยตนเองหลังจากผูกบัญชีและได้รับการยืนยันการดูแลฐานกิจกรรมเรียบร้อยแล้ว (ข้อมูลที่แก้ไขได้: ชื่อ, คำอธิบาย, สถาณะฐานกิจกรรม, ที่ตั้งฐานกิจกรรม, Icon ฐานกิจกรรม)",
               style: TextStyle(
-                fontFamily: "Sukhumwit",
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
               ),

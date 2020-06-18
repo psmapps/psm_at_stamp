@@ -24,6 +24,9 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
             icon: Icon(FontAwesomeIcons.book),
             child: Text(
               "สมุดแสตมป์",
+              style: TextStyle(
+                fontFamily: "Sukhumwit",
+              ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -31,6 +34,9 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
             icon: Icon(FontAwesomeIcons.userAlt),
             child: Text(
               "บัญชีของฉัน",
+              style: TextStyle(
+                fontFamily: "Sukhumwit",
+              ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -62,8 +68,8 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
             child: Text(
               "ฐานกิจกรรม",
               style: TextStyle(
-                fontFamily: "Sukhumwit",
                 fontSize: 13,
+                fontFamily: "Sukhumwit",
               ),
               textAlign: TextAlign.center,
             ),
@@ -73,8 +79,8 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
             child: Text(
               "แจกแสตมป์",
               style: TextStyle(
-                fontFamily: "Sukhumwit",
                 fontSize: 13,
+                fontFamily: "Sukhumwit",
               ),
               textAlign: TextAlign.center,
             ),
@@ -84,8 +90,8 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
             child: Text(
               "เพิ่มแสตมป์",
               style: TextStyle(
-                fontFamily: "Sukhumwit",
                 fontSize: 13,
+                fontFamily: "Sukhumwit",
               ),
               textAlign: TextAlign.center,
             ),
@@ -95,8 +101,8 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
             child: Text(
               "บัญชีของฉัน",
               style: TextStyle(
-                fontFamily: "Sukhumwit",
                 fontSize: 13,
+                fontFamily: "Sukhumwit",
               ),
               textAlign: TextAlign.center,
             ),
@@ -122,6 +128,9 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
             child: Text(
               "สมุดแสตมป์",
               textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: "Sukhumwit",
+              ),
             ),
           ),
           Tab(
@@ -129,6 +138,9 @@ ScreenWidget screenDataManager({@required PsmAtStampUser psmAtStampUser}) {
             child: Text(
               "บัญชีของฉัน",
               textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: "Sukhumwit",
+              ),
             ),
           ),
         ],

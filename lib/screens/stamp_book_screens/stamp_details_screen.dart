@@ -36,9 +36,7 @@ class StampDetailScreen extends StatelessWidget {
             Flexible(
               child: Text(
                 stampIdInfomation.categories,
-                style: TextStyle(
-                  fontFamily: "Sukhumwit",
-                ),
+                style: TextStyle(),
                 maxLines: 1,
               ),
             ),

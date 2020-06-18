@@ -9,7 +9,6 @@ Widget registerStampInfo({@required String index, @required String data}) {
         style: TextStyle(
           color: Colors.green,
           fontWeight: FontWeight.bold,
-          fontFamily: "Sukhumwit",
           fontSize: 18,
         ),
       ),
@@ -21,7 +20,6 @@ Widget registerStampInfo({@required String index, @required String data}) {
           data,
           style: TextStyle(
             color: Colors.black,
-            fontFamily: "Sukhumwit",
             fontSize: 18,
           ),
           textAlign: TextAlign.center,

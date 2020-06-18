@@ -70,7 +70,6 @@ Widget _badgeDisplayTemplate({
   return Tooltip(
     message: toolTipMessage,
     textStyle: TextStyle(
-      fontFamily: "Sukhumwit",
       fontSize: 18,
       color: Colors.white,
       fontWeight: FontWeight.bold,

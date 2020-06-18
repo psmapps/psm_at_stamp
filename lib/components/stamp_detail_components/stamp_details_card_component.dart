@@ -201,7 +201,6 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
                                           : Text(
                                               "สแกน QR Code ที่ฐานกิจกรรมเพื่อรับแสตมป์",
                                               style: TextStyle(
-                                                fontFamily: "Sukhumwit",
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -221,7 +220,6 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
                                             "RefID: " + refId,
                                             style: TextStyle(
                                               color: Colors.grey[400],
-                                              fontFamily: "Sukhumwit",
                                               fontWeight: FontWeight.bold,
                                             ),
                                           )
