@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:psm_at_stamp/components/notification_components/loading_box.dart';
@@ -13,9 +14,11 @@ import 'package:psm_at_stamp/services/register_services/psmatstampregister_const
 /// [psmAtStampRegister]
 /// * Optional
 /// [psmAtStampStampData]
-Future<void> registerConfirm(BuildContext context,
-    {@required PsmAtStampRegister psmAtStampRegister,
-    PsmAtStampStampData psmAtStampStampData}) async {
+Future<void> registerConfirm(
+  BuildContext context, {
+  @required PsmAtStampRegister psmAtStampRegister,
+  PsmAtStampStampData psmAtStampStampData,
+}) async {
   showLoadingBox(context, loadingMessage: "กำลังผูกบัญชี");
   DocumentSnapshot docSnap;
   try {
@@ -59,24 +62,7 @@ Future<void> registerConfirm(BuildContext context,
       "userId": psmAtStampRegister.userId,
     });
   }
-  String signInServices;
-  switch (psmAtStampRegister.signInServices) {
-    case (SignInServices.apple):
-      signInServices = "Apple";
-      break;
-    case (SignInServices.email):
-      signInServices = "Email";
-      break;
-    case (SignInServices.google):
-      signInServices = "Google";
-      break;
-    case (SignInServices.line):
-      signInServices = "LINE";
-      break;
-    default:
-      Navigator.pop(context);
-      return;
-  }
+
   try {
     await Firestore.instance
         .collection("Stamp_User")
@@ -93,7 +79,7 @@ Future<void> registerConfirm(BuildContext context,
       "userId": psmAtStampRegister.userId,
       "profileImage": psmAtStampRegister.profileImage,
       "permission": "Student",
-      "registerService": signInServices,
+      "registerService": EnumToString.parse(psmAtStampRegister.signInServices),
     });
   } catch (e) {
     logger.d(e);
@@ -108,7 +94,7 @@ Future<void> registerConfirm(BuildContext context,
   }
   logger.d("Registered user " + psmAtStampRegister.userId + " in database.");
   String content = "คุณสามารถเข้าสู่ระบบอีกครั้งด้วย " +
-      signInServices +
+      EnumToString.parse(psmAtStampRegister.signInServices) +
       " เพื่อเริ่มต้นใช้งานได้ทันที ";
   if (psmAtStampRegister.permission == PsmAtStampUserPermission.staff) {
     content +=

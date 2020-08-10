@@ -34,14 +34,16 @@ Future<void> signInWithApple(BuildContext context) async {
   }
   if (_signInWithAppleResult.status == AuthorizationStatus.error) {
     Navigator.pop(context);
-    return showMessageBox(context,
-        title: "เกิดข้อผิดพลาด",
-        content:
-            "ไม่สามารถเข้าสู่ระบบด้วย Apple ได้ กรุณาตรวจสอบการเชื่อมต่อ หรือ ติดต่อ PSM @ STAMP เพื่อรับการช่วยเหลือ (Code: " +
-                _signInWithAppleResult.error.code.toString() +
-                ")",
-        icon: FontAwesomeIcons.exclamationCircle,
-        iconColor: Colors.red);
+    return showMessageBox(
+      context,
+      title: "เกิดข้อผิดพลาด",
+      content:
+          "ไม่สามารถเข้าสู่ระบบด้วย Apple ได้ กรุณาตรวจสอบการเชื่อมต่อ หรือ ติดต่อ PSM @ STAMP เพื่อรับการช่วยเหลือ (Code: " +
+              _signInWithAppleResult.error.code.toString() +
+              ")",
+      icon: FontAwesomeIcons.exclamationCircle,
+      iconColor: Colors.red,
+    );
   }
   logger.d(_signInWithAppleResult.credential.user);
   final AuthCredential _credential =

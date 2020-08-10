@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,6 +66,7 @@ Future<PsmAtStampUser> signUserIn({
             "Some of required data is missing from this account: " + userId);
   }
   String fcmToken = await FirebaseMessaging().getToken();
+
   await Firestore.instance
       .collection("Stamp_User")
       .document(userId)
@@ -72,6 +74,7 @@ Future<PsmAtStampUser> signUserIn({
     "accessToken": accessToken,
     "udid": udid,
     "fcmToken": fcmToken,
+    "signInService": EnumToString.parse(signInServices),
   });
 
   if (_remotePermission == "student" || _remotePermission == "Student") {

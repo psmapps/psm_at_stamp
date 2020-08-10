@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  enum_to_string: ^1.0.9
   soundpool: ^1.1.1
   overlay_support: ^1.0.4
   flutter_svg: ^0.17.4

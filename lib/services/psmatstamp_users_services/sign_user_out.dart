@@ -30,7 +30,8 @@ Future<void> signUserOut(
         "udid": "",
         "accessToken": "",
         "fcmToken": "",
-        "isFourceSignOut": false
+        "isFourceSignOut": false,
+        "signInService": null,
       }).timeout(Duration(seconds: 10));
       if (psmAtStampUser.signInServices == SignInServices.google) {
         await GoogleSignIn().signOut();
