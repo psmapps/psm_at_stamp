@@ -17,7 +17,7 @@ class _BellNotificationAnimationState extends State<BellNotificationAnimation>
   @override
   void initState() {
     _animationController =
-        AnimationController(duration: Duration(milliseconds: 500));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     super.initState();
     _runAnimation();
   }
