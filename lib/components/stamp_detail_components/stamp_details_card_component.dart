@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:psm_at_stamp/components/stamp_distributing_component/in_active_component.dart';
@@ -216,11 +217,18 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
                                             padding:
                                                 const EdgeInsets.only(top: 15),
                                           ),
-                                          Text(
-                                            "RefID: " + refId,
-                                            style: TextStyle(
-                                              color: Colors.grey[400],
-                                              fontWeight: FontWeight.bold,
+                                          InkWell(
+                                            onLongPress: () {
+                                              Clipboard.setData(
+                                                ClipboardData(text: refId),
+                                              );
+                                            },
+                                            child: Text(
+                                              "RefID: " + refId,
+                                              style: TextStyle(
+                                                color: Colors.grey[400],
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           )
                                         ],
