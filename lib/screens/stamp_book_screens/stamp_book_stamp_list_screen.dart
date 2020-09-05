@@ -64,7 +64,7 @@ class _StampBookStampListScreenState extends State<StampBookStampListScreen> {
       body: Container(
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: StreamBuilder(
-          stream: Firestore.instance
+          stream: FirebaseFirestore.instance
               .collection("Stamp_Data")
               .where("categories", isEqualTo: widget.stampCategories.categories)
               .snapshots(),

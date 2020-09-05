@@ -20,12 +20,12 @@ Future<void> registerStaffAddToRequest(
     );
   }
   showLoadingBox(context, loadingMessage: "กำลังตรวจสอบสิทธิ");
-  QuerySnapshot stampQuerySnap = await Firestore.instance
+  QuerySnapshot stampQuerySnap = await FirebaseFirestore.instance
       .collection("Stamp_Data")
       .where("stampLinkCode", isEqualTo: stampLinkCode)
       .limit(1)
-      .getDocuments();
-  if (stampQuerySnap.documents.isEmpty) {
+      .get();
+  if (stampQuerySnap.docs.isEmpty) {
     Navigator.pop(context);
     return showMessageBox(
       context,
@@ -39,10 +39,10 @@ Future<void> registerStaffAddToRequest(
   String categories;
   String name;
   String stampId;
-  stampQuerySnap.documents.forEach((stampDocSnap) {
-    categories = stampDocSnap.data["categories"];
-    name = stampDocSnap.data["name"];
-    stampId = stampDocSnap.documentID;
+  stampQuerySnap.docs.forEach((stampDocSnap) {
+    categories = stampDocSnap.data()["categories"];
+    name = stampDocSnap.data()["name"];
+    stampId = stampDocSnap.id;
   });
 
   if (categories == null || name == null) {
@@ -56,11 +56,11 @@ Future<void> registerStaffAddToRequest(
       iconColor: Colors.yellow,
     );
   }
-  QuerySnapshot regStaffRequest = await Firestore.instance
+  QuerySnapshot regStaffRequest = await FirebaseFirestore.instance
       .collection("Staff_Register_Request")
       .where("userId", isEqualTo: psmAtStampUser.userId)
-      .getDocuments();
-  if (regStaffRequest.documents.isNotEmpty) {
+      .get();
+  if (regStaffRequest.docs.isNotEmpty) {
     Navigator.pop(context);
     return showMessageBox(
       context,
@@ -72,10 +72,10 @@ Future<void> registerStaffAddToRequest(
     );
   }
   try {
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("Staff_Register_Request")
-        .document()
-        .setData({
+        .doc()
+        .set({
       "stampId": stampId,
       "studentId": psmAtStampUser.studentId,
       "userId": psmAtStampUser.userId,

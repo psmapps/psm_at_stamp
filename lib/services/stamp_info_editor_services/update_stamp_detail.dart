@@ -12,10 +12,10 @@ Future<void> updateStampDetail(
   @required PsmAtStampUser psmAtStampUser,
 }) async {
   try {
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("Stamp_Data")
-        .document(psmAtStampUser.stampId)
-        .updateData({setting: value});
+        .doc(psmAtStampUser.stampId)
+        .update({setting: value});
   } catch (e) {
     logger.e(e);
     showMessageBox(

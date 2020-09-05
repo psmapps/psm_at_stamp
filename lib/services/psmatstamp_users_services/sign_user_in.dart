@@ -21,9 +21,9 @@ Future<PsmAtStampUser> signUserIn({
   String udid = await FlutterUdid.udid;
   DocumentSnapshot doc;
   try {
-    doc = await Firestore.instance
+    doc = await FirebaseFirestore.instance
         .collection("Stamp_User")
-        .document(userId)
+        .doc(userId)
         .get()
         .timeout(Duration(seconds: 10));
   } catch (e) {
@@ -41,7 +41,7 @@ Future<PsmAtStampUser> signUserIn({
         code: "ACCOUNT_NOT_FOUND",
         details: "The userId is not found in Stamp_User: " + userId);
   }
-  Map<String, dynamic> docData = doc.data;
+  Map<String, dynamic> docData = doc.data();
   bool didOverrideSignIn = false;
   PsmAtStampUserPermission _permission;
   String _remotePermission = docData["permission"];
@@ -67,10 +67,7 @@ Future<PsmAtStampUser> signUserIn({
   }
   String fcmToken = await FirebaseMessaging().getToken();
 
-  await Firestore.instance
-      .collection("Stamp_User")
-      .document(userId)
-      .updateData({
+  await FirebaseFirestore.instance.collection("Stamp_User").doc(userId).update({
     "accessToken": accessToken,
     "udid": udid,
     "fcmToken": fcmToken,

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:psm_at_stamp/components/stamp_distributing_component/in_active_component.dart';
@@ -64,9 +63,9 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
   Future<void> iconUrlFromCategories({@required String categories}) async {
     DocumentSnapshot categoriesDoc;
     try {
-      categoriesDoc = await Firestore.instance
+      categoriesDoc = await FirebaseFirestore.instance
           .collection("Categories")
-          .document(categories)
+          .doc(categories)
           .get()
           .timeout(Duration(seconds: 10));
     } catch (e) {
@@ -76,9 +75,9 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
       throw PlatformException(code: "CATEGORES_NOT_FOUND");
     }
     setState(() {
-      if (categoriesDoc.data["iconUrl"] != "" &&
-          categoriesDoc.data["iconUrl"] != null) {
-        iconUrl = categoriesDoc.data["iconUrl"];
+      if (categoriesDoc.data()["iconUrl"] != "" &&
+          categoriesDoc.data()["iconUrl"] != null) {
+        iconUrl = categoriesDoc.data()["iconUrl"];
       } else {
         iconUrl = "";
       }
@@ -86,9 +85,9 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
   }
 
   void streamStampInformation() {
-    stampInfomationStream = Firestore.instance
+    stampInfomationStream = FirebaseFirestore.instance
         .collection("Stamp_Data")
-        .document(widget.stampIdInfomation.stampId)
+        .doc(widget.stampIdInfomation.stampId)
         .snapshots()
         .listen(
       (doc) async {
@@ -101,21 +100,22 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
         } else {
           setState(
             () {
-              if (doc.data["iconUrl"] != null && doc.data["iconUrl"] != "") {
-                iconUrl = doc.data["iconUrl"];
+              if (doc.data()["iconUrl"] != null &&
+                  doc.data()["iconUrl"] != "") {
+                iconUrl = doc.data()["iconUrl"];
               } else {
                 if (widget.stampIdInfomation.categoriesIconUrl != "" &&
                     widget.stampIdInfomation.categoriesIconUrl != null) {
                   iconUrl = widget.stampIdInfomation.categoriesIconUrl;
                 } else {
-                  iconUrlFromCategories(categories: doc.data["categories"]);
+                  iconUrlFromCategories(categories: doc.data()["categories"]);
                 }
               }
-              name = doc.data["name"];
-              location = doc.data["location"];
-              details = doc.data["detail"];
+              name = doc.data()["name"];
+              location = doc.data()["location"];
+              details = doc.data()["detail"];
               isOpen =
-                  convertStampStatusToEnum(stampStatus: doc.data["isOpen"]);
+                  convertStampStatusToEnum(stampStatus: doc.data()["isOpen"]);
               stampDetailWidget = onActiveStampDetailInfoComponent(
                 name: name,
                 location: location,
@@ -130,7 +130,7 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
   }
 
   void streamStampInTransaction() {
-    stampInTransactionStream = Firestore.instance
+    stampInTransactionStream = FirebaseFirestore.instance
         .collection("Stamp_Transaction")
         .where("userId", isEqualTo: widget.psmAtStampUser.userId)
         .where(
@@ -143,9 +143,9 @@ class _StampDetailCardComponentState extends State<StampDetailCardComponent> {
       (data) {
         setState(
           () {
-            if (data.documents.isNotEmpty) {
+            if (data.docs.isNotEmpty) {
               isStamped = true;
-              refId = data.documents[0].documentID;
+              refId = data.docs[0].id;
             } else {
               isStamped = false;
               refId = "-";

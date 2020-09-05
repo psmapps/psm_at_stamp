@@ -14,11 +14,11 @@ import 'package:psm_at_stamp/services/signin_screen_services/signin_with_google/
 
 Future<void> signInWithGoogle(BuildContext context) async {
   showLoadingBox(context, loadingMessage: "กำลังเข้าสู่ระบบด้วย Google");
-  AuthResult _authResult;
+  UserCredential _authResult;
   GoogleSignInAuthentication _googleSignInAuth;
   try {
     _googleSignInAuth = await startSignInWithGoogle();
-    AuthCredential _authCredential = GoogleAuthProvider.getCredential(
+    AuthCredential _authCredential = GoogleAuthProvider.credential(
         idToken: _googleSignInAuth.idToken,
         accessToken: _googleSignInAuth.accessToken);
     _authResult =
@@ -52,7 +52,7 @@ Future<void> signInWithGoogle(BuildContext context) async {
     if (e.code == "ACCOUNT_NOT_FOUND") {
       PsmAtStampRegister psmAtStampRegister = new PsmAtStampRegister(
         email: _authResult.user.email,
-        profileImage: _authResult.user.photoUrl ??
+        profileImage: _authResult.user.photoURL ??
             "https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/user.png?alt=media&token=eb023a2a-0d9e-46f2-8301-ef4e0e20cfee",
         displayName: _authResult.user.displayName ?? "Stamp User",
         userId: _authResult.user.uid,

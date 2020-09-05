@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 Future<List> getStampTransactionByCategories(
     {@required String categories, @required String userId}) async {
   List stampIdFromTransactionList = [];
-  QuerySnapshot querySnap = await Firestore.instance
+  QuerySnapshot querySnap = await FirebaseFirestore.instance
       .collection("Stamp_Transaction")
       .where("userId", isEqualTo: userId)
       .where("categories", isEqualTo: categories)
-      .getDocuments();
-  if (querySnap.documents.isEmpty) {
+      .get();
+  if (querySnap.docs.isEmpty) {
     return stampIdFromTransactionList;
   }
-  querySnap.documents.forEach((docSnap) {
-    stampIdFromTransactionList.add(docSnap.data["stampId"]);
+  querySnap.docs.forEach((docSnap) {
+    stampIdFromTransactionList.add(docSnap.data()["stampId"]);
   });
   return stampIdFromTransactionList;
 }

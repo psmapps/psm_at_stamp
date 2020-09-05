@@ -36,9 +36,9 @@ Future<void> registerValidate(
     );
   }
   showLoadingBox(context, loadingMessage: "กำลังตรวจสอบข้อมูล");
-  DocumentSnapshot docSnap = await Firestore.instance
+  DocumentSnapshot docSnap = await FirebaseFirestore.instance
       .collection("Student_Data")
-      .document(studentId)
+      .doc(studentId)
       .get();
 
   if (!docSnap.exists) {
@@ -53,7 +53,7 @@ Future<void> registerValidate(
       iconColor: Colors.red,
     );
   }
-  if (docSnap.data["isRegistered"] == true) {
+  if (docSnap.data()["isRegistered"] == true) {
     Navigator.pop(context);
     return showMessageBox(
       context,
@@ -64,11 +64,11 @@ Future<void> registerValidate(
       iconColor: Colors.yellow,
     );
   }
-  if (docSnap.data["prefix"] == null ||
-      docSnap.data["name"] == null ||
-      docSnap.data["surname"] == null ||
-      docSnap.data["year"] == null ||
-      docSnap.data["room"] == null) {
+  if (docSnap.data()["prefix"] == null ||
+      docSnap.data()["name"] == null ||
+      docSnap.data()["surname"] == null ||
+      docSnap.data()["year"] == null ||
+      docSnap.data()["room"] == null) {
     Navigator.pop(context);
     return showMessageBox(
       context,
@@ -86,21 +86,21 @@ Future<void> registerValidate(
     email: psmAtStampRegister.email,
     signInServices: psmAtStampRegister.signInServices,
     permission: psmAtStampRegister.permission,
-    prefix: docSnap.data["prefix"],
-    name: docSnap.data["name"],
-    surname: docSnap.data["surname"],
-    year: docSnap.data["year"],
-    room: docSnap.data["room"],
+    prefix: docSnap.data()["prefix"],
+    name: docSnap.data()["name"],
+    surname: docSnap.data()["surname"],
+    year: docSnap.data()["year"],
+    room: docSnap.data()["room"],
     studentId: studentId,
   );
 
   if (psmAtStampRegister.permission == PsmAtStampUserPermission.staff) {
-    QuerySnapshot stampQuerySnap = await Firestore.instance
+    QuerySnapshot stampQuerySnap = await FirebaseFirestore.instance
         .collection("Stamp_Data")
         .where("stampLinkCode", isEqualTo: stampLinkCode)
         .limit(1)
-        .getDocuments();
-    if (stampQuerySnap.documents.isEmpty) {
+        .get();
+    if (stampQuerySnap.docs.isEmpty) {
       Navigator.pop(context);
       return showMessageBox(
         context,
@@ -112,9 +112,9 @@ Future<void> registerValidate(
       );
     }
     PsmAtStampStampData psmAtStampStampData;
-    stampQuerySnap.documents.forEach((stampDocSnap) {
-      if (stampDocSnap.data["categories"] == null ||
-          stampDocSnap.data["name"] == null) {
+    stampQuerySnap.docs.forEach((stampDocSnap) {
+      if (stampDocSnap.data()["categories"] == null ||
+          stampDocSnap.data()["name"] == null) {
         Navigator.pop(context);
         return showMessageBox(
           context,
@@ -126,11 +126,11 @@ Future<void> registerValidate(
         );
       }
       psmAtStampStampData = PsmAtStampStampData(
-        stampId: stampDocSnap.documentID,
-        categories: stampDocSnap.data["categories"],
-        detail: stampDocSnap.data["detail"] ?? "ไม่มีข้อมูล",
-        location: stampDocSnap.data["location"] ?? "ไม่มีข้อมูล",
-        name: stampDocSnap.data["name"],
+        stampId: stampDocSnap.id,
+        categories: stampDocSnap.data()["categories"],
+        detail: stampDocSnap.data()["detail"] ?? "ไม่มีข้อมูล",
+        location: stampDocSnap.data()["location"] ?? "ไม่มีข้อมูล",
+        name: stampDocSnap.data()["name"],
       );
     });
     Navigator.pop(context);

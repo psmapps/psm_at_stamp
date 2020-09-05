@@ -6,9 +6,9 @@ import 'package:psm_at_stamp/services/logger_services/logger_service.dart';
 Future<String> getCategoriesIcon({@required String categories}) async {
   DocumentSnapshot categoriesDoc;
   try {
-    categoriesDoc = await Firestore.instance
+    categoriesDoc = await FirebaseFirestore.instance
         .collection("Categories")
-        .document(categories)
+        .doc(categories)
         .get()
         .timeout(Duration(seconds: 10));
   } catch (e) {
@@ -18,5 +18,5 @@ Future<String> getCategoriesIcon({@required String categories}) async {
   if (!categoriesDoc.exists) {
     throw PlatformException(code: "Categories_Not_Found");
   }
-  return categoriesDoc.data["iconUrl"];
+  return categoriesDoc.data()["iconUrl"];
 }

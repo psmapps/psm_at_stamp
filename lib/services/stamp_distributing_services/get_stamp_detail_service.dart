@@ -8,9 +8,9 @@ Future<Map<String, dynamic>> getStampDetailService(BuildContext context,
     {@required PsmAtStampUser psmAtStampUser}) async {
   DocumentSnapshot stampDoc;
   try {
-    stampDoc = await Firestore.instance
+    stampDoc = await FirebaseFirestore.instance
         .collection("Stamp_Data")
-        .document(psmAtStampUser.stampId)
+        .doc(psmAtStampUser.stampId)
         .get()
         .timeout(
           Duration(seconds: 10),
@@ -29,11 +29,11 @@ Future<Map<String, dynamic>> getStampDetailService(BuildContext context,
   }
   DocumentSnapshot permissionDoc;
   try {
-    permissionDoc = await Firestore.instance
+    permissionDoc = await FirebaseFirestore.instance
         .collection("Stamp_Data")
-        .document(psmAtStampUser.stampId)
+        .doc(psmAtStampUser.stampId)
         .collection("staff")
-        .document(psmAtStampUser.userId)
+        .doc(psmAtStampUser.userId)
         .get();
   } catch (e) {
     logger.e(e);
@@ -46,48 +46,48 @@ Future<Map<String, dynamic>> getStampDetailService(BuildContext context,
         code: "Permission not found", details: "ไม่พบสิทธิการแจกแสตมป์ของคุณ");
   }
 
-  if (stampDoc.data["iconUrl"] == "" || stampDoc.data["iconUrl"] == null) {
+  if (stampDoc.data()["iconUrl"] == "" || stampDoc.data()["iconUrl"] == null) {
     DocumentSnapshot categoriesDoc;
     try {
-      categoriesDoc = await Firestore.instance
+      categoriesDoc = await FirebaseFirestore.instance
           .collection("Categories")
-          .document(stampDoc.data["categories"])
+          .doc(stampDoc.data()["categories"])
           .get()
           .timeout(Duration(seconds: 10));
     } catch (e) {
       return {
-        "stampName": stampDoc.data["name"],
-        "stampCategories": stampDoc.data["categories"],
+        "stampName": stampDoc.data()["name"],
+        "stampCategories": stampDoc.data()["categories"],
         "iconUrl": null,
       };
     }
     if (categoriesDoc.exists) {
-      if (categoriesDoc.data["iconUrl"] == null ||
-          categoriesDoc.data["iconUrl"] == "") {
+      if (categoriesDoc.data()["iconUrl"] == null ||
+          categoriesDoc.data()["iconUrl"] == "") {
         return {
-          "stampName": stampDoc.data["name"],
-          "stampCategories": stampDoc.data["categories"],
+          "stampName": stampDoc.data()["name"],
+          "stampCategories": stampDoc.data()["categories"],
           "iconUrl": null,
         };
       } else {
         return {
-          "stampName": stampDoc.data["name"],
-          "stampCategories": stampDoc.data["categories"],
-          "iconUrl": categoriesDoc.data["iconUrl"],
+          "stampName": stampDoc.data()["name"],
+          "stampCategories": stampDoc.data()["categories"],
+          "iconUrl": categoriesDoc.data()["iconUrl"],
         };
       }
     } else {
       return {
-        "stampName": stampDoc.data["name"],
-        "stampCategories": stampDoc.data["categories"],
+        "stampName": stampDoc.data()["name"],
+        "stampCategories": stampDoc.data()["categories"],
         "iconUrl": null,
       };
     }
   } else {
     return {
-      "stampName": stampDoc.data["name"],
-      "stampCategories": stampDoc.data["categories"],
-      "iconUrl": stampDoc.data["iconUrl"],
+      "stampName": stampDoc.data()["name"],
+      "stampCategories": stampDoc.data()["categories"],
+      "iconUrl": stampDoc.data()["iconUrl"],
     };
   }
 }

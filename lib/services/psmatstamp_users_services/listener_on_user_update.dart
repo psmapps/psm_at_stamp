@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_udid/flutter_udid.dart';
@@ -15,14 +14,14 @@ StreamSubscription onUserUpdateStreamSubscription;
 void listenerOnUserUpdate(BuildContext context,
     {@required PsmAtStampUser psmAtStampUser}) async {
   logger.d("onUserUpdate: listener started");
-  onUserUpdateStreamSubscription = Firestore.instance
+  onUserUpdateStreamSubscription = FirebaseFirestore.instance
       .collection("Stamp_User")
-      .document(psmAtStampUser.userId)
+      .doc(psmAtStampUser.userId)
       .snapshots()
       .listen(
     (docSnap) async {
       logger.d("onUserUpdate: Update triggered");
-      if (docSnap.data["udid"] != (await FlutterUdid.udid)) {
+      if (docSnap.data()["udid"] != (await FlutterUdid.udid)) {
         logger.d(
             "onUserUpdate: Different user credential detected, Signing user out");
         return showMessageBox(
@@ -47,7 +46,7 @@ void listenerOnUserUpdate(BuildContext context,
           ],
         );
       }
-      if (docSnap.data["permission"] !=
+      if (docSnap.data()["permission"] !=
           psmAtStampPermissionToString(
               psmAtStampUserPermission: psmAtStampUser.permission)) {
         logger.d("onUserUpdate: Permission update triggered, Signing User Out");
@@ -73,7 +72,7 @@ void listenerOnUserUpdate(BuildContext context,
           ],
         );
       }
-      if (docSnap.data["isFourceSignOut"] ?? false == true) {
+      if (docSnap.data()["isFourceSignOut"] ?? false == true) {
         logger
             .d("onUserUpdate: isFourceSignOut is triggered, Signing User Out");
         return showMessageBox(

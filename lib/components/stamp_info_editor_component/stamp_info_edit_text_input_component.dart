@@ -36,18 +36,18 @@ class _StampInfoEditTextInputState extends State<StampInfoEditTextInput> {
   }
 
   void subscribeToSetting() {
-    settingSteam = Firestore.instance
+    settingSteam = FirebaseFirestore.instance
         .collection("Stamp_Data")
-        .document(widget.psmAtStampUser.stampId)
+        .doc(widget.psmAtStampUser.stampId)
         .snapshots()
         .listen((data) {
       if (!data.exists) {
         Navigator.popUntil(context, (route) => route.isFirst);
       }
       setState(() {
-        settingTextController.text = data.data[widget.settingName];
-        currentLength = data.data[widget.settingName].toString().length;
-        beforeChagneString = data.data[widget.settingName];
+        settingTextController.text = data.data()[widget.settingName];
+        currentLength = data.data()[widget.settingName].toString().length;
+        beforeChagneString = data.data()[widget.settingName];
       });
     });
   }

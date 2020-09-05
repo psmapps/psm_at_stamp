@@ -29,9 +29,9 @@ Future<void> welcomeCredentialCheck(BuildContext context) async {
     );
   }
   try {
-    docSnap = await Firestore.instance
+    docSnap = await FirebaseFirestore.instance
         .collection("Stamp_User")
-        .document(psmAtStampUserFromCredentail.userId)
+        .doc(psmAtStampUserFromCredentail.userId)
         .get()
         .timeout(
           Duration(seconds: 10),
@@ -95,8 +95,9 @@ Future<void> welcomeCredentialCheck(BuildContext context) async {
     );
   }
 
-  if (docSnap.data["accessToken"] != psmAtStampUserFromCredentail.accessToken &&
-      docSnap.data["udid"] != _udid) {
+  if (docSnap.data()["accessToken"] !=
+          psmAtStampUserFromCredentail.accessToken &&
+      docSnap.data()["udid"] != _udid) {
     logger.d("overrideSignIn detected. Deleting local credential file.");
     await deleteCredentialFile();
     return showMessageBox(
@@ -121,21 +122,21 @@ Future<void> welcomeCredentialCheck(BuildContext context) async {
     );
   }
   PsmAtStampUser psmAtStampUser = PsmAtStampUser(
-    prefix: docSnap.data["prefix"],
-    name: docSnap.data["name"],
-    surname: docSnap.data["surname"],
+    prefix: docSnap.data()["prefix"],
+    name: docSnap.data()["name"],
+    surname: docSnap.data()["surname"],
     userId: psmAtStampUserFromCredentail.userId,
-    studentId: docSnap.data["studentId"],
-    year: docSnap.data["year"],
-    room: docSnap.data["room"],
+    studentId: docSnap.data()["studentId"],
+    year: docSnap.data()["year"],
+    room: docSnap.data()["room"],
     permission: psmAtStampStringToPermission(
-        permissionString: docSnap.data["permission"]),
+        permissionString: docSnap.data()["permission"]),
     accessToken: psmAtStampUserFromCredentail.accessToken,
     udid: _udid,
     signInServices: psmAtStampUserFromCredentail.signInServices,
-    displayName: docSnap.data["displayName"],
-    stampId: docSnap.data["stampId"],
-    profileImageUrl: docSnap.data["profileImage"],
+    displayName: docSnap.data()["displayName"],
+    stampId: docSnap.data()["stampId"],
+    profileImageUrl: docSnap.data()["profileImage"],
     otherInfos: {"didOverrideSignIn": false},
   );
   logger.d(psmAtStampUser.exportToString());

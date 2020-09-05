@@ -22,10 +22,10 @@ Future<void> imageUploaderService(
   String downloadUri = await storageReference.getDownloadURL();
   logger.d(downloadUri);
   try {
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("Stamp_Data")
-        .document(psmAtStampUser.stampId)
-        .updateData({
+        .doc(psmAtStampUser.stampId)
+        .update({
       "iconUrl": downloadUri,
     });
   } catch (e) {

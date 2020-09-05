@@ -22,9 +22,9 @@ Future<void> registerConfirm(
   showLoadingBox(context, loadingMessage: "กำลังผูกบัญชี");
   DocumentSnapshot docSnap;
   try {
-    docSnap = await Firestore.instance
+    docSnap = await FirebaseFirestore.instance
         .collection("Student_Data")
-        .document(psmAtStampRegister.studentId)
+        .doc(psmAtStampRegister.studentId)
         .get();
   } catch (e) {
     logger.d(e);
@@ -37,7 +37,8 @@ Future<void> registerConfirm(
       iconColor: Colors.yellow,
     );
   }
-  if (docSnap.data["isRegistered"] != null && docSnap.data["isRegistered"]) {
+  if (docSnap.data()["isRegistered"] != null &&
+      docSnap.data()["isRegistered"]) {
     Navigator.pop(context);
     return showMessageBox(
       context,
@@ -48,15 +49,15 @@ Future<void> registerConfirm(
       iconColor: Colors.yellow,
     );
   }
-  await Firestore.instance
+  await FirebaseFirestore.instance
       .collection("Student_Data")
-      .document(psmAtStampRegister.studentId)
-      .updateData({"isRegistered": true});
+      .doc(psmAtStampRegister.studentId)
+      .update({"isRegistered": true});
   if (psmAtStampRegister.permission == PsmAtStampUserPermission.staff) {
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("Staff_Register_Request")
-        .document()
-        .setData({
+        .doc()
+        .set({
       "stampId": psmAtStampStampData.stampId,
       "studentId": psmAtStampRegister.studentId,
       "userId": psmAtStampRegister.userId,
@@ -64,10 +65,10 @@ Future<void> registerConfirm(
   }
 
   try {
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("Stamp_User")
-        .document(psmAtStampRegister.userId)
-        .setData({
+        .doc(psmAtStampRegister.userId)
+        .set({
       "displayName": psmAtStampRegister.displayName,
       "accessToken": "",
       "prefix": psmAtStampRegister.prefix,

@@ -46,16 +46,15 @@ Future<void> signInWithApple(BuildContext context) async {
     );
   }
   logger.d(_signInWithAppleResult.credential.user);
-  final AuthCredential _credential =
-      OAuthProvider(providerId: "apple.com").getCredential(
+  final AuthCredential _credential = OAuthProvider("apple.com").credential(
     idToken:
         String.fromCharCodes(_signInWithAppleResult.credential.identityToken),
     accessToken: String.fromCharCodes(
         _signInWithAppleResult.credential.authorizationCode),
   );
-  AuthResult _authResult;
+  UserCredential _userCredential;
   try {
-    _authResult = await FirebaseAuth.instance
+    _userCredential = await FirebaseAuth.instance
         .signInWithCredential(_credential)
         .timeout(Duration(seconds: 10));
   } on PlatformException catch (e) {
@@ -73,10 +72,10 @@ Future<void> signInWithApple(BuildContext context) async {
       iconColor: Colors.red,
     );
   }
-  logger.d(_authResult.user.uid);
+  logger.d(_userCredential.user.uid);
   try {
     PsmAtStampUser psmAtStampUser = await signUserIn(
-      userId: _authResult.user.uid,
+      userId: _userCredential.user.uid,
       accessToken: String.fromCharCodes(
         _signInWithAppleResult.credential.authorizationCode,
       ),
@@ -95,11 +94,11 @@ Future<void> signInWithApple(BuildContext context) async {
     Navigator.pop(context);
     if (e.code == "ACCOUNT_NOT_FOUND") {
       PsmAtStampRegister psmAtStampRegister = new PsmAtStampRegister(
-        email: _authResult.user.email,
-        profileImage: _authResult.user.photoUrl ??
+        email: _userCredential.user.email,
+        profileImage: _userCredential.user.photoURL ??
             "https://firebasestorage.googleapis.com/v0/b/satitprasarnmit-psm-at-stamp.appspot.com/o/user.png?alt=media&token=eb023a2a-0d9e-46f2-8301-ef4e0e20cfee",
         displayName: "Stamp User",
-        userId: _authResult.user.uid,
+        userId: _userCredential.user.uid,
         signInServices: SignInServices.apple,
       );
       return signUserInErrorHandler(

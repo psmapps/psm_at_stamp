@@ -23,10 +23,10 @@ Future<void> signUserOut(
   onUserUpdateStreamSubscription.cancel();
   if (updateCredentailInDatabase ?? true) {
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection("Stamp_User")
-          .document(psmAtStampUser.userId)
-          .updateData({
+          .doc(psmAtStampUser.userId)
+          .update({
         "udid": "",
         "accessToken": "",
         "fcmToken": "",

@@ -22,13 +22,13 @@ class _StampInTransactionAmountComponentState
   }
 
   void streamStampInTransactionAmount() {
-    Firestore.instance
+    FirebaseFirestore.instance
         .collection("Stamp_Transaction")
         .where("userId", isEqualTo: widget.psmAtStampUser.userId)
         .snapshots()
         .listen((data) {
       setState(() {
-        stampInTransactionAmount = data.documents.length.toString();
+        stampInTransactionAmount = data.docs.length.toString();
       });
     });
   }

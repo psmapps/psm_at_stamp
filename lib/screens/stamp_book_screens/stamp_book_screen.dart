@@ -25,7 +25,7 @@ class _StampBookScreenState extends State<StampBookScreen> {
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: StreamBuilder(
-        stream: Firestore.instance
+        stream: FirebaseFirestore.instance
             .collection("Categories")
             .orderBy("priority", descending: true)
             .snapshots(),

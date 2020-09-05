@@ -60,7 +60,7 @@ class _StampBookComponentState extends State<StampBookComponent> {
   }
 
   void streamStampInTransactionAmount() {
-    stampInTransactionAmountStream = Firestore.instance
+    stampInTransactionAmountStream = FirebaseFirestore.instance
         .collection("Stamp_Transaction")
         .where("categories", isEqualTo: widget.stampCategories.categories)
         .where(
@@ -70,31 +70,31 @@ class _StampBookComponentState extends State<StampBookComponent> {
         .snapshots()
         .listen((querySnap) {
       setState(() {
-        stampInTransactionAmount = querySnap.documents.length.toString();
+        stampInTransactionAmount = querySnap.docs.length.toString();
       });
     });
   }
 
   void streamStampAmount() {
-    stampAmountStrean = Firestore.instance
+    stampAmountStrean = FirebaseFirestore.instance
         .collection("Stamp_Data")
         .where("categories", isEqualTo: widget.stampCategories.categories)
         .snapshots()
         .listen((querySnap) {
       setState(() {
-        stampAmount = querySnap.documents.length.toString();
+        stampAmount = querySnap.docs.length.toString();
       });
     });
   }
 
   void streamSetStampBadge() {
-    stampBadgeStream = Firestore.instance
+    stampBadgeStream = FirebaseFirestore.instance
         .collection("Stamp_Transaction")
         .where("stampId", isEqualTo: widget.stampIdInfomation.stampId)
         .where("userId", isEqualTo: widget.psmAtStampUser.userId)
         .snapshots()
         .listen((data) {
-      if (data.documents.isEmpty) {
+      if (data.docs.isEmpty) {
         setState(() {
           stampBadge = false;
         });

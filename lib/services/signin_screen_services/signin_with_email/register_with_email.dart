@@ -32,7 +32,7 @@ Future<void> registerWithEmail(BuildContext context,
     );
   }
   showLoadingBox(context, loadingMessage: "กำลังสมัครบัญชี");
-  AuthResult result;
+  UserCredential result;
   try {
     result = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);

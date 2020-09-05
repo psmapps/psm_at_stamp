@@ -32,16 +32,16 @@ class _StampInfoEditStampStatusState extends State<StampInfoEditStampStatus> {
   }
 
   void subscribeToSetting() {
-    settingSteam = Firestore.instance
+    settingSteam = FirebaseFirestore.instance
         .collection("Stamp_Data")
-        .document(widget.psmAtStampUser.stampId)
+        .doc(widget.psmAtStampUser.stampId)
         .snapshots()
         .listen((data) {
       if (!data.exists) {
         Navigator.popUntil(context, (route) => route.isFirst);
       }
       setState(() {
-        isOpen = data.data[widget.settingName];
+        isOpen = data.data()[widget.settingName];
       });
     });
   }
