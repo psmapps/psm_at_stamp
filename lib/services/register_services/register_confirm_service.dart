@@ -80,7 +80,8 @@ Future<void> registerConfirm(
       "userId": psmAtStampRegister.userId,
       "profileImage": psmAtStampRegister.profileImage,
       "permission": "Student",
-      "registerService": EnumToString.parse(psmAtStampRegister.signInServices),
+      "registerService":
+          EnumToString.convertToString(psmAtStampRegister.signInServices),
     });
   } catch (e) {
     logger.d(e);
@@ -95,7 +96,7 @@ Future<void> registerConfirm(
   }
   logger.d("Registered user " + psmAtStampRegister.userId + " in database.");
   String content = "คุณสามารถเข้าสู่ระบบอีกครั้งด้วย " +
-      EnumToString.parse(psmAtStampRegister.signInServices) +
+      EnumToString.convertToString(psmAtStampRegister.signInServices) +
       " เพื่อเริ่มต้นใช้งานได้ทันที ";
   if (psmAtStampRegister.permission == PsmAtStampUserPermission.staff) {
     content +=

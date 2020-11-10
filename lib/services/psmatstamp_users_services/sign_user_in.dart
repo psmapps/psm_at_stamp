@@ -71,7 +71,7 @@ Future<PsmAtStampUser> signUserIn({
     "accessToken": accessToken,
     "udid": udid,
     "fcmToken": fcmToken,
-    "signInService": EnumToString.parse(signInServices),
+    "signInService": EnumToString.convertToString(signInServices),
   });
 
   if (_remotePermission == "student" || _remotePermission == "Student") {
